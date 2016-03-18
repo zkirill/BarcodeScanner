@@ -11,6 +11,7 @@ public class BarcodeScannerController: UIViewController {
   lazy var infoView: UILabel = {
     let label = UILabel()
     label.backgroundColor = .whiteColor()
+    
     return label
   }()
 

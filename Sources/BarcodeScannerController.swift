@@ -3,10 +3,11 @@ import AVFoundation
 
 
 protocol BarcodeScannerControllerDelegate: class {
-  func barcodeScannerController(controller: BarcodeScannerController, didReportError error: ErrorType)
+  func barcodeScannerController(controller: BarcodeScannerController, didReceiveError error: ErrorType)
+  func barcodeScannerController(controller: BarcodeScannerController, didCapturedCode code: String)
 }
 
-public class BarcodeScannerController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+public class BarcodeScannerController: UIViewController {
 
   lazy var infoView: UILabel = {
     let label = UILabel()
@@ -64,7 +65,6 @@ public class BarcodeScannerController: UIViewController, AVCaptureMetadataOutput
   }
 
   weak var delegate: BarcodeScannerControllerDelegate?
-  var capturedCode: String?
 
   // MARK: - View lifecycle
 
@@ -76,7 +76,7 @@ public class BarcodeScannerController: UIViewController, AVCaptureMetadataOutput
     do {
       input = try AVCaptureDeviceInput(device: captureDevice)
     } catch {
-      delegate?.barcodeScannerController(self, didReportError: error)
+      delegate?.barcodeScannerController(self, didReceiveError: error)
       return
     }
 
@@ -115,5 +115,35 @@ public class BarcodeScannerController: UIViewController, AVCaptureMetadataOutput
   public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     videoPreviewLayer.frame.size = size
+  }
+}
+
+// MARK: - AVCaptureMetadataOutputObjectsDelegate
+
+extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
+
+  public func captureOutput(captureOutput: AVCaptureOutput!,
+    didOutputMetadataObjects metadataObjects: [AnyObject]!,
+    fromConnection connection: AVCaptureConnection!) {
+
+      guard metadataObjects != nil && metadataObjects.count > 0 else {
+        focusView.frame = CGRectZero
+        return
+      }
+
+      let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+
+      guard readableCodeTypes.contains(metadataObj.type) else {
+        return
+      }
+
+      let barCodeObject = videoPreviewLayer.transformedMetadataObjectForMetadataObject(metadataObj as AVMetadataMachineReadableCodeObject) as! AVMetadataMachineReadableCodeObject
+
+      focusView.frame = barCodeObject.bounds
+
+      guard let code = metadataObj.stringValue else { return }
+
+      infoView.text = code
+      delegate?.barcodeScannerController(self, didCapturedCode: code)
   }
 }

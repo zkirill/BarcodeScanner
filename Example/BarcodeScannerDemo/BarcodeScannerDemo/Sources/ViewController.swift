@@ -26,7 +26,7 @@ class ViewController: UIViewController {
   }
 
   func buttonDidPress() {
-    let controller = ScannerViewController()
+    let controller = BarcodeScannerController()
     presentViewController(controller, animated: true, completion: nil)
   }
 }

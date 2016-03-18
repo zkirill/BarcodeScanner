@@ -11,8 +11,23 @@ public class BarcodeScannerController: UIViewController, AVCaptureMetadataOutput
 
   lazy var videoView: UIView = UIView()
 
+
+  private var readableCodeTypes = [
+    AVMetadataObjectTypeUPCECode,
+    AVMetadataObjectTypeCode39Code,
+    AVMetadataObjectTypeCode39Mod43Code,
+    AVMetadataObjectTypeEAN13Code,
+    AVMetadataObjectTypeEAN8Code,
+    AVMetadataObjectTypeCode93Code,
+    AVMetadataObjectTypeCode128Code,
+    AVMetadataObjectTypePDF417Code,
+    AVMetadataObjectTypeQRCode,
+    AVMetadataObjectTypeAztecCode
+  ]
+
   var captureSession: AVCaptureSession?
   var videoPreviewLayer: AVCaptureVideoPreviewLayer?
   var focusView: UIView?
   var captureDevice: AVCaptureDevice?
+  var capturedCode:String?
 }

@@ -25,7 +25,7 @@ public class BarcodeScannerController: UIViewController {
   lazy var flashButton: UIButton = {
     let button = UIButton(type: .Custom)
     button.addTarget(self, action: "flashButtonDidPress", forControlEvents: .TouchUpInside)
-    button.backgroundColor = .redColor()
+
     return button
   }()
 

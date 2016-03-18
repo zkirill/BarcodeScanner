@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA156C164BE5793CF2B94EB6 /* Pods_BarcodeScannerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10050ED8DB6C7D8CB3B6AA47 /* Pods_BarcodeScannerDemo.framework */; };
+		167D06FF49C3596F78EDD06A /* Pods_BarcodeScannerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D854109E0993F1FDCC1D7819 /* Pods_BarcodeScannerDemo.framework */; };
 		D5C7F74E1C3BC9CE008CDDBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5C7F74C1C3BC9CE008CDDBA /* LaunchScreen.storyboard */; };
 		D5C7F75B1C3BCA1E008CDDBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C7F7571C3BCA1E008CDDBA /* Assets.xcassets */; };
 		D5C7F75C1C3BCA1E008CDDBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7F7591C3BCA1E008CDDBA /* AppDelegate.swift */; };
@@ -15,15 +15,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		10050ED8DB6C7D8CB3B6AA47 /* Pods_BarcodeScannerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BarcodeScannerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2CB34E9B58E913D87F761FD /* Pods-BarcodeScannerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeScannerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BarcodeScannerDemo/Pods-BarcodeScannerDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		3D5BC54A5A5404AE71517992 /* Pods-BarcodeScannerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeScannerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BarcodeScannerDemo/Pods-BarcodeScannerDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		B3AA6D6FB36136D55D0B2019 /* Pods-BarcodeScannerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeScannerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-BarcodeScannerDemo/Pods-BarcodeScannerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D5C7F7401C3BC9CE008CDDBA /* BarcodeScannerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeScannerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C7F74D1C3BC9CE008CDDBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5C7F74F1C3BC9CE008CDDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5C7F7571C3BCA1E008CDDBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5C7F7591C3BCA1E008CDDBA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5C7F75A1C3BCA1E008CDDBA /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F8D187004AE21598BA8B65B9 /* Pods-BarcodeScannerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeScannerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-BarcodeScannerDemo/Pods-BarcodeScannerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		D854109E0993F1FDCC1D7819 /* Pods_BarcodeScannerDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BarcodeScannerDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,28 +31,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA156C164BE5793CF2B94EB6 /* Pods_BarcodeScannerDemo.framework in Frameworks */,
+				167D06FF49C3596F78EDD06A /* Pods_BarcodeScannerDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3D7EE362E1121FE9D8FCD5A0 /* Pods */ = {
+		1D182F27A2C79EB52501F751 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B2CB34E9B58E913D87F761FD /* Pods-BarcodeScannerDemo.debug.xcconfig */,
-				F8D187004AE21598BA8B65B9 /* Pods-BarcodeScannerDemo.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		630D695916ED32D2A53A342C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				10050ED8DB6C7D8CB3B6AA47 /* Pods_BarcodeScannerDemo.framework */,
+				D854109E0993F1FDCC1D7819 /* Pods_BarcodeScannerDemo.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C49DDC88513C2B77243DE13D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3D5BC54A5A5404AE71517992 /* Pods-BarcodeScannerDemo.debug.xcconfig */,
+				B3AA6D6FB36136D55D0B2019 /* Pods-BarcodeScannerDemo.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		D5C7F7371C3BC9CE008CDDBA = {
@@ -60,8 +60,8 @@
 			children = (
 				D5C7F7421C3BC9CE008CDDBA /* BarcodeScannerDemo */,
 				D5C7F7411C3BC9CE008CDDBA /* Products */,
-				3D7EE362E1121FE9D8FCD5A0 /* Pods */,
-				630D695916ED32D2A53A342C /* Frameworks */,
+				C49DDC88513C2B77243DE13D /* Pods */,
+				1D182F27A2C79EB52501F751 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,24 +332,26 @@
 		};
 		D5C7F7531C3BC9CE008CDDBA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B2CB34E9B58E913D87F761FD /* Pods-BarcodeScannerDemo.debug.xcconfig */;
+			baseConfigurationReference = 3D5BC54A5A5404AE71517992 /* Pods-BarcodeScannerDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BarcodeScannerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		D5C7F7541C3BC9CE008CDDBA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8D187004AE21598BA8B65B9 /* Pods-BarcodeScannerDemo.release.xcconfig */;
+			baseConfigurationReference = B3AA6D6FB36136D55D0B2019 /* Pods-BarcodeScannerDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BarcodeScannerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

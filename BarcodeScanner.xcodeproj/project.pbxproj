@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D578B9A51C9C8351006F5D0C /* flashAuto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A11C9C8351006F5D0C /* flashAuto@3x.png */; };
+		D578B9A61C9C8351006F5D0C /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A21C9C8351006F5D0C /* flashOff@3x.png */; };
+		D578B9A71C9C8351006F5D0C /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A31C9C8351006F5D0C /* flashOn@3x.png */; };
+		D578B9A81C9C8351006F5D0C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A41C9C8351006F5D0C /* info@3x.png */; };
 		D5B2E8AA1C3A780C00C0327D /* BarcodeScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
 		D5D7C2E51C9C7F0400C29304 /* FlashMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D7C2E41C9C7F0400C29304 /* FlashMode.swift */; };
-		D5EADEF61C9C7DE400FAEE2F /* flashAuto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5EADEF31C9C7DE400FAEE2F /* flashAuto@3x.png */; };
-		D5EADEF71C9C7DE400FAEE2F /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5EADEF41C9C7DE400FAEE2F /* flashOff@3x.png */; };
-		D5EADEF81C9C7DE400FAEE2F /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5EADEF51C9C7DE400FAEE2F /* flashOn@3x.png */; };
 		D5F1C1C91C9C5113001E17A6 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */; };
 		D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */; };
 		D5F1C1CB1C9C5113001E17A6 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C71C9C5113001E17A6 /* FooterView.swift */; };
 		D5F1C1CC1C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C81C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift */; };
-		D5F1C1D11C9C5210001E17A6 /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5F1C1CF1C9C5210001E17A6 /* info@3x.png */; };
 		D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +35,10 @@
 /* Begin PBXFileReference section */
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
+		D578B9A11C9C8351006F5D0C /* flashAuto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashAuto@3x.png"; sourceTree = "<group>"; };
+		D578B9A21C9C8351006F5D0C /* flashOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@3x.png"; sourceTree = "<group>"; };
+		D578B9A31C9C8351006F5D0C /* flashOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@3x.png"; sourceTree = "<group>"; };
+		D578B9A41C9C8351006F5D0C /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* BarcodeScanner-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeScanner-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629751C3A878E007F7B7C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -44,14 +48,10 @@
 		D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5D7C2E41C9C7F0400C29304 /* FlashMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashMode.swift; sourceTree = "<group>"; };
-		D5EADEF31C9C7DE400FAEE2F /* flashAuto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashAuto@3x.png"; sourceTree = "<group>"; };
-		D5EADEF41C9C7DE400FAEE2F /* flashOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@3x.png"; sourceTree = "<group>"; };
-		D5EADEF51C9C7DE400FAEE2F /* flashOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@3x.png"; sourceTree = "<group>"; };
 		D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerController.swift; sourceTree = "<group>"; };
 		D5F1C1C71C9C5113001E17A6 /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		D5F1C1C81C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientation+Capture.swift"; sourceTree = "<group>"; };
-		D5F1C1CF1C9C5210001E17A6 /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
 		D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,10 +142,10 @@
 		D5F1C1CD1C9C5186001E17A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D5EADEF31C9C7DE400FAEE2F /* flashAuto@3x.png */,
-				D5EADEF41C9C7DE400FAEE2F /* flashOff@3x.png */,
-				D5EADEF51C9C7DE400FAEE2F /* flashOn@3x.png */,
-				D5F1C1CF1C9C5210001E17A6 /* info@3x.png */,
+				D578B9A11C9C8351006F5D0C /* flashAuto@3x.png */,
+				D578B9A21C9C8351006F5D0C /* flashOff@3x.png */,
+				D578B9A31C9C8351006F5D0C /* flashOn@3x.png */,
+				D578B9A41C9C8351006F5D0C /* info@3x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -241,10 +241,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5EADEF61C9C7DE400FAEE2F /* flashAuto@3x.png in Resources */,
-				D5EADEF81C9C7DE400FAEE2F /* flashOn@3x.png in Resources */,
-				D5EADEF71C9C7DE400FAEE2F /* flashOff@3x.png in Resources */,
-				D5F1C1D11C9C5210001E17A6 /* info@3x.png in Resources */,
+				D578B9A61C9C8351006F5D0C /* flashOff@3x.png in Resources */,
+				D578B9A81C9C8351006F5D0C /* info@3x.png in Resources */,
+				D578B9A51C9C8351006F5D0C /* flashAuto@3x.png in Resources */,
+				D578B9A71C9C8351006F5D0C /* flashOn@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

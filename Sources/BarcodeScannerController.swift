@@ -16,11 +16,17 @@ public class BarcodeScannerController: UIViewController {
   }()
 
   lazy var footerView: FooterView = {
-    let blurEffect = UIBlurEffect(style: .Light)
+    let blurEffect = UIBlurEffect(style: .ExtraLight)
     let view = FooterView(effect: blurEffect)
-    view.backgroundColor = .whiteColor()
 
     return view
+  }()
+
+  lazy var flashButton: UIButton = {
+    let button = UIButton(type: .Custom)
+    button.addTarget(self, action: "flashButtonDidPress", forControlEvents: .TouchUpInside)
+    button.backgroundColor = .redColor()
+    return button
   }()
 
   lazy var focusView: UIView = {
@@ -68,6 +74,19 @@ public class BarcodeScannerController: UIViewController {
   public var oneTimeSearch = true
   public weak var delegate: BarcodeScannerControllerDelegate?
 
+  var flashMode: FlashMode = .Auto {
+    didSet {
+      guard captureDevice.hasFlash else { return }
+
+      do {
+        try captureDevice.lockForConfiguration()
+      } catch {}
+
+      captureDevice.flashMode = flashMode.captureFlashMode
+      flashButton.setImage(flashMode.image, forState: .Normal)
+    }
+  }
+
   // MARK: - View lifecycle
 
   public override func viewDidLoad() {
@@ -92,12 +111,13 @@ public class BarcodeScannerController: UIViewController {
 
     view.layer.addSublayer(videoPreviewLayer)
 
-    [headerView, footerView, focusView].forEach {
+    [headerView, footerView, flashButton, focusView].forEach {
       view.addSubview($0)
       view.bringSubviewToFront($0)
     }
 
     captureSession.startRunning()
+    flashMode = .Auto
   }
 
   // MARK: - Layout
@@ -105,12 +125,13 @@ public class BarcodeScannerController: UIViewController {
   public override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
 
-    let footerViewHeight = view.frame.height / 3
+    let footerViewHeight = view.frame.height / 3 - 20
     let orientation = UIApplication.sharedApplication().statusBarOrientation
 
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
     footerView.frame = CGRect(x: 0, y: view.bounds.height - footerViewHeight,
       width: view.bounds.width, height: footerViewHeight)
+    flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
     videoPreviewLayer.frame = view.layer.bounds
     videoPreviewLayer.connection.videoOrientation = orientation.captureOrientation
   }
@@ -121,6 +142,8 @@ public class BarcodeScannerController: UIViewController {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     videoPreviewLayer.frame.size = size
   }
+
+  // MARK: - Animations
 
   func showFlashAnimation() {
     let flashView = UIView(frame: view.bounds)
@@ -135,6 +158,12 @@ public class BarcodeScannerController: UIViewController {
       }, completion: {(finished:Bool) in
         flashView.removeFromSuperview()
     })
+  }
+
+  // MARK: - Actions
+
+  func flashButtonDidPress() {
+    flashMode = flashMode.next
   }
 }
 

@@ -8,11 +8,19 @@ public protocol BarcodeScannerControllerDelegate: class {
 
 public class BarcodeScannerController: UIViewController {
 
-  lazy var infoView: UILabel = {
-    let label = UILabel()
-    label.backgroundColor = .whiteColor()
-    
-    return label
+  lazy var headerView: HeaderView = {
+    let view = HeaderView()
+    view.backgroundColor = .whiteColor()
+
+    return view
+  }()
+
+  lazy var footerView: FooterView = {
+    let blurEffect = UIBlurEffect(style: .Light)
+    let view = FooterView(effect: blurEffect)
+    view.backgroundColor = .whiteColor()
+
+    return view
   }()
 
   lazy var focusView: UIView = {
@@ -57,13 +65,6 @@ public class BarcodeScannerController: UIViewController {
     AVMetadataObjectTypeAztecCode
   ]
 
-  var infoViewFrame: CGRect {
-    let height = view.frame.height / 3
-
-    return CGRect(x: 0, y: view.bounds.height - height,
-      width: view.bounds.width, height: height)
-  }
-
   public var oneTimeSearch = true
   public weak var delegate: BarcodeScannerControllerDelegate?
 
@@ -90,11 +91,11 @@ public class BarcodeScannerController: UIViewController {
     output.metadataObjectTypes = readableCodeTypes
 
     view.layer.addSublayer(videoPreviewLayer)
-    view.addSubview(infoView)
-    view.addSubview(focusView)
 
-    view.bringSubviewToFront(infoView)
-    view.bringSubviewToFront(focusView)
+    [headerView, footerView, focusView].forEach {
+      view.addSubview($0)
+      view.bringSubviewToFront($0)
+    }
 
     captureSession.startRunning()
   }
@@ -104,10 +105,13 @@ public class BarcodeScannerController: UIViewController {
   public override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
 
-    infoView.frame = infoViewFrame
-    videoPreviewLayer.frame = view.layer.bounds
-
+    let footerViewHeight = view.frame.height / 3
     let orientation = UIApplication.sharedApplication().statusBarOrientation
+
+    headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
+    footerView.frame = CGRect(x: 0, y: view.bounds.height - footerViewHeight,
+      width: view.bounds.width, height: footerViewHeight)
+    videoPreviewLayer.frame = view.layer.bounds
     videoPreviewLayer.connection.videoOrientation = orientation.captureOrientation
   }
 
@@ -165,7 +169,6 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
         captureSession.stopRunning()
       }
 
-      infoView.text = code
       delegate?.barcodeScannerController(self, didCapturedCode: code)
   }
 }

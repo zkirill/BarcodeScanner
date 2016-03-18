@@ -12,10 +12,11 @@
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
 		D5F1C1C91C9C5113001E17A6 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */; };
 		D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */; };
-		D5F1C1CB1C9C5113001E17A6 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C71C9C5113001E17A6 /* InfoView.swift */; };
+		D5F1C1CB1C9C5113001E17A6 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C71C9C5113001E17A6 /* FooterView.swift */; };
 		D5F1C1CC1C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C81C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift */; };
 		D5F1C1D01C9C5210001E17A6 /* flashlight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5F1C1CE1C9C5210001E17A6 /* flashlight@3x.png */; };
 		D5F1C1D11C9C5210001E17A6 /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5F1C1CF1C9C5210001E17A6 /* info@3x.png */; };
+		D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,14 +39,14 @@
 		D5C629791C3A879F007F7B7C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		D5C6297A1C3A879F007F7B7C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Mac.plist"; sourceTree = "<group>"; };
 		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerController.swift; sourceTree = "<group>"; };
-		D5F1C1C71C9C5113001E17A6 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		D5F1C1C71C9C5113001E17A6 /* FooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		D5F1C1C81C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientation+Capture.swift"; sourceTree = "<group>"; };
 		D5F1C1CE1C9C5210001E17A6 /* flashlight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashlight@3x.png"; sourceTree = "<group>"; };
 		D5F1C1CF1C9C5210001E17A6 /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
+		D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */,
-				D5C6298C1C3A8BBD007F7B7C /* Info-Mac.plist */,
 			);
 			path = BarcodeScanner;
 			sourceTree = "<group>";
@@ -106,7 +106,8 @@
 			children = (
 				D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */,
 				D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */,
-				D5F1C1C71C9C5113001E17A6 /* InfoView.swift */,
+				D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */,
+				D5F1C1C71C9C5113001E17A6 /* FooterView.swift */,
 				D5F1C1C81C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift */,
 			);
 			path = Sources;
@@ -269,9 +270,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */,
 				D5F1C1C91C9C5113001E17A6 /* BarcodeScanner.swift in Sources */,
 				D5F1C1CC1C9C5113001E17A6 /* UIInterfaceOrientation+Capture.swift in Sources */,
-				D5F1C1CB1C9C5113001E17A6 /* InfoView.swift in Sources */,
+				D5F1C1CB1C9C5113001E17A6 /* FooterView.swift in Sources */,
 				D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

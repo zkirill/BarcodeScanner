@@ -1,7 +1,23 @@
 import UIKit
 
-public var closeButtonTitle = "Close"
-public var infoText = ""
+public struct Title {
+  public static var text = NSLocalizedString("Scan barcode", comment: "")
+  public static var font = UIFont.boldSystemFontOfSize(17)
+  public static var color = UIColor.blackColor()
+}
+
+public struct CloseButton {
+  public static var text = NSLocalizedString("Close", comment: "")
+  public static var font = UIFont.boldSystemFontOfSize(17)
+  public static var color = UIColor.blackColor()
+}
+
+public struct Info {
+  public static var text = NSLocalizedString(
+    "Place the barcode within the window to scan. The search will start automatically.", comment: "")
+  public static var font = UIFont.boldSystemFontOfSize(16)
+  public static var color = UIColor.blackColor()
+}
 
 func imageNamed(name: String) -> UIImage {
   let cls = BarcodeScannerController.self

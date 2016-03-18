@@ -1,8 +1,7 @@
 import UIKit
 import AVFoundation
 
-
-protocol BarcodeScannerControllerDelegate: class {
+public protocol BarcodeScannerControllerDelegate: class {
   func barcodeScannerController(controller: BarcodeScannerController, didReceiveError error: ErrorType)
   func barcodeScannerController(controller: BarcodeScannerController, didCapturedCode code: String)
 }
@@ -64,7 +63,8 @@ public class BarcodeScannerController: UIViewController {
       width: view.bounds.width, height: height)
   }
 
-  weak var delegate: BarcodeScannerControllerDelegate?
+  public var oneTimeSearch = true
+  public weak var delegate: BarcodeScannerControllerDelegate?
 
   // MARK: - View lifecycle
 
@@ -116,6 +116,21 @@ public class BarcodeScannerController: UIViewController {
     super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     videoPreviewLayer.frame.size = size
   }
+
+  func showFlashAnimation() {
+    let flashView = UIView(frame: view.bounds)
+    flashView.backgroundColor = UIColor.whiteColor()
+    flashView.alpha = 1
+
+    view.addSubview(flashView)
+    view.bringSubviewToFront(flashView)
+
+    UIView.animateWithDuration(0.1, animations: {
+      flashView.alpha = 0.0
+      }, completion: {(finished:Bool) in
+        flashView.removeFromSuperview()
+    })
+  }
 }
 
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
@@ -142,6 +157,12 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
       focusView.frame = barCodeObject.bounds
 
       guard let code = metadataObj.stringValue else { return }
+
+      showFlashAnimation()
+
+      if oneTimeSearch {
+        captureSession.stopRunning()
+      }
 
       infoView.text = code
       delegate?.barcodeScannerController(self, didCapturedCode: code)

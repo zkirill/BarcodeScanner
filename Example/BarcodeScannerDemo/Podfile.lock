@@ -1,0 +1,16 @@
+PODS:
+  - BarcodeScanner (1.0.0)
+
+DEPENDENCIES:
+  - BarcodeScanner (from `../../`)
+
+EXTERNAL SOURCES:
+  BarcodeScanner:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  BarcodeScanner: a85b2750387a63b749fc9ba9a2fed94ea1b78e27
+
+PODFILE CHECKSUM: 8e638abc5a328d4183494a7b6d1c4412636ee9a0
+
+COCOAPODS: 1.0.0.beta.5

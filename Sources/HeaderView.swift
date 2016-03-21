@@ -1,5 +1,9 @@
 import UIKit
 
+protocol HeaderViewDelegate: class {
+  func headerViewDidPressClose(hederView: HeaderView)
+}
+
 class HeaderView: UIView {
 
   lazy var label: UILabel = {
@@ -19,9 +23,12 @@ class HeaderView: UIView {
     button.setTitle(CloseButton.text, forState: .Normal)
     button.titleLabel?.font = CloseButton.font
     button.tintColor = CloseButton.color
+    button.addTarget(self, action: "buttonDidPress", forControlEvents: .TouchUpInside)
 
     return button
   }()
+
+  weak var delegate: HeaderViewDelegate?
 
   // MARK: - Initialization
 
@@ -54,5 +61,11 @@ class HeaderView: UIView {
     label.frame = CGRect(
       x: 0, y: ((frame.height - labelHeight) / 2) + 8,
       width: frame.width, height: labelHeight)
+  }
+
+  // MARK: - Actions
+
+  func buttonDidPress() {
+    delegate?.headerViewDidPressClose(self)
   }
 }

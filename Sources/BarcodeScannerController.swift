@@ -4,6 +4,7 @@ import AVFoundation
 public protocol BarcodeScannerControllerDelegate: class {
   func barcodeScannerController(controller: BarcodeScannerController, didReceiveError error: ErrorType)
   func barcodeScannerController(controller: BarcodeScannerController, didCapturedCode code: String)
+  func barcodeScannerControllerDidDismiss(controller: BarcodeScannerController)
 }
 
 enum State {
@@ -68,7 +69,6 @@ public class BarcodeScannerController: UIViewController {
 
   public var oneTimeSearch = true
   public weak var delegate: BarcodeScannerControllerDelegate?
-  var presented = false
 
   var state: State = .Scanning {
     didSet {
@@ -142,6 +142,7 @@ public class BarcodeScannerController: UIViewController {
     torchMode = .Off
     state = .Scanning
     focusView.hidden = true
+    headerView.delegate = self
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
   }
@@ -149,11 +150,9 @@ public class BarcodeScannerController: UIViewController {
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    presented = isBeingPresented()
-    headerView.hidden = !presented
-
     setupFrames()
     footerView.setupFrames()
+    headerView.hidden = !isBeingPresented()
   }
 
   public override func viewDidAppear(animated: Bool) {
@@ -254,5 +253,14 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
       }
 
       delegate?.barcodeScannerController(self, didCapturedCode: code)
+  }
+}
+
+// MARK: - HeaderViewDelegate
+
+extension BarcodeScannerController: HeaderViewDelegate {
+
+  func headerViewDidPressClose(hederView: HeaderView) {
+    delegate?.barcodeScannerControllerDidDismiss(self)
   }
 }

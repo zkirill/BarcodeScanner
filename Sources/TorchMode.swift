@@ -1,18 +1,16 @@
 import UIKit
 import AVFoundation
 
-public enum FlashMode {
-  case On, Off, Auto
+public enum TorchMode {
+  case On, Off
 
-  var next: FlashMode {
-    let result: FlashMode
+  var next: TorchMode {
+    let result: TorchMode
 
     switch self {
     case .On:
       result = .Off
     case .Off:
-      result = .Auto
-    case .Auto:
       result = .On
     }
 
@@ -27,23 +25,19 @@ public enum FlashMode {
       result = imageNamed("flashOn")
     case .Off:
       result = imageNamed("flashOff")
-    case .Auto:
-      result = imageNamed("flashAuto")
     }
 
     return result
   }
 
-  var captureFlashMode: AVCaptureFlashMode {
-    let result: AVCaptureFlashMode
+  var captureTorchMode: AVCaptureTorchMode {
+    let result: AVCaptureTorchMode
 
     switch self {
     case .On:
       result = .On
     case .Off:
       result = .Off
-    case .Auto:
-      result = .Auto
     }
 
     return result

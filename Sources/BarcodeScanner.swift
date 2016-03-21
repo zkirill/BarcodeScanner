@@ -16,9 +16,10 @@ public struct Info {
   public static var scanningText = NSLocalizedString(
     "Place the barcode within the window to scan. The search will start automatically.", comment: "")
   public static var processingText = NSLocalizedString(
-    "Barcode is processing...", comment: "")
-  public static var font = UIFont.boldSystemFontOfSize(16)
+    "Looking for your product...", comment: "")
+  public static var font = UIFont.boldSystemFontOfSize(14)
   public static var color = UIColor.blackColor()
+  public static var loadingColor = UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1)
 }
 
 func imageNamed(name: String) -> UIImage {

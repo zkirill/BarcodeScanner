@@ -12,19 +12,8 @@ enum State {
 
 public class BarcodeScannerController: UIViewController {
 
-  lazy var headerView: HeaderView = {
-    let view = HeaderView()
-    view.backgroundColor = .whiteColor()
-
-    return view
-  }()
-
-  lazy var footerView: FooterView = {
-    let blurEffect = UIBlurEffect(style: .ExtraLight)
-    let view = FooterView(effect: blurEffect)
-
-    return view
-  }()
+  lazy var headerView: HeaderView = HeaderView()
+  lazy var footerView: FooterView = FooterView()
 
   lazy var flashButton: UIButton = {
     let button = UIButton(type: .Custom)
@@ -33,8 +22,17 @@ public class BarcodeScannerController: UIViewController {
     return button
   }()
 
-  lazy var focusView: UIImageView = {
-    let view = UIImageView(image: imageNamed("focus"))
+  lazy var focusView: UIView = {
+    let view = UIView()
+    view.layer.borderColor = UIColor.whiteColor().CGColor
+    view.layer.borderWidth = 2
+    view.layer.cornerRadius = 5
+    view.layer.shadowColor = UIColor.whiteColor().CGColor
+    view.layer.shadowRadius = 10.0
+    view.layer.shadowOpacity = 0.9
+    view.layer.shadowOffset = CGSizeZero
+    view.layer.masksToBounds = false
+
     return view
   }()
 
@@ -71,55 +69,43 @@ public class BarcodeScannerController: UIViewController {
   public var oneTimeSearch = true
   public weak var delegate: BarcodeScannerControllerDelegate?
   var presented = false
-  var animating = false
 
   var state: State = .Scanning {
     didSet {
       let alpha: CGFloat = state == .Scanning ? 1 : 0
-      animating = true
+
+      focusView.alpha = alpha
+      flashButton.alpha = alpha
 
       UIView.animateWithDuration(0.5, animations: {
-        self.focusView.alpha = alpha
-        self.flashButton.alpha = alpha
         self.footerView.frame = self.footerFrame
-        self.animating = false
         self.footerView.state = self.state
-        }) { _ in
-          if self.state == .Processing {
-            UIView.animateWithDuration(1.0, delay:0, options: [.Repeat, .Autoreverse], animations: {
-              self.footerView.effect = UIBlurEffect(style: .Light)
-              }, completion: nil)
-          } else {
-            self.footerView.layer.removeAllAnimations()
-          }
-      }
+        })
     }
   }
 
-  var flashMode: FlashMode = .Auto {
+  var torchMode: TorchMode = .Off {
     didSet {
       guard captureDevice.hasFlash else { return }
 
       do {
         try captureDevice.lockForConfiguration()
+        captureDevice.torchMode = torchMode.captureTorchMode
+        captureDevice.unlockForConfiguration()
       } catch {}
 
-      captureDevice.flashMode = flashMode.captureFlashMode
-      flashButton.setImage(flashMode.image, forState: .Normal)
+      flashButton.setImage(torchMode.image, forState: .Normal)
     }
   }
 
   var footerFrame: CGRect {
-    let headerHeight = presented ? headerView.frame.height : 0
-    let height = state == .Scanning
-      ? view.frame.height / 3 - 20
-      : view.bounds.height - headerHeight
-    let y = state == .Scanning
-      ? view.bounds.height - height
-      : presented ? headerHeight : 0
-
-    return CGRect(x: 0, y: y,
+    let height = state == .Scanning ? 75 : view.bounds.height
+    return CGRect(x: 0, y: view.bounds.height - height,
       width: view.bounds.width, height: height)
+  }
+
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 
   // MARK: - View lifecycle
@@ -152,9 +138,12 @@ public class BarcodeScannerController: UIViewController {
     }
 
     captureSession.startRunning()
-    flashMode = .Auto
+    torchMode = .Off
     state = .Scanning
     footerView.state = state
+    focusView.hidden = true
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
   }
 
   public override func viewWillAppear(animated: Bool) {
@@ -162,36 +151,49 @@ public class BarcodeScannerController: UIViewController {
 
     presented = isBeingPresented()
     headerView.hidden = !presented
+
+    setupFrames()
+    footerView.setupFrames()
+  }
+
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    animateFocusView()
+  }
+
+  func appWillEnterForeground() {
+    animateFocusView()
   }
 
   // MARK: - Layout
 
-  public override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
-    let orientation = UIApplication.sharedApplication().statusBarOrientation
-
+  public func setupFrames() {
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
-
-    if !animating {
-      footerView.frame = footerFrame
-    }
-
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
+    footerView.frame = footerFrame
+    updateFocusView(CGSize(width: 218, height: 150))
+
     videoPreviewLayer.frame = view.layer.bounds
-    videoPreviewLayer.connection.videoOrientation = orientation.captureOrientation
+    videoPreviewLayer.connection.videoOrientation = .Portrait
+  }
+
+  func updateFocusView(size: CGSize) {
+    focusView.frame = CGRect(
+      x: (view.frame.width - size.width) / 2,
+      y: (view.frame.height - size.height) / 2,
+      width: size.width,
+      height: size.height)
   }
 
   // MARK: - Orientation
 
-  public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-    videoPreviewLayer.frame.size = size
+  public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return .Portrait
   }
 
   // MARK: - Animations
 
-  func showFlashAnimation() {
+  func animateFlash(processing: Bool = false) {
     let flashView = UIView(frame: view.bounds)
     flashView.backgroundColor = UIColor.whiteColor()
     flashView.alpha = 1
@@ -199,18 +201,35 @@ public class BarcodeScannerController: UIViewController {
     view.addSubview(flashView)
     view.bringSubviewToFront(flashView)
 
-    UIView.animateWithDuration(0.1, animations: {
-      flashView.alpha = 0.0
-      }, completion: {(finished:Bool) in
+    UIView.animateWithDuration(0.2,
+      animations: {
+        flashView.alpha = 0.0
+      },
+      completion: { _ in
         flashView.removeFromSuperview()
-        self.state = .Processing
+        if processing {
+          self.state = .Processing
+        }
     })
+  }
+
+  func animateFocusView() {
+    focusView.layer.removeAllAnimations()
+    focusView.hidden = false
+
+    setupFrames()
+
+    UIView.animateWithDuration(1.0, delay:0,
+      options: [.Repeat, .Autoreverse, .BeginFromCurrentState],
+      animations: {
+        self.updateFocusView(CGSize(width: 280, height: 80))
+      }, completion: nil)
   }
 
   // MARK: - Actions
 
   func flashButtonDidPress() {
-    flashMode = flashMode.next
+    torchMode = torchMode.next
   }
 }
 
@@ -222,24 +241,13 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
     didOutputMetadataObjects metadataObjects: [AnyObject]!,
     fromConnection connection: AVCaptureConnection!) {
 
-      guard metadataObjects != nil && metadataObjects.count > 0 else {
-        focusView.frame = CGRectZero
-        return
-      }
+      guard metadataObjects != nil && metadataObjects.count > 0 else { return }
 
-      let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+      guard let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
+        code = metadataObj.stringValue
+        where readableCodeTypes.contains(metadataObj.type) else { return }
 
-      guard readableCodeTypes.contains(metadataObj.type) else {
-        return
-      }
-
-      let barCodeObject = videoPreviewLayer.transformedMetadataObjectForMetadataObject(metadataObj as AVMetadataMachineReadableCodeObject) as! AVMetadataMachineReadableCodeObject
-
-      focusView.frame = barCodeObject.bounds
-
-      guard let code = metadataObj.stringValue else { return }
-
-      showFlashAnimation()
+      animateFlash(oneTimeSearch)
 
       if oneTimeSearch {
         captureSession.stopRunning()

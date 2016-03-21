@@ -4,8 +4,6 @@ class FooterView: UIVisualEffectView {
 
   lazy var label: UILabel = {
     let label = UILabel()
-    label.font = Info.font
-    label.textColor = Info.color
     label.numberOfLines = 2
 
     return label
@@ -34,21 +32,22 @@ class FooterView: UIVisualEffectView {
 
       label.text = state == .Scanning
         ? Info.scanningText
-        : Info.processingText
+        : Info.loadingText
+
+      label.font = state == .Scanning
+        ? Info.scanningFont
+        : Info.loadingFont
 
       label.textAlignment = state == .Scanning ? .Left : .Center
 
       imageView.tintColor = state == .Scanning
-        ? Info.color
+        ? Info.scanningColor
         : Info.loadingColor
 
       if state == .Scanning {
         layer.removeAllAnimations()
         borderView.hidden = true
         borderView.layer.removeAllAnimations()
-      } else {
-        borderView.hidden = false
-        animateLoading()
       }
     }
   }
@@ -93,7 +92,7 @@ class FooterView: UIVisualEffectView {
     } else {
       imageView.frame = CGRect(
         x: (frame.width - imageSize.width) / 2,
-        y: (frame.height - imageSize.height) / 2 - 100,
+        y: (frame.height - imageSize.height) / 2 - 60,
         width: imageSize.width,
         height: imageSize.height)
 
@@ -114,17 +113,28 @@ class FooterView: UIVisualEffectView {
   // MARK: - Animations
 
   func animateLoading() {
-    UIView.animateWithDuration(2.0, delay:0, options: [.Repeat, .Autoreverse],
-      animations: {
-        self.effect = UIBlurEffect(style: .Light)
-      }, completion: nil)
+    borderView.hidden = false
 
+    animateBlur(.Light)
     animateBorderView(CGFloat(M_PI_2))
   }
 
+  func animateBlur(style: UIBlurEffectStyle) {
+    guard state == .Processing else { return }
+
+    UIView.animateWithDuration(2.0, delay: 0.5, options: [.BeginFromCurrentState],
+      animations: {
+        self.effect = UIBlurEffect(style: style)
+      }, completion: { _ in
+        self.animateBlur(style == .Light ? .ExtraLight : .Light)
+    })
+  }
+
   func animateBorderView(angle: CGFloat) {
+    guard state == .Processing else { return }
+
     UIView.animateWithDuration(0.8,
-      delay: 0, usingSpringWithDamping: 0.6,
+      delay: 0.5, usingSpringWithDamping: 0.6,
       initialSpringVelocity: 1.0,
       options: [.BeginFromCurrentState],
       animations: {

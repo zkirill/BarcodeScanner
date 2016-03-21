@@ -1,10 +1,16 @@
 import UIKit
 import AVFoundation
 
-public protocol BarcodeScannerControllerDelegate: class {
-  func barcodeScannerController(controller: BarcodeScannerController, didReceiveError error: ErrorType)
-  func barcodeScannerController(controller: BarcodeScannerController, didCapturedCode code: String)
-  func barcodeScannerControllerDidDismiss(controller: BarcodeScannerController)
+public protocol BarcodeScannerCodeDelegate: class {
+  func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String)
+}
+
+public protocol BarcodeScannerErrorDelegate: class {
+  func barcodeScanner(controller: BarcodeScannerController, didReceiveError error: ErrorType)
+}
+
+public protocol BarcodeScannerDismissalDelegate: class {
+  func barcodeScannerDidDismiss(controller: BarcodeScannerController)
 }
 
 enum State {
@@ -13,6 +19,8 @@ enum State {
 
 public class BarcodeScannerController: UIViewController {
 
+  lazy var captureDevice: AVCaptureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+  lazy var captureSession: AVCaptureSession = AVCaptureSession()
   lazy var headerView: HeaderView = HeaderView()
   lazy var footerView: FooterView = FooterView()
 
@@ -44,29 +52,28 @@ public class BarcodeScannerController: UIViewController {
     return videoPreviewLayer
     }()
 
-  lazy var captureDevice: AVCaptureDevice = {
-    let captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-    return captureDevice
-  }()
-
-  lazy var captureSession: AVCaptureSession = {
-    let captureSession = AVCaptureSession()
-    return captureSession
-  }()
-
   var state: State = .Scanning {
     didSet {
+      state == .Scanning
+        ? captureSession.startRunning()
+        : captureSession.stopRunning()
+
+      locked = state == .Processing && oneTimeSearch
+
       let alpha: CGFloat = state == .Scanning ? 1 : 0
 
       focusView.alpha = alpha
       flashButton.alpha = alpha
 
-      UIView.animateWithDuration(4.0,
+      UIView.animateWithDuration(0.5,
         animations: {
           self.footerView.frame = self.footerFrame
+          self.footerView.state = self.state
         },
         completion: { _ in
-          self.footerView.state = self.state
+          if self.state == .Processing {
+            self.footerView.animateLoading()
+          }
       })
     }
   }
@@ -105,7 +112,10 @@ public class BarcodeScannerController: UIViewController {
   ]
 
   public var oneTimeSearch = true
-  public weak var delegate: BarcodeScannerControllerDelegate?
+  public weak var codeDelegate: BarcodeScannerCodeDelegate?
+  public weak var errorDelegate: BarcodeScannerErrorDelegate?
+  public weak var dismissalDelegate: BarcodeScannerDismissalDelegate?
+  var locked = false
 
   // MARK: - Initialization
 
@@ -123,7 +133,7 @@ public class BarcodeScannerController: UIViewController {
     do {
       input = try AVCaptureDeviceInput(device: captureDevice)
     } catch {
-      delegate?.barcodeScannerController(self, didReceiveError: error)
+      errorDelegate?.barcodeScanner(self, didReceiveError: error)
       return
     }
 
@@ -142,7 +152,6 @@ public class BarcodeScannerController: UIViewController {
       view.bringSubviewToFront($0)
     }
 
-    captureSession.startRunning()
     torchMode = .Off
     state = .Scanning
     focusView.hidden = true
@@ -210,6 +219,7 @@ public class BarcodeScannerController: UIViewController {
       },
       completion: { _ in
         flashView.removeFromSuperview()
+
         if processing {
           self.state = .Processing
         }
@@ -231,6 +241,10 @@ public class BarcodeScannerController: UIViewController {
 
   // MARK: - Actions
 
+  public func startScanning() {
+    state = .Scanning
+  }
+
   func flashButtonDidPress() {
     torchMode = torchMode.next
   }
@@ -243,6 +257,7 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
   public func captureOutput(captureOutput: AVCaptureOutput!,
     didOutputMetadataObjects metadataObjects: [AnyObject]!,
     fromConnection connection: AVCaptureConnection!) {
+      guard !locked else { return }
 
       guard metadataObjects != nil && metadataObjects.count > 0 else { return }
 
@@ -250,13 +265,12 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
         code = metadataObj.stringValue
         where readableCodeTypes.contains(metadataObj.type) else { return }
 
-      animateFlash(oneTimeSearch)
-
       if oneTimeSearch {
-        captureSession.stopRunning()
+        locked = true
       }
 
-      delegate?.barcodeScannerController(self, didCapturedCode: code)
+      animateFlash(oneTimeSearch)
+      codeDelegate?.barcodeScanner(self, didCapturedCode: code)
   }
 }
 
@@ -265,6 +279,6 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
 extension BarcodeScannerController: HeaderViewDelegate {
 
   func headerViewDidPressClose(hederView: HeaderView) {
-    delegate?.barcodeScannerControllerDidDismiss(self)
+    dismissalDelegate?.barcodeScannerDidDismiss(self)
   }
 }

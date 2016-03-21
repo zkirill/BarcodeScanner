@@ -35,6 +35,8 @@ class FooterView: UIVisualEffectView {
         ? Info.scanningText
         : Info.processingText
 
+      label.textAlignment = state == .Scanning ? .Left : .Center
+
       imageView.tintColor = state == .Scanning
         ? Info.color
         : Info.loadingColor

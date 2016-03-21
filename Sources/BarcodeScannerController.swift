@@ -77,10 +77,11 @@ public class BarcodeScannerController: UIViewController {
       focusView.alpha = alpha
       flashButton.alpha = alpha
 
-      UIView.animateWithDuration(0.5, animations: {
+      UIView.animateWithDuration(4.0, animations: {
         self.footerView.frame = self.footerFrame
-        self.footerView.state = self.state
-        })
+        }, completion: { _ in
+          self.footerView.state = self.state
+      })
     }
   }
 
@@ -132,7 +133,7 @@ public class BarcodeScannerController: UIViewController {
 
     view.layer.addSublayer(videoPreviewLayer)
 
-    [headerView, footerView, flashButton, focusView].forEach {
+    [footerView, headerView, flashButton, focusView].forEach {
       view.addSubview($0)
       view.bringSubviewToFront($0)
     }
@@ -140,7 +141,6 @@ public class BarcodeScannerController: UIViewController {
     captureSession.startRunning()
     torchMode = .Off
     state = .Scanning
-    footerView.state = state
     focusView.hidden = true
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)

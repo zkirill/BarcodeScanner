@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "BarcodeScanner"
-  s.summary          = "A short description of BarcodeScanner."
+  s.summary          = "Simple and beautiful barcode scanner."
   s.version          = "1.0.0"
   s.homepage         = "https://github.com/hyperoslo/BarcodeScanner"
   s.license          = 'MIT'
@@ -17,5 +17,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Sources/**/*'
   s.resource_bundles = { 'BarcodeScanner' => ['Images/*.{png}'] }
 
-  s.ios.frameworks = 'UIKit', 'AVFoundation'
+  s.frameworks = 'UIKit', 'AVFoundation'
+  s.dependency 'Sugar'
 end

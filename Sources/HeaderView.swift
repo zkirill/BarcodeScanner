@@ -51,15 +51,16 @@ class HeaderView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    let padding: CGFloat = 15
+    let padding: CGFloat = 8
     let labelHeight: CGFloat = 40
 
     button.sizeToFit()
-    button.frame.origin = CGPoint(x: padding,
-      y: ((frame.height - button.frame.height) / 2) + 8)
+
+    button.frame.origin = CGPoint(x: 15,
+      y: ((frame.height - button.frame.height) / 2) + padding)
 
     label.frame = CGRect(
-      x: 0, y: ((frame.height - labelHeight) / 2) + 8,
+      x: 0, y: ((frame.height - labelHeight) / 2) + padding,
       width: frame.width, height: labelHeight)
   }
 

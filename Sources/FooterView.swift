@@ -14,6 +14,7 @@ class FooterView: UIVisualEffectView {
   lazy var imageView: UIImageView = {
     let image = imageNamed("info").imageWithRenderingMode(.AlwaysTemplate)
     let imageView = UIImageView(image: image)
+
     return imageView
   }()
 
@@ -113,8 +114,9 @@ class FooterView: UIVisualEffectView {
   // MARK: - Animations
 
   func animateLoading() {
-    UIView.animateWithDuration(2.0, delay:0, options: [.Repeat, .Autoreverse], animations: {
-      self.effect = UIBlurEffect(style: .Light)
+    UIView.animateWithDuration(2.0, delay:0, options: [.Repeat, .Autoreverse],
+      animations: {
+        self.effect = UIBlurEffect(style: .Light)
       }, completion: nil)
 
     animateBorderView(CGFloat(M_PI_2))

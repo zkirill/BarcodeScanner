@@ -16,12 +16,12 @@ public class BarcodeScannerController: UIViewController {
   lazy var headerView: HeaderView = HeaderView()
   lazy var footerView: FooterView = FooterView()
 
-  lazy var flashButton: UIButton = {
+  lazy var flashButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
     button.addTarget(self, action: "flashButtonDidPress", forControlEvents: .TouchUpInside)
 
     return button
-  }()
+    }()
 
   lazy var focusView: UIView = {
     let view = UIView()
@@ -54,22 +54,6 @@ public class BarcodeScannerController: UIViewController {
     return captureSession
   }()
 
-  private var readableCodeTypes = [
-    AVMetadataObjectTypeUPCECode,
-    AVMetadataObjectTypeCode39Code,
-    AVMetadataObjectTypeCode39Mod43Code,
-    AVMetadataObjectTypeEAN13Code,
-    AVMetadataObjectTypeEAN8Code,
-    AVMetadataObjectTypeCode93Code,
-    AVMetadataObjectTypeCode128Code,
-    AVMetadataObjectTypePDF417Code,
-    AVMetadataObjectTypeQRCode,
-    AVMetadataObjectTypeAztecCode
-  ]
-
-  public var oneTimeSearch = true
-  public weak var delegate: BarcodeScannerControllerDelegate?
-
   var state: State = .Scanning {
     didSet {
       let alpha: CGFloat = state == .Scanning ? 1 : 0
@@ -77,9 +61,11 @@ public class BarcodeScannerController: UIViewController {
       focusView.alpha = alpha
       flashButton.alpha = alpha
 
-      UIView.animateWithDuration(4.0, animations: {
-        self.footerView.frame = self.footerFrame
-        }, completion: { _ in
+      UIView.animateWithDuration(4.0,
+        animations: {
+          self.footerView.frame = self.footerFrame
+        },
+        completion: { _ in
           self.footerView.state = self.state
       })
     }
@@ -104,6 +90,24 @@ public class BarcodeScannerController: UIViewController {
     return CGRect(x: 0, y: view.bounds.height - height,
       width: view.bounds.width, height: height)
   }
+
+  private var readableCodeTypes = [
+    AVMetadataObjectTypeUPCECode,
+    AVMetadataObjectTypeCode39Code,
+    AVMetadataObjectTypeCode39Mod43Code,
+    AVMetadataObjectTypeEAN13Code,
+    AVMetadataObjectTypeEAN8Code,
+    AVMetadataObjectTypeCode93Code,
+    AVMetadataObjectTypeCode128Code,
+    AVMetadataObjectTypePDF417Code,
+    AVMetadataObjectTypeQRCode,
+    AVMetadataObjectTypeAztecCode
+  ]
+
+  public var oneTimeSearch = true
+  public weak var delegate: BarcodeScannerControllerDelegate?
+
+  // MARK: - Initialization
 
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -170,10 +174,10 @@ public class BarcodeScannerController: UIViewController {
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
     footerView.frame = footerFrame
-    updateFocusView(CGSize(width: 218, height: 150))
-
     videoPreviewLayer.frame = view.layer.bounds
     videoPreviewLayer.connection.videoOrientation = .Portrait
+
+    updateFocusView(CGSize(width: 218, height: 150))
   }
 
   func updateFocusView(size: CGSize) {

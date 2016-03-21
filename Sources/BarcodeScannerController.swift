@@ -6,6 +6,10 @@ public protocol BarcodeScannerControllerDelegate: class {
   func barcodeScannerController(controller: BarcodeScannerController, didCapturedCode code: String)
 }
 
+enum State {
+  case Scanning, Processing
+}
+
 public class BarcodeScannerController: UIViewController {
 
   lazy var headerView: HeaderView = {
@@ -29,15 +33,8 @@ public class BarcodeScannerController: UIViewController {
     return button
   }()
 
-  lazy var focusView: UIView = {
-    let view = UIView()
-    view.layer.borderColor = UIColor.redColor().CGColor
-    view.layer.borderWidth = 2
-    view.autoresizingMask = [
-      .FlexibleTopMargin, .FlexibleBottomMargin,
-      .FlexibleLeftMargin, .FlexibleRightMargin
-    ]
-
+  lazy var focusView: UIImageView = {
+    let view = UIImageView(image: imageNamed("focus"))
     return view
   }()
 
@@ -73,6 +70,31 @@ public class BarcodeScannerController: UIViewController {
 
   public var oneTimeSearch = true
   public weak var delegate: BarcodeScannerControllerDelegate?
+  var presented = false
+  var animating = false
+
+  var state: State = .Scanning {
+    didSet {
+      let alpha: CGFloat = state == .Scanning ? 1 : 0
+      animating = true
+
+      UIView.animateWithDuration(0.5, animations: {
+        self.focusView.alpha = alpha
+        self.flashButton.alpha = alpha
+        self.footerView.frame = self.footerFrame
+        self.animating = false
+        self.footerView.state = self.state
+        }) { _ in
+          if self.state == .Processing {
+            UIView.animateWithDuration(1.0, delay:0, options: [.Repeat, .Autoreverse], animations: {
+              self.footerView.effect = UIBlurEffect(style: .Light)
+              }, completion: nil)
+          } else {
+            self.footerView.layer.removeAllAnimations()
+          }
+      }
+    }
+  }
 
   var flashMode: FlashMode = .Auto {
     didSet {
@@ -85,6 +107,19 @@ public class BarcodeScannerController: UIViewController {
       captureDevice.flashMode = flashMode.captureFlashMode
       flashButton.setImage(flashMode.image, forState: .Normal)
     }
+  }
+
+  var footerFrame: CGRect {
+    let headerHeight = presented ? headerView.frame.height : 0
+    let height = state == .Scanning
+      ? view.frame.height / 3 - 20
+      : view.bounds.height - headerHeight
+    let y = state == .Scanning
+      ? view.bounds.height - height
+      : presented ? headerHeight : 0
+
+    return CGRect(x: 0, y: y,
+      width: view.bounds.width, height: height)
   }
 
   // MARK: - View lifecycle
@@ -118,6 +153,15 @@ public class BarcodeScannerController: UIViewController {
 
     captureSession.startRunning()
     flashMode = .Auto
+    state = .Scanning
+    footerView.state = state
+  }
+
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    presented = isBeingPresented()
+    headerView.hidden = !presented
   }
 
   // MARK: - Layout
@@ -125,12 +169,14 @@ public class BarcodeScannerController: UIViewController {
   public override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
 
-    let footerViewHeight = view.frame.height / 3 - 20
     let orientation = UIApplication.sharedApplication().statusBarOrientation
 
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
-    footerView.frame = CGRect(x: 0, y: view.bounds.height - footerViewHeight,
-      width: view.bounds.width, height: footerViewHeight)
+
+    if !animating {
+      footerView.frame = footerFrame
+    }
+
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
     videoPreviewLayer.frame = view.layer.bounds
     videoPreviewLayer.connection.videoOrientation = orientation.captureOrientation
@@ -157,6 +203,7 @@ public class BarcodeScannerController: UIViewController {
       flashView.alpha = 0.0
       }, completion: {(finished:Bool) in
         flashView.removeFromSuperview()
+        self.state = .Processing
     })
   }
 

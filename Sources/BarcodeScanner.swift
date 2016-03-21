@@ -13,8 +13,10 @@ public struct CloseButton {
 }
 
 public struct Info {
-  public static var text = NSLocalizedString(
+  public static var scanningText = NSLocalizedString(
     "Place the barcode within the window to scan. The search will start automatically.", comment: "")
+  public static var processingText = NSLocalizedString(
+    "Barcode is processing...", comment: "")
   public static var font = UIFont.boldSystemFontOfSize(16)
   public static var color = UIColor.blackColor()
 }

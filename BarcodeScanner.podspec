@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Sources/**/*'
-  s.resource_bundles = { 'BarcodeScannerResources' => ['Resources/*.{png}'] }
+  s.resource_bundles = { 'BarcodeScanner' => ['Images/*.{png}'] }
 
   s.ios.frameworks = 'UIKit', 'AVFoundation'
 end

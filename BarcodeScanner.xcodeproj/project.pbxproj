@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D578B9A51C9C8351006F5D0C /* flashAuto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A11C9C8351006F5D0C /* flashAuto@3x.png */; };
-		D578B9A61C9C8351006F5D0C /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A21C9C8351006F5D0C /* flashOff@3x.png */; };
-		D578B9A71C9C8351006F5D0C /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A31C9C8351006F5D0C /* flashOn@3x.png */; };
-		D578B9A81C9C8351006F5D0C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D578B9A41C9C8351006F5D0C /* info@3x.png */; };
+		D50BE3E81C9FE7A80000A34C /* flashAuto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E41C9FE7A80000A34C /* flashAuto@3x.png */; };
+		D50BE3E91C9FE7A80000A34C /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */; };
+		D50BE3EA1C9FE7A80000A34C /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */; };
+		D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E71C9FE7A80000A34C /* info@3x.png */; };
 		D5B2E8AA1C3A780C00C0327D /* BarcodeScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */; };
 		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
 		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
@@ -35,10 +35,10 @@
 /* Begin PBXFileReference section */
 		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
 		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
-		D578B9A11C9C8351006F5D0C /* flashAuto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashAuto@3x.png"; sourceTree = "<group>"; };
-		D578B9A21C9C8351006F5D0C /* flashOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@3x.png"; sourceTree = "<group>"; };
-		D578B9A31C9C8351006F5D0C /* flashOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@3x.png"; sourceTree = "<group>"; };
-		D578B9A41C9C8351006F5D0C /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
+		D50BE3E41C9FE7A80000A34C /* flashAuto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashAuto@3x.png"; sourceTree = "<group>"; };
+		D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@3x.png"; sourceTree = "<group>"; };
+		D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@3x.png"; sourceTree = "<group>"; };
+		D50BE3E71C9FE7A80000A34C /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B2E8A91C3A780C00C0327D /* BarcodeScanner-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeScanner-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C629751C3A878E007F7B7C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
@@ -76,10 +76,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D50BE3E31C9FE7A80000A34C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D50BE3E41C9FE7A80000A34C /* flashAuto@3x.png */,
+				D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */,
+				D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */,
+				D50BE3E71C9FE7A80000A34C /* info@3x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		D5B2E8951C3A780C00C0327D = {
 			isa = PBXGroup;
 			children = (
-				D5F1C1CD1C9C5186001E17A6 /* Resources */,
+				D50BE3E31C9FE7A80000A34C /* Images */,
 				D500FD111C3AABED00782D78 /* Playground-iOS.playground */,
 				D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */,
 				D5F1C1C41C9C5103001E17A6 /* Frameworks */,
@@ -137,17 +148,6 @@
 				D5C629761C3A878E007F7B7C /* Nimble.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D5F1C1CD1C9C5186001E17A6 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D578B9A11C9C8351006F5D0C /* flashAuto@3x.png */,
-				D578B9A21C9C8351006F5D0C /* flashOff@3x.png */,
-				D578B9A31C9C8351006F5D0C /* flashOn@3x.png */,
-				D578B9A41C9C8351006F5D0C /* info@3x.png */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,10 +241,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D578B9A61C9C8351006F5D0C /* flashOff@3x.png in Resources */,
-				D578B9A81C9C8351006F5D0C /* info@3x.png in Resources */,
-				D578B9A51C9C8351006F5D0C /* flashAuto@3x.png in Resources */,
-				D578B9A71C9C8351006F5D0C /* flashOn@3x.png in Resources */,
+				D50BE3E91C9FE7A80000A34C /* flashOff@3x.png in Resources */,
+				D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */,
+				D50BE3E81C9FE7A80000A34C /* flashAuto@3x.png in Resources */,
+				D50BE3EA1C9FE7A80000A34C /* flashOn@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

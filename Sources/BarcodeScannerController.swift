@@ -1,6 +1,8 @@
 import UIKit
 import AVFoundation
 
+// MARK: - Delegates
+
 public protocol BarcodeScannerCodeDelegate: class {
   func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String)
 }
@@ -14,15 +16,17 @@ public protocol BarcodeScannerDismissalDelegate: class {
 }
 
 enum State {
-  case Scanning, Processing
+  case Scanning, Processing, Unauthorized, NotFound
 }
+
+// MARK: - Controller
 
 public class BarcodeScannerController: UIViewController {
 
   lazy var captureDevice: AVCaptureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
   lazy var captureSession: AVCaptureSession = AVCaptureSession()
   lazy var headerView: HeaderView = HeaderView()
-  lazy var footerView: FooterView = FooterView()
+  lazy var infoView: InfoView = InfoView()
 
   lazy var flashButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
@@ -45,6 +49,21 @@ public class BarcodeScannerController: UIViewController {
     return view
   }()
 
+  lazy var settingsButton: UIButton = { [unowned self] in
+    let button = UIButton(type: .System)
+    let title = NSAttributedString(string: SettingsButton.text,
+      attributes: [
+        NSFontAttributeName : SettingsButton.font,
+        NSForegroundColorAttributeName : SettingsButton.color,
+      ])
+
+    button.setAttributedTitle(title, forState: .Normal)
+    button.sizeToFit()
+    button.addTarget(self, action: "settingsButtonDidPress", forControlEvents: .TouchUpInside)
+
+    return button
+    }()
+
   lazy var videoPreviewLayer: AVCaptureVideoPreviewLayer = { [unowned self] in
     let videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     videoPreviewLayer.videoGravity = AVLayerVideoGravityResize
@@ -54,25 +73,40 @@ public class BarcodeScannerController: UIViewController {
 
   var state: State = .Scanning {
     didSet {
-      state == .Scanning
-        ? captureSession.startRunning()
-        : captureSession.stopRunning()
+      let duration = state == .Processing
+        || oldValue == .Processing
+        || oldValue == .NotFound ? 0.5 : 0.0
 
-      locked = state == .Processing && oneTimeSearch
+      guard state != .NotFound else {
+        infoView.state = state
 
-      let alpha: CGFloat = state == .Scanning ? 1 : 0
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+          self.state = .Scanning
+        }
 
-      focusView.alpha = alpha
-      flashButton.alpha = alpha
+        return
+      }
 
-      UIView.animateWithDuration(0.5,
+      let delayReset = oldValue == .Processing || oldValue == .NotFound
+
+      if !delayReset {
+        resetState()
+      }
+
+      UIView.animateWithDuration(duration,
         animations: {
-          self.footerView.frame = self.footerFrame
-          self.footerView.state = self.state
+          self.infoView.frame = self.infoFrame
+          self.infoView.state = self.state
         },
         completion: { _ in
+          if delayReset {
+            self.resetState()
+          }
+
+          self.infoView.layer.removeAllAnimations()
           if self.state == .Processing {
-            self.footerView.animateLoading()
+            self.infoView.animateLoading()
           }
       })
     }
@@ -92,8 +126,8 @@ public class BarcodeScannerController: UIViewController {
     }
   }
 
-  var footerFrame: CGRect {
-    let height = state == .Scanning ? 75 : view.bounds.height
+  var infoFrame: CGRect {
+    let height = state != .Processing ? 75 : view.bounds.height
     return CGRect(x: 0, y: view.bounds.height - height,
       width: view.bounds.width, height: height)
   }
@@ -128,43 +162,29 @@ public class BarcodeScannerController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    let input: AVCaptureInput
-
-    do {
-      input = try AVCaptureDeviceInput(device: captureDevice)
-    } catch {
-      errorDelegate?.barcodeScanner(self, didReceiveError: error)
-      return
-    }
-
-    let output = AVCaptureMetadataOutput()
-
-    captureSession.addInput(input)
-    captureSession.addOutput(output)
-
-    output.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
-    output.metadataObjectTypes = readableCodeTypes
-
+    view.backgroundColor = UIColor.blackColor()
     view.layer.addSublayer(videoPreviewLayer)
 
-    [footerView, headerView, flashButton, focusView].forEach {
+    [infoView, headerView, settingsButton, flashButton, focusView].forEach {
       view.addSubview($0)
       view.bringSubviewToFront($0)
     }
 
     torchMode = .Off
-    state = .Scanning
     focusView.hidden = true
     headerView.delegate = self
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+    setupCamera()
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterForeground",
+      name: UIApplicationWillEnterForegroundNotification, object: nil)
   }
 
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
     setupFrames()
-    footerView.setupFrames()
+    infoView.setupFrames()
     headerView.hidden = !isBeingPresented()
   }
 
@@ -174,23 +194,95 @@ public class BarcodeScannerController: UIViewController {
   }
 
   func appWillEnterForeground() {
+    torchMode = .Off
     animateFocusView()
+  }
+
+  // MARK: - Configuration
+
+  func setupCamera() {
+    let authorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+
+    if authorizationStatus == .Authorized {
+      setupSession()
+      state = .Scanning
+    } else if authorizationStatus == .NotDetermined {
+      AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
+        completionHandler: { (granted: Bool) -> Void in
+          dispatch_async(dispatch_get_main_queue()) {
+            if granted {
+              self.setupSession()
+            }
+
+            self.state = granted ? .Scanning : .Unauthorized
+          }
+      })
+    } else {
+      state = .Unauthorized
+    }
+  }
+
+  func setupSession() {
+    do {
+      let input = try AVCaptureDeviceInput(device: captureDevice)
+      captureSession.addInput(input)
+    } catch {
+      errorDelegate?.barcodeScanner(self, didReceiveError: error)
+    }
+
+    let output = AVCaptureMetadataOutput()
+    captureSession.addOutput(output)
+
+    output.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
+    output.metadataObjectTypes = readableCodeTypes
+
+    videoPreviewLayer.session = captureSession
+    setupFrames()
+  }
+
+  // MARK: - Reset
+
+  public func resetWithError() {
+    state = .NotFound
+  }
+
+  public func reset() {
+    state = .Scanning
+  }
+
+  func resetState() {
+    let alpha: CGFloat = state == .Scanning ? 1 : 0
+
+    torchMode = .Off
+    locked = state == .Processing && oneTimeSearch
+
+    state == .Scanning
+      ? captureSession.startRunning()
+      : captureSession.stopRunning()
+
+    focusView.alpha = alpha
+    flashButton.alpha = alpha
+    settingsButton.hidden = state != .Unauthorized
   }
 
   // MARK: - Layout
 
-  public func setupFrames() {
+  func setupFrames() {
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
-    footerView.frame = footerFrame
+    infoView.frame = infoFrame
     videoPreviewLayer.frame = view.layer.bounds
-    videoPreviewLayer.connection.videoOrientation = .Portrait
 
-    updateFocusView(CGSize(width: 218, height: 150))
+    if videoPreviewLayer.connection != nil {
+      videoPreviewLayer.connection.videoOrientation = .Portrait
+    }
+
+    centerSubview(focusView, size: CGSize(width: 218, height: 150))
+    centerSubview(settingsButton, size: CGSize(width: 150, height: 50))
   }
 
-  func updateFocusView(size: CGSize) {
-    focusView.frame = CGRect(
+  func centerSubview(subview: UIView, size: CGSize) {
+    subview.frame = CGRect(
       x: (view.frame.width - size.width) / 2,
       y: (view.frame.height - size.height) / 2,
       width: size.width,
@@ -235,14 +327,18 @@ public class BarcodeScannerController: UIViewController {
     UIView.animateWithDuration(1.0, delay:0,
       options: [.Repeat, .Autoreverse, .BeginFromCurrentState],
       animations: {
-        self.updateFocusView(CGSize(width: 280, height: 80))
+        self.centerSubview(self.focusView, size: CGSize(width: 280, height: 80))
       }, completion: nil)
   }
 
   // MARK: - Actions
 
-  public func startScanning() {
-    state = .Scanning
+  func settingsButtonDidPress() {
+    dispatch_async(dispatch_get_main_queue()) {
+      if let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString) {
+        UIApplication.sharedApplication().openURL(settingsURL)
+      }
+    }
   }
 
   func flashButtonDidPress() {

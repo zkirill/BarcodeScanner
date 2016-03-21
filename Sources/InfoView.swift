@@ -1,6 +1,6 @@
 import UIKit
 
-class FooterView: UIVisualEffectView {
+class InfoView: UIVisualEffectView {
 
   lazy var label: UILabel = {
     let label = UILabel()
@@ -20,7 +20,7 @@ class FooterView: UIVisualEffectView {
     let view = UIView()
     view.backgroundColor = .clearColor()
     view.layer.borderWidth = 2
-    view.layer.borderColor = Info.loadingColor.CGColor
+    view.layer.borderColor = Info.loadingTint.CGColor
     view.layer.cornerRadius = 10
 
     return view
@@ -30,22 +30,24 @@ class FooterView: UIVisualEffectView {
     didSet {
       setupFrames()
 
-      label.text = state == .Scanning
-        ? Info.scanningText
-        : Info.loadingText
+      switch state {
+      case .Processing, .NotFound:
+        label.text = state == .Processing ? Info.loadingText : Info.notFoundText
+        label.font = Info.loadingFont
+        label.textColor = Info.textColor
+        label.textAlignment = .Center
+        imageView.tintColor = state == .Processing ? Info.loadingTint : Info.notFoundTint
 
-      label.font = state == .Scanning
-        ? Info.scanningFont
-        : Info.loadingFont
+        if state == .NotFound {
+          borderView.hidden = true
+        }
+      default:
+        label.text = state == .Scanning ? Info.text : Info.settingsText
+        label.font = Info.font
+        label.textColor = Info.textColor
+        label.textAlignment = .Left
+        imageView.tintColor = Info.tint
 
-      label.textAlignment = state == .Scanning ? .Left : .Center
-
-      imageView.tintColor = state == .Scanning
-        ? Info.scanningColor
-        : Info.loadingColor
-
-      if state == .Scanning {
-        layer.removeAllAnimations()
         borderView.hidden = true
         borderView.layer.removeAllAnimations()
       }
@@ -77,7 +79,7 @@ class FooterView: UIVisualEffectView {
     let imageSize = CGSize(width: 30, height: 27)
     let borderSize: CGFloat = 51
 
-    if state == .Scanning {
+    if state != .Processing && state != .NotFound {
       imageView.frame = CGRect(
         x: padding,
         y: (frame.height - imageSize.height) / 2,
@@ -131,7 +133,10 @@ class FooterView: UIVisualEffectView {
   }
 
   func animateBorderView(angle: CGFloat) {
-    guard state == .Processing else { return }
+    guard state == .Processing else {
+      borderView.transform = CGAffineTransformIdentity
+      return
+    }
 
     UIView.animateWithDuration(0.8,
       delay: 0.5, usingSpringWithDamping: 0.6,

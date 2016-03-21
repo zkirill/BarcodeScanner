@@ -43,9 +43,9 @@ extension ViewController: BarcodeScannerCodeDelegate {
   func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
     print(code)
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(10 * Double(NSEC_PER_SEC)))
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(6 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) {
-      controller.startScanning()
+      controller.resetWithError()
     }
   }
 }
@@ -53,7 +53,7 @@ extension ViewController: BarcodeScannerCodeDelegate {
 extension ViewController: BarcodeScannerErrorDelegate {
 
   func barcodeScanner(controller: BarcodeScannerController, didReceiveError error: ErrorType) {
-    controller.dismissViewControllerAnimated(true, completion: nil)
+    print(error)
   }
 }
 

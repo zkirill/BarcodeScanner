@@ -23,7 +23,7 @@ class HeaderView: UIView {
     button.setTitle(CloseButton.text, forState: .Normal)
     button.titleLabel?.font = CloseButton.font
     button.tintColor = CloseButton.color
-    button.addTarget(self, action: "buttonDidPress", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(buttonDidPress), forControlEvents: .TouchUpInside)
 
     return button
   }()

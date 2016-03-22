@@ -31,7 +31,7 @@ public class BarcodeScannerController: UIViewController {
 
   lazy var flashButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
-    button.addTarget(self, action: "flashButtonDidPress", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(flashButtonDidPress), forControlEvents: .TouchUpInside)
 
     return button
     }()
@@ -60,7 +60,7 @@ public class BarcodeScannerController: UIViewController {
 
     button.setAttributedTitle(title, forState: .Normal)
     button.sizeToFit()
-    button.addTarget(self, action: "settingsButtonDidPress", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(settingsButtonDidPress), forControlEvents: .TouchUpInside)
 
     return button
     }()
@@ -176,7 +176,7 @@ public class BarcodeScannerController: UIViewController {
 
     setupCamera()
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterForeground",
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(appWillEnterForeground),
       name: UIApplicationWillEnterForegroundNotification, object: nil)
   }
 

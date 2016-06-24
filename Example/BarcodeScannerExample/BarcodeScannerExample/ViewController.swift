@@ -9,7 +9,7 @@ class ViewController: UIViewController {
     button.titleLabel?.font = UIFont.systemFontOfSize(28)
     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     button.setTitle("Scan", forState: .Normal)
-    button.addTarget(self, action: "buttonDidPress", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(buttonDidPress), forControlEvents: .TouchUpInside)
 
     return button
   }()

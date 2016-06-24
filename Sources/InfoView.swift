@@ -20,34 +20,25 @@ class InfoView: UIVisualEffectView {
     let view = UIView()
     view.backgroundColor = .clearColor()
     view.layer.borderWidth = 2
-    view.layer.borderColor = Info.loadingTint.CGColor
     view.layer.cornerRadius = 10
 
     return view
   }()
 
-  var state: State = .Scanning {
+  var status: Status = Status(.Scanning) {
     didSet {
       setupFrames()
 
-      switch state {
-      case .Processing, .NotFound:
-        label.text = state == .Processing ? Info.loadingText : Info.notFoundText
-        label.font = Info.loadingFont
-        label.textColor = Info.textColor
-        label.textAlignment = .Center
-        imageView.tintColor = state == .Processing ? Info.loadingTint : Info.notFoundTint
+      let stateStyles = status.state.styles
 
-        if state == .NotFound {
-          borderView.hidden = true
-        }
-      default:
-        label.text = state == .Scanning ? Info.text : Info.settingsText
-        label.font = Info.font
-        label.textColor = Info.textColor
-        label.textAlignment = .Left
-        imageView.tintColor = Info.tint
+      label.text = status.text
+      label.textColor = Info.textColor
+      label.font = stateStyles.font
+      label.textAlignment = stateStyles.alignment
+      imageView.tintColor = stateStyles.tint
+      borderView.layer.borderColor = stateStyles.tint.CGColor
 
+      if status.state != .Processing {
         borderView.hidden = true
         borderView.layer.removeAllAnimations()
       }
@@ -64,7 +55,7 @@ class InfoView: UIVisualEffectView {
       addSubview($0)
     }
 
-    state = .Scanning
+    status = Status(.Scanning)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -79,7 +70,7 @@ class InfoView: UIVisualEffectView {
     let imageSize = CGSize(width: 30, height: 27)
     let borderSize: CGFloat = 51
 
-    if state != .Processing && state != .NotFound {
+    if status.state != .Processing && status.state != .NotFound {
       imageView.frame = CGRect(
         x: padding,
         y: (frame.height - imageSize.height) / 2,
@@ -101,7 +92,7 @@ class InfoView: UIVisualEffectView {
       label.frame = CGRect(
         x: padding,
         y: imageView.frame.maxY + 14,
-        width: frame.width - padding,
+        width: frame.width - 2 * padding,
         height: labelHeight)
     }
 
@@ -122,7 +113,7 @@ class InfoView: UIVisualEffectView {
   }
 
   func animateBlur(style: UIBlurEffectStyle) {
-    guard state == .Processing else { return }
+    guard status.state == .Processing else { return }
 
     UIView.animateWithDuration(2.0, delay: 0.5, options: [.BeginFromCurrentState],
       animations: {
@@ -133,7 +124,7 @@ class InfoView: UIVisualEffectView {
   }
 
   func animateBorderView(angle: CGFloat) {
-    guard state == .Processing else {
+    guard status.state == .Processing else {
       borderView.transform = CGAffineTransformIdentity
       return
     }

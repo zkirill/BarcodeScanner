@@ -16,10 +16,6 @@ public protocol BarcodeScannerDismissalDelegate: class {
   func barcodeScannerDidDismiss(controller: BarcodeScannerController)
 }
 
-enum State {
-  case Scanning, Processing, Unauthorized, NotFound
-}
-
 // MARK: - Controller
 
 public class BarcodeScannerController: UIViewController {
@@ -72,23 +68,25 @@ public class BarcodeScannerController: UIViewController {
     return videoPreviewLayer
     }()
 
-  var state: State = .Scanning {
+  var status: Status = Status(.Scanning) {
     didSet {
-      let duration = state == .Processing
-        || oldValue == .Processing
-        || oldValue == .NotFound ? 0.5 : 0.0
+      let duration = status.animated &&
+        (status.state == .Processing
+          || oldValue.state == .Processing
+          || oldValue.state == .NotFound
+        ) ? 0.5 : 0.0
 
-      guard state != .NotFound else {
-        infoView.state = state
+      guard status.state != .NotFound else {
+        infoView.status = status
 
         delay(2.0) {
-          self.state = .Scanning
+          self.status = Status(.Scanning)
         }
 
         return
       }
 
-      let delayReset = oldValue == .Processing || oldValue == .NotFound
+      let delayReset = oldValue.state == .Processing || oldValue.state == .NotFound
 
       if !delayReset {
         resetState()
@@ -97,7 +95,7 @@ public class BarcodeScannerController: UIViewController {
       UIView.animateWithDuration(duration,
         animations: {
           self.infoView.frame = self.infoFrame
-          self.infoView.state = self.state
+          self.infoView.status = self.status
         },
         completion: { _ in
           if delayReset {
@@ -105,7 +103,7 @@ public class BarcodeScannerController: UIViewController {
           }
 
           self.infoView.layer.removeAllAnimations()
-          if self.state == .Processing {
+          if self.status.state == .Processing {
             self.infoView.animateLoading()
           }
       })
@@ -127,7 +125,7 @@ public class BarcodeScannerController: UIViewController {
   }
 
   var infoFrame: CGRect {
-    let height = state != .Processing ? 75 : view.bounds.height
+    let height = status.state != .Processing ? 75 : view.bounds.height
     return CGRect(x: 0, y: view.bounds.height - height,
       width: view.bounds.width, height: height)
   }
@@ -205,7 +203,7 @@ public class BarcodeScannerController: UIViewController {
 
     if authorizationStatus == .Authorized {
       setupSession()
-      state = .Scanning
+      status = Status(.Scanning)
     } else if authorizationStatus == .NotDetermined {
       AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
         completionHandler: { (granted: Bool) -> Void in
@@ -214,11 +212,11 @@ public class BarcodeScannerController: UIViewController {
               self.setupSession()
             }
 
-            self.state = granted ? .Scanning : .Unauthorized
+            self.status = granted ? Status(.Scanning) : Status(.Unauthorized)
           }
       })
     } else {
-      state = .Unauthorized
+      status = Status(.Unauthorized)
     }
   }
 
@@ -242,27 +240,27 @@ public class BarcodeScannerController: UIViewController {
 
   // MARK: - Reset
 
-  public func resetWithError() {
-    state = .NotFound
+  public func resetWithError(message: String? = nil) {
+    status = Status(.NotFound, text: message)
   }
 
-  public func reset() {
-    state = .Scanning
+  public func reset(animated animated: Bool = true) {
+    status = Status(.Scanning, animated: animated)
   }
 
   func resetState() {
-    let alpha: CGFloat = state == .Scanning ? 1 : 0
+    let alpha: CGFloat = status.state == .Scanning ? 1 : 0
 
     torchMode = .Off
-    locked = state == .Processing && oneTimeSearch
+    locked = status.state == .Processing && oneTimeSearch
 
-    state == .Scanning
+    status.state == .Scanning
       ? captureSession.startRunning()
       : captureSession.stopRunning()
 
     focusView.alpha = alpha
     flashButton.alpha = alpha
-    settingsButton.hidden = state != .Unauthorized
+    settingsButton.hidden = status.state != .Unauthorized
   }
 
   // MARK: - Layout
@@ -313,7 +311,7 @@ public class BarcodeScannerController: UIViewController {
         flashView.removeFromSuperview()
 
         if processing {
-          self.state = .Processing
+          self.status = Status(.Processing)
         }
     })
   }

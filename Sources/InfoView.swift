@@ -10,7 +10,7 @@ class InfoView: UIVisualEffectView {
   }()
 
   lazy var imageView: UIImageView = {
-    let image = imageNamed("info").template
+    let image = imageNamed("info").imageWithRenderingMode(.AlwaysTemplate)
     let imageView = UIImageView(image: image)
 
     return imageView

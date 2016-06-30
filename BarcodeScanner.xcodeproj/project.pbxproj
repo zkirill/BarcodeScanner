@@ -10,7 +10,6 @@
 		D50BE3E91C9FE7A80000A34C /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */; };
 		D50BE3EA1C9FE7A80000A34C /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */; };
 		D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E71C9FE7A80000A34C /* info@3x.png */; };
-		D5C4E08B1CA0BFA8008D9269 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C4E08A1CA0BFA8008D9269 /* Sugar.framework */; };
 		D5C4E08E1CA0BFB9008D9269 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */; };
 		D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */; };
 		D5F1C1C91C9C5113001E17A6 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */; };
@@ -43,7 +42,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5C4E08B1CA0BFA8008D9269 /* Sugar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +131,6 @@
 				D5B2E89B1C3A780C00C0327D /* Frameworks */,
 				D5B2E89C1C3A780C00C0327D /* Headers */,
 				D5B2E89D1C3A780C00C0327D /* Resources */,
-				D5C4E0891CA0BF81008D9269 /* Copy frameworks with Carthage */,
 			);
 			buildRules = (
 			);
@@ -188,24 +185,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		D5C4E0891CA0BF81008D9269 /* Copy frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Sugar.framework",
-			);
-			name = "Copy frameworks with Carthage";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5B2E89A1C3A780C00C0327D /* Sources */ = {

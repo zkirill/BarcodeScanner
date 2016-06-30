@@ -1,6 +1,5 @@
 import UIKit
 import AVFoundation
-import Sugar
 
 // MARK: - Delegates
 
@@ -79,8 +78,10 @@ public class BarcodeScannerController: UIViewController {
       guard status.state != .NotFound else {
         infoView.status = status
 
-        delay(2.0) {
-          self.status = Status(.Scanning)
+        dispatch_after(
+          dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))),
+          dispatch_get_main_queue()) {
+            self.status = Status(.Scanning)
         }
 
         return
@@ -207,7 +208,7 @@ public class BarcodeScannerController: UIViewController {
     } else if authorizationStatus == .NotDetermined {
       AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
         completionHandler: { (granted: Bool) -> Void in
-          dispatch {
+          dispatch_async(dispatch_get_main_queue()) {
             if granted {
               self.setupSession()
             }
@@ -332,7 +333,7 @@ public class BarcodeScannerController: UIViewController {
   // MARK: - Actions
 
   func settingsButtonDidPress() {
-    dispatch {
+    dispatch_async(dispatch_get_main_queue()) {
       if let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString) {
         UIApplication.sharedApplication().openURL(settingsURL)
       }

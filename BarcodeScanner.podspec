@@ -18,5 +18,4 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'BarcodeScanner' => ['Images/*.{png}'] }
 
   s.frameworks = 'UIKit', 'AVFoundation'
-  s.dependency 'Sugar'
 end

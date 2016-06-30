@@ -1,7 +1,8 @@
-# BarcodeScanner
+![BarcodeScanner](https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/BarcodeScannerPresentation.png)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/BarcodeScanner.svg?style=flat)](https://travis-ci.org/hyperoslo/BarcodeScanner)
 [![Version](https://img.shields.io/cocoapods/v/BarcodeScanner.svg?style=flat)](http://cocoadocs.org/docsets/BarcodeScanner)
+![Swift](https://img.shields.io/badge/%20in-swift%202.2-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/BarcodeScanner.svg?style=flat)](http://cocoadocs.org/docsets/BarcodeScanner)
 [![Platform](https://img.shields.io/cocoapods/p/BarcodeScanner.svg?style=flat)](http://cocoadocs.org/docsets/BarcodeScanner)
@@ -20,6 +21,8 @@ barcode capturing functionality and a great user experience.
 - [x] Code, error and dismissal delegates.
 
 ## Table of Contents
+
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/BarcodeScannerIcon.png" alt="BarcodeScanner Icon" width="190" height="190" align="right" />
 
 * [Usage](#usage)
   * [Controller](#controller)
@@ -46,6 +49,8 @@ controller.dismissalDelegate = self
 
 presentViewController(controller, animated: true, completion: nil)
 ```
+
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleScanning.png" alt="BarcodeScanner scanning" align="center" />
 
 You can also push `BarcodeScannerController` to your navigation stack:
 
@@ -102,7 +107,11 @@ extension ViewController: BarcodeScannerDismissalDelegate {
 ### Actions
 
 When the code is captured `BarcodeScannerController` switches to the processing
-mode. While the user see a nice loading animation you can perform some
+mode:
+
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleLoading.png" alt="BarcodeScanner loading" align="center" />
+
+While the user see a nice loading animation you can perform some
 background task, for example make a network request to fetch product info based
 on the code. When the task is done you have 3 options to proceed:
 
@@ -117,6 +126,8 @@ func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: 
 
 2. Show an error message and switch back to the scanning mode (for example,
 when there is no product found with a given barcode in your database):
+
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleError.png" alt="BarcodeScanner error" align="center" />
 
 ```swift
 func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {

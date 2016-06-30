@@ -33,7 +33,7 @@ public struct Info {
   public static var tint = UIColor.blackColor()
 
   public static var loadingFont = UIFont.boldSystemFontOfSize(16)
-  public static var loadingTint = UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1)
+  public static var loadingTint = UIColor.blackColor()
 
   public static var notFoundTint = UIColor.redColor()
 }

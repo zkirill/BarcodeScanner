@@ -1,3 +1,5 @@
+import UIKit
+
 struct Status {
   let state: State
   let animated: Bool

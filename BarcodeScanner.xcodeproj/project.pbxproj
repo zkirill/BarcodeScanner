@@ -10,35 +10,20 @@
 		D50BE3E91C9FE7A80000A34C /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */; };
 		D50BE3EA1C9FE7A80000A34C /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */; };
 		D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E71C9FE7A80000A34C /* info@3x.png */; };
-		D5B2E8AA1C3A780C00C0327D /* BarcodeScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */; };
 		D5C4E08B1CA0BFA8008D9269 /* Sugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C4E08A1CA0BFA8008D9269 /* Sugar.framework */; };
 		D5C4E08E1CA0BFB9008D9269 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */; };
 		D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */; };
-		D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629751C3A878E007F7B7C /* Quick.framework */; };
-		D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C629761C3A878E007F7B7C /* Nimble.framework */; };
 		D5F1C1C91C9C5113001E17A6 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */; };
 		D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */; };
 		D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */; };
+		D5FC8AD71D252A12004BED88 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC8AD61D252A12004BED88 /* State.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D5B2E8AB1C3A780C00C0327D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D5B2E8961C3A780C00C0327D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D5B2E89E1C3A780C00C0327D;
-			remoteInfo = BarcodeScanner;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		D500FD111C3AABED00782D78 /* Playground-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-iOS.playground"; sourceTree = "<group>"; };
-		D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Playground-Mac.playground"; sourceTree = "<group>"; };
 		D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@3x.png"; sourceTree = "<group>"; };
 		D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@3x.png"; sourceTree = "<group>"; };
 		D50BE3E71C9FE7A80000A34C /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5B2E8A91C3A780C00C0327D /* BarcodeScanner-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeScanner-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C4E08A1CA0BFA8008D9269 /* Sugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sugar.framework; path = Carthage/Build/iOS/Sugar.framework; sourceTree = "<group>"; };
 		D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchMode.swift; sourceTree = "<group>"; };
@@ -47,10 +32,10 @@
 		D5C629791C3A879F007F7B7C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
 		D5C6297A1C3A879F007F7B7C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerController.swift; sourceTree = "<group>"; };
 		D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D5FC8AD61D252A12004BED88 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,16 +44,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C4E08B1CA0BFA8008D9269 /* Sugar.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D5B2E8A61C3A780C00C0327D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D5C629771C3A878E007F7B7C /* Quick.framework in Frameworks */,
-				D5C629781C3A878E007F7B7C /* Nimble.framework in Frameworks */,
-				D5B2E8AA1C3A780C00C0327D /* BarcodeScanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,12 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				D50BE3E31C9FE7A80000A34C /* Images */,
-				D500FD111C3AABED00782D78 /* Playground-iOS.playground */,
-				D500FD121C3AAC8E00782D78 /* Playground-Mac.playground */,
 				D5F1C1C41C9C5103001E17A6 /* Frameworks */,
 				D5C629691C3A809D007F7B7C /* Sources */,
 				D5C6295C1C3A800E007F7B7C /* BarcodeScanner */,
-				D5C6298F1C3A8BDA007F7B7C /* BarcodeScannerTests */,
 				D5B2E8A01C3A780C00C0327D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,7 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */,
-				D5B2E8A91C3A780C00C0327D /* BarcodeScanner-iOS-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +90,7 @@
 		D5C629691C3A809D007F7B7C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D5FC8AD61D252A12004BED88 /* State.swift */,
 				D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */,
 				D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */,
 				D5F1C1C51C9C5113001E17A6 /* BarcodeScanner.swift */,
@@ -126,14 +98,6 @@
 				D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		D5C6298F1C3A8BDA007F7B7C /* BarcodeScannerTests */ = {
-			isa = PBXGroup;
-			children = (
-				D5C629901C3A8BDA007F7B7C /* Info-iOS.plist */,
-			);
-			path = BarcodeScannerTests;
 			sourceTree = "<group>";
 		};
 		D5F1C1C41C9C5103001E17A6 /* Frameworks */ = {
@@ -180,25 +144,6 @@
 			productReference = D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D5B2E8A81C3A780C00C0327D /* BarcodeScanner-iOS-Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D5B2E8B61C3A780C00C0327D /* Build configuration list for PBXNativeTarget "BarcodeScanner-iOS-Tests" */;
-			buildPhases = (
-				D5B2E8A51C3A780C00C0327D /* Sources */,
-				D5B2E8A61C3A780C00C0327D /* Frameworks */,
-				D5B2E8A71C3A780C00C0327D /* Resources */,
-				D5C629731C3A86E3007F7B7C /* Copy frameworks with Carthage */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D5B2E8AC1C3A780C00C0327D /* PBXTargetDependency */,
-			);
-			name = "BarcodeScanner-iOS-Tests";
-			productName = BarcodeScannerTests;
-			productReference = D5B2E8A91C3A780C00C0327D /* BarcodeScanner-iOS-Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -210,9 +155,6 @@
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					D5B2E89E1C3A780C00C0327D = {
-						CreatedOnToolsVersion = 7.2;
-					};
-					D5B2E8A81C3A780C00C0327D = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -230,7 +172,6 @@
 			projectRoot = "";
 			targets = (
 				D5B2E89E1C3A780C00C0327D /* BarcodeScanner-iOS */,
-				D5B2E8A81C3A780C00C0327D /* BarcodeScanner-iOS-Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -243,13 +184,6 @@
 				D50BE3E91C9FE7A80000A34C /* flashOff@3x.png in Resources */,
 				D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */,
 				D50BE3EA1C9FE7A80000A34C /* flashOn@3x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D5B2E8A71C3A780C00C0327D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,22 +205,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		D5C629731C3A86E3007F7B7C /* Copy frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
-			);
-			name = "Copy frameworks with Carthage";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -299,25 +217,11 @@
 				D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */,
 				D5F1C1C91C9C5113001E17A6 /* BarcodeScanner.swift in Sources */,
 				D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D5B2E8A51C3A780C00C0327D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				D5FC8AD71D252A12004BED88 /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D5B2E8AC1C3A780C00C0327D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D5B2E89E1C3A780C00C0327D /* BarcodeScanner-iOS */;
-			targetProxy = D5B2E8AB1C3A780C00C0327D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D5B2E8B11C3A780C00C0327D /* Debug */ = {
@@ -454,37 +358,6 @@
 			};
 			name = Release;
 		};
-		D5B2E8B71C3A780C00C0327D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/BarcodeScannerTests/Info-iOS.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		D5B2E8B81C3A780C00C0327D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/BarcodeScannerTests/Info-iOS.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -502,15 +375,6 @@
 			buildConfigurations = (
 				D5B2E8B41C3A780C00C0327D /* Debug */,
 				D5B2E8B51C3A780C00C0327D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D5B2E8B61C3A780C00C0327D /* Build configuration list for PBXNativeTarget "BarcodeScanner-iOS-Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D5B2E8B71C3A780C00C0327D /* Debug */,
-				D5B2E8B81C3A780C00C0327D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

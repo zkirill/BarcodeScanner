@@ -5,7 +5,7 @@ class ViewController: UIViewController {
 
   lazy var button: UIButton = {
     let button = UIButton(type: .System)
-    button.backgroundColor = UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1)
+    button.backgroundColor = UIColor.blackColor()
     button.titleLabel?.font = UIFont.systemFontOfSize(28)
     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     button.setTitle("Scan", forState: .Normal)
@@ -16,8 +16,8 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.whiteColor()
 
+    view.backgroundColor = UIColor.whiteColor()
     view.addSubview(button)
   }
 
@@ -63,4 +63,3 @@ extension ViewController: BarcodeScannerDismissalDelegate {
     controller.dismissViewControllerAnimated(true, completion: nil)
   }
 }
-

@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 public struct Title {
   public static var text = NSLocalizedString("Scan barcode", comment: "")
@@ -54,3 +55,16 @@ func imageNamed(name: String) -> UIImage {
 
   return image
 }
+
+public var metadata = [
+  AVMetadataObjectTypeUPCECode,
+  AVMetadataObjectTypeCode39Code,
+  AVMetadataObjectTypeCode39Mod43Code,
+  AVMetadataObjectTypeEAN13Code,
+  AVMetadataObjectTypeEAN8Code,
+  AVMetadataObjectTypeCode93Code,
+  AVMetadataObjectTypeCode128Code,
+  AVMetadataObjectTypePDF417Code,
+  AVMetadataObjectTypeQRCode,
+  AVMetadataObjectTypeAztecCode
+]

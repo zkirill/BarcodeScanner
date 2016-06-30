@@ -131,19 +131,6 @@ public class BarcodeScannerController: UIViewController {
       width: view.bounds.width, height: height)
   }
 
-  private var readableCodeTypes = [
-    AVMetadataObjectTypeUPCECode,
-    AVMetadataObjectTypeCode39Code,
-    AVMetadataObjectTypeCode39Mod43Code,
-    AVMetadataObjectTypeEAN13Code,
-    AVMetadataObjectTypeEAN8Code,
-    AVMetadataObjectTypeCode93Code,
-    AVMetadataObjectTypeCode128Code,
-    AVMetadataObjectTypePDF417Code,
-    AVMetadataObjectTypeQRCode,
-    AVMetadataObjectTypeAztecCode
-  ]
-
   public var oneTimeSearch = true
   public weak var codeDelegate: BarcodeScannerCodeDelegate?
   public weak var errorDelegate: BarcodeScannerErrorDelegate?
@@ -231,11 +218,10 @@ public class BarcodeScannerController: UIViewController {
 
     let output = AVCaptureMetadataOutput()
     captureSession.addOutput(output)
-
     output.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
-    output.metadataObjectTypes = readableCodeTypes
-
+    output.metadataObjectTypes = metadata
     videoPreviewLayer.session = captureSession
+
     setupFrames()
   }
 
@@ -358,7 +344,7 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
 
       guard let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
         code = metadataObj.stringValue
-        where readableCodeTypes.contains(metadataObj.type) else { return }
+        where metadata.contains(metadataObj.type) else { return }
 
       if oneTimeSearch {
         locked = true

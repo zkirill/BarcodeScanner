@@ -58,7 +58,7 @@ public class BarcodeScannerController: UIViewController {
     view.layer.shadowColor = UIColor.whiteColor().CGColor
     view.layer.shadowRadius = 10.0
     view.layer.shadowOpacity = 0.9
-    view.layer.shadowOffset = CGSizeZero
+    view.layer.shadowOffset = CGSize.zero
     view.layer.masksToBounds = false
 
     return view
@@ -327,6 +327,9 @@ public class BarcodeScannerController: UIViewController {
 
   /**
    Sets a new size and center aligns subview's position.
+
+   - Parameter subview: The subview.
+   - Parameter size: A new size.
   */
   func centerSubview(subview: UIView, size: CGSize) {
     subview.frame = CGRect(
@@ -416,7 +419,7 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
     fromConnection connection: AVCaptureConnection!) {
       guard !locked else { return }
 
-      guard metadataObjects != nil && metadataObjects.count > 0 else { return }
+      guard metadataObjects != nil && !metadataObjects.isEmpty else { return }
 
       guard let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
         code = metadataObj.stringValue

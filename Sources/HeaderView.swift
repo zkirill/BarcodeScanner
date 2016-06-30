@@ -4,8 +4,12 @@ protocol HeaderViewDelegate: class {
   func headerViewDidPressClose(hederView: HeaderView)
 }
 
+/**
+ Header view that simulates a navigation bar.
+ */
 class HeaderView: UIView {
 
+  /// Title label.
   lazy var label: UILabel = {
     let label = UILabel()
     label.backgroundColor = .whiteColor()
@@ -18,6 +22,7 @@ class HeaderView: UIView {
     return label
   }()
 
+  /// Close button.
   lazy var button: UIButton = {
     let button = UIButton(type: .System)
     button.setTitle(CloseButton.text, forState: .Normal)
@@ -28,10 +33,16 @@ class HeaderView: UIView {
     return button
   }()
 
+  /// Header view delegate.
   weak var delegate: HeaderViewDelegate?
 
   // MARK: - Initialization
 
+  /**
+   Creates a new instance of `HeaderView`.
+
+   - Parameter frame: View frame.
+   */
   override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -66,6 +77,9 @@ class HeaderView: UIView {
 
   // MARK: - Actions
 
+  /**
+   Close button action handler.
+   */
   func buttonDidPress() {
     delegate?.headerViewDidPressClose(self)
   }

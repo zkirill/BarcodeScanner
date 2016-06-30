@@ -1,9 +1,13 @@
 import UIKit
 import AVFoundation
 
+/**
+ Wrapper around `AVCaptureTorchMode`.
+ */
 public enum TorchMode {
   case On, Off
 
+  /// Returns the next torch mode.
   var next: TorchMode {
     let result: TorchMode
 
@@ -17,6 +21,7 @@ public enum TorchMode {
     return result
   }
 
+  /// Torch mode image.
   var image: UIImage {
     let result: UIImage
 
@@ -30,6 +35,7 @@ public enum TorchMode {
     return result
   }
 
+  /// Returns `AVCaptureTorchMode` value.
   var captureTorchMode: AVCaptureTorchMode {
     let result: AVCaptureTorchMode
 

@@ -1,6 +1,8 @@
 import UIKit
 import AVFoundation
 
+// MARK: - Configurations
+
 public struct Title {
   public static var text = NSLocalizedString("Scan barcode", comment: "")
   public static var font = UIFont.boldSystemFontOfSize(17)
@@ -39,6 +41,12 @@ public struct Info {
   public static var notFoundTint = UIColor.redColor()
 }
 
+/**
+ Returns image with a given name from the resource bundle.
+
+ - Parameter name: Image name.
+ - Returns: An image.
+ */
 func imageNamed(name: String) -> UIImage {
   let cls = BarcodeScannerController.self
   var bundle = NSBundle(forClass: cls)
@@ -56,6 +64,9 @@ func imageNamed(name: String) -> UIImage {
   return image
 }
 
+/**
+ `AVCaptureMetadataOutput` metadata object types.
+ */
 public var metadata = [
   AVMetadataObjectTypeUPCECode,
   AVMetadataObjectTypeCode39Code,

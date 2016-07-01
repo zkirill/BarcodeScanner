@@ -18,7 +18,7 @@ barcode capturing functionality and a great user experience.
 - [x] Animated focus view and custom loading indicator.
 - [x] Torch mode switch.
 - [x] Customizable colors, informational and error messages.
-- [x] No dependencies.
+- [x] No external dependencies.
 - [x] [Demo project](https://github.com/hyperoslo/BarcodeScanner/tree/master/Example/BarcodeScannerExample).
 
 ## Table of Contents

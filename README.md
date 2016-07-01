@@ -14,11 +14,12 @@ barcode capturing functionality and a great user experience.
 
 - [x] Barcode scanning.
 - [x] State modes: scanning, processing, unauthorized, not found.
-- [x] Video authorization status handling.
+- [x] Handling of camera authorization status.
 - [x] Animated focus view and custom loading indicator.
-- [x] Torch mode.
+- [x] Torch mode switch.
 - [x] Customizable colors, informational and error messages.
-- [x] Code, error and dismissal delegates.
+- [x] No dependencies.
+- [x] [Demo project](https://github.com/hyperoslo/BarcodeScanner/tree/master/Example/BarcodeScannerExample).
 
 ## Table of Contents
 
@@ -72,7 +73,7 @@ extension ViewController: BarcodeScannerCodeDelegate {
 
   func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
     print(code)
-    controller.resetWithError()
+    controller.reset()
   }
 }
 ```
@@ -137,7 +138,7 @@ func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: 
 }
 ```
 
-3. Resets the controller to the scanning mode (with or without animation):
+3. Reset the controller to the scanning mode (with or without animation):
 
 ```swift
 func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
@@ -156,6 +157,7 @@ We styled **BarcodeScanner** to make it look nice, but feel free to customize
 its appearance by changing global configuration variables:
 
 ```swift
+// Strings
 BarcodeScanner.Title.text = NSLocalizedString("Scan barcode", comment: "")
 BarcodeScanner.CloseButton.text = NSLocalizedString("Close", comment: "")
 BarcodeScanner.SettingsButton.text = NSLocalizedString("Settings", comment: "")
@@ -166,13 +168,15 @@ BarcodeScanner.Info.notFoundText = NSLocalizedString("No product found.", commen
 BarcodeScanner.Info.settingsText = NSLocalizedString(
   "In order to scan barcodes you have to allow camera under your settings.", comment: "")
 
+// Fonts
 BarcodeScanner.Title.font = UIFont.boldSystemFontOfSize(17)
 BarcodeScanner.CloseButton.font = UIFont.boldSystemFontOfSize(17)
 BarcodeScanner.SettingsButton.font = UIFont.boldSystemFontOfSize(17)
 BarcodeScanner.Info.font = UIFont.boldSystemFontOfSize(14)
-BarcodeScanner.Info.loadingFont = UIColor.blackColor()
+BarcodeScanner.Info.loadingFont = UIFont.boldSystemFontOfSize(16)
 
-BarcodeScanner.Title.color = Colors.BarcodeScanner.text
+// Colors
+BarcodeScanner.Title.color = UIColor.blackColor()
 BarcodeScanner.CloseButton.color = UIColor.blackColor()
 BarcodeScanner.SettingsButton.color = UIColor.whiteColor()
 BarcodeScanner.Info.textColor = UIColor.blackColor()
@@ -189,6 +193,9 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'BarcodeScanner'
 ```
+
+In order to quickly try the demo project of a **BarcodeScanner** just run
+`pod try BarcodeScanner` in your terminal.
 
 **BarcodeScanner** is also available through [Carthage](https://github.com/Carthage/Carthage).
 To install just write into your Cartfile:

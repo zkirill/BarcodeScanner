@@ -1,7 +1,11 @@
 import UIKit
 
+/**
+ Info view is an overlay with loading and error messages.
+ */
 class InfoView: UIVisualEffectView {
 
+  /// Text label.
   lazy var label: UILabel = {
     let label = UILabel()
     label.numberOfLines = 2
@@ -9,13 +13,15 @@ class InfoView: UIVisualEffectView {
     return label
   }()
 
+  /// Info image view.
   lazy var imageView: UIImageView = {
-    let image = imageNamed("info").template
+    let image = imageNamed("info").imageWithRenderingMode(.AlwaysTemplate)
     let imageView = UIImageView(image: image)
 
     return imageView
   }()
 
+  /// Border view.
   lazy var borderView: UIView = {
     let view = UIView()
     view.backgroundColor = .clearColor()
@@ -25,6 +31,9 @@ class InfoView: UIVisualEffectView {
     return view
   }()
 
+  /**
+   The current info view status mode.
+   */
   var status: Status = Status(.Scanning) {
     didSet {
       setupFrames()
@@ -47,6 +56,9 @@ class InfoView: UIVisualEffectView {
 
   // MARK: - Initialization
 
+  /**
+   Creates a new instance of `InfoView`.
+   */
   init() {
     let blurEffect = UIBlurEffect(style: .ExtraLight)
     super.init(effect: blurEffect)
@@ -64,6 +76,9 @@ class InfoView: UIVisualEffectView {
 
   // MARK: - Layout
 
+  /**
+   Sets up frames of subviews.
+   */
   func setupFrames() {
     let padding: CGFloat = 10
     let labelHeight: CGFloat = 40
@@ -105,6 +120,9 @@ class InfoView: UIVisualEffectView {
 
   // MARK: - Animations
 
+  /**
+   Animates blur and border view.
+   */
   func animateLoading() {
     borderView.hidden = false
 
@@ -112,6 +130,11 @@ class InfoView: UIVisualEffectView {
     animateBorderView(CGFloat(M_PI_2))
   }
 
+  /**
+   Animates blur to make pulsating effect.
+
+   - Parameter style: The current blur style.
+   */
   func animateBlur(style: UIBlurEffectStyle) {
     guard status.state == .Processing else { return }
 
@@ -123,6 +146,11 @@ class InfoView: UIVisualEffectView {
     })
   }
 
+  /**
+   Animates border view with a given angle.
+
+   - Parameter angle: Rotation angle.
+   */
   func animateBorderView(angle: CGFloat) {
     guard status.state == .Processing else {
       borderView.transform = CGAffineTransformIdentity

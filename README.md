@@ -51,7 +51,9 @@ controller.dismissalDelegate = self
 presentViewController(controller, animated: true, completion: nil)
 ```
 
-<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleScanning.png" alt="BarcodeScanner scanning" align="center" />
+<div align="center">
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleScanning.png" alt="BarcodeScanner scanning" width="270" height="480" />
+</div>
 
 You can also push `BarcodeScannerController` to your navigation stack:
 
@@ -110,7 +112,9 @@ extension ViewController: BarcodeScannerDismissalDelegate {
 When the code is captured `BarcodeScannerController` switches to the processing
 mode:
 
-<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleLoading.png" alt="BarcodeScanner loading" align="center" />
+<div align="center">
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleLoading.png" alt="BarcodeScanner loading" width="270" height="480" />
+</div>
 
 While the user see a nice loading animation you can perform some
 background task, for example make a network request to fetch product info based
@@ -128,7 +132,9 @@ func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: 
 2. Show an error message and switch back to the scanning mode (for example,
 when there is no product found with a given barcode in your database):
 
-<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleError.png" alt="BarcodeScanner error" align="center" />
+<div align="center">
+<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleError.png" alt="BarcodeScanner error" width="270" height="480" />
+</div>
 
 ```swift
 func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {

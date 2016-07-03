@@ -122,36 +122,34 @@ on the code. When the task is done you have 3 options to proceed:
 
 1. Dismiss `BarcodeScannerController` and show your results.
 
-```swift
-func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
-  // Code processing
-  controller.dismissViewControllerAnimated(true, completion: nil)
-}
-```
-
+ ```swift
+ func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+   // Code processing
+   controller.dismissViewControllerAnimated(true, completion: nil)
+ }
+ ```
 2. Show an error message and switch back to the scanning mode (for example,
 when there is no product found with a given barcode in your database):
 
-<div align="center">
-<img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleError.png" alt="BarcodeScanner error" width="270" height="480" />
-</div><br/>
+ <div align="center">
+ <img src="https://github.com/hyperoslo/BarcodeScanner/blob/master/Art/ExampleError.png" alt="BarcodeScanner error" width="270" height="480" />
+ </div><br/>
 
-```swift
-func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
-  // Code processing
-  controller.resetWithError("Error message")
-  // If message is not provided the default message from the config will be used instead.
-}
-```
-
+ ```swift
+ func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+   // Code processing
+   controller.resetWithError("Error message")
+   // If message is not provided the default message from the config will be used instead.
+ }
+ ```
 3. Reset the controller to the scanning mode (with or without animation):
 
-```swift
-func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
-  // Code processing
-  controller.reset(animated: true)
-}
-```
+ ```swift
+ func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+   // Code processing
+   controller.reset(animated: true)
+ }
+ ```
 
 If you want to do continuous barcode scanning just set the `oneTimeSearch`
 property on your `BarcodeScannerController` instance to `false`.

@@ -204,6 +204,9 @@ In order to quickly try the demo project of a **BarcodeScanner** just run
 **BarcodeScanner** is also available through [Carthage](https://github.com/Carthage/Carthage).
 To install just write into your Cartfile:
 
+**BarcodeScanner** can also be installed manually. Just download and drop
+`Sources` and `Images` folders in your project.
+
 ```ruby
 github "hyperoslo/BarcodeScanner"
 ```

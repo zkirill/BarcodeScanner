@@ -80,7 +80,7 @@ public class BarcodeScannerController: UIViewController {
     return button
     }()
 
-  /// Videp preview layer.
+  /// Video preview layer.
   lazy var videoPreviewLayer: AVCaptureVideoPreviewLayer = { [unowned self] in
     let videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     videoPreviewLayer.videoGravity = AVLayerVideoGravityResize

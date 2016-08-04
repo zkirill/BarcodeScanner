@@ -92,12 +92,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D50BE4071C9FE8870000A34C /* Build configuration list for PBXNativeTarget "BarcodeScannerExample" */;
 			buildPhases = (
-				36F8214472FD1CA639982CE8 /* 📦 Check Pods Manifest.lock */,
+				36F8214472FD1CA639982CE8 /* [CP] Check Pods Manifest.lock */,
 				D50BE3F11C9FE8870000A34C /* Sources */,
 				D50BE3F21C9FE8870000A34C /* Frameworks */,
 				D50BE3F31C9FE8870000A34C /* Resources */,
-				E090C912AA824DD28A310598 /* 📦 Embed Pods Frameworks */,
-				B23721B8976E46E75F5C472C /* 📦 Copy Pods Resources */,
+				E090C912AA824DD28A310598 /* [CP] Embed Pods Frameworks */,
+				B23721B8976E46E75F5C472C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -120,6 +120,7 @@
 				TargetAttributes = {
 					D50BE3F41C9FE8870000A34C = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = LG4DBY4QF9;
 					};
 				};
 			};
@@ -154,14 +155,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		36F8214472FD1CA639982CE8 /* 📦 Check Pods Manifest.lock */ = {
+		36F8214472FD1CA639982CE8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,14 +170,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B23721B8976E46E75F5C472C /* 📦 Copy Pods Resources */ = {
+		B23721B8976E46E75F5C472C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,14 +185,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BarcodeScannerExample/Pods-BarcodeScannerExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E090C912AA824DD28A310598 /* 📦 Embed Pods Frameworks */ = {
+		E090C912AA824DD28A310598 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,10 +312,13 @@
 			baseConfigurationReference = 560D7A8F00215E8F16A67009 /* Pods-BarcodeScannerExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BarcodeScannerExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerExample;
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerExample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -323,10 +327,13 @@
 			baseConfigurationReference = B2BB8B30EF0245DC64F4025A /* Pods-BarcodeScannerExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BarcodeScannerExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerExample;
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerExample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

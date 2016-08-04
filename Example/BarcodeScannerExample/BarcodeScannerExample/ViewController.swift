@@ -40,8 +40,9 @@ class ViewController: UIViewController {
 
 extension ViewController: BarcodeScannerCodeDelegate {
 
-  func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+  func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String, type: String) {
     print(code)
+    print(type)
 
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(6 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) {

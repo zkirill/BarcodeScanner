@@ -73,7 +73,7 @@ Use `BarcodeScannerCodeDelegate` when you want to get the captured code back.
 ```swift
 extension ViewController: BarcodeScannerCodeDelegate {
 
-  func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+  func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String, type: String) {
     print(code)
     controller.reset()
   }

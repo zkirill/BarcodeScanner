@@ -24,7 +24,7 @@ class InfoView: UIVisualEffectView {
   /// Border view.
   lazy var borderView: UIView = {
     let view = UIView()
-    view.backgroundColor = .clear()
+    view.backgroundColor = UIColor.clear
     view.layer.borderWidth = 2
     view.layer.cornerRadius = 10
 

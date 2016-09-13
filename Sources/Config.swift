@@ -52,8 +52,8 @@ func imageNamed(_ name: String) -> UIImage {
   var bundle = Bundle(for: cls)
   let traitCollection = UITraitCollection(displayScale: 3)
 
-  if let bundlePath = (bundle.resourcePath)! + "/BarcodeScanner.bundle",
-    let resourceBundle = Bundle(path: bundlePath) {
+  if let path = bundle.resourcePath,
+    let resourceBundle = Bundle(path: path + "/BarcodeScanner.bundle") {
       bundle = resourceBundle
   }
 

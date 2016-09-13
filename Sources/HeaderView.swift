@@ -12,7 +12,7 @@ class HeaderView: UIView {
   /// Title label.
   lazy var label: UILabel = {
     let label = UILabel()
-    label.backgroundColor = .white()
+    label.backgroundColor = UIColor.white
     label.text = Title.text
     label.font = Title.font
     label.textColor = Title.color
@@ -46,7 +46,7 @@ class HeaderView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    backgroundColor = .white()
+    backgroundColor = UIColor.white
 
     [label, button].forEach {
       addSubview($0)

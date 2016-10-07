@@ -278,7 +278,7 @@ open class BarcodeScannerController: UIViewController {
 
    - Parameter errorMessage: Error message that overrides the message from the config.
    */
-  public func reset(errorMessage: String? = nil) {
+  public func resetWithError(errorMessage: String? = nil) {
     status = Status(state: .notFound, text: errorMessage)
   }
 

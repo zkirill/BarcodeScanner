@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 
 extension ViewController: BarcodeScannerCodeDelegate {
 
-  func barcodeScanner(_ controller: BarcodeScannerController, didCapturedCode code: String, type: String) {
+  func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
     print(code)
     print(type)
 

@@ -1,7 +1,7 @@
 import UIKit
 
 protocol HeaderViewDelegate: class {
-  func headerViewDidPressClose(_ hederView: HeaderView)
+  func headerViewDidPressClose(_ headerView: HeaderView)
 }
 
 /**

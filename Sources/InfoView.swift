@@ -127,7 +127,7 @@ class InfoView: UIVisualEffectView {
     borderView.isHidden = false
 
     animate(blurStyle: .light)
-    animateBorderView(CGFloat(M_PI_2))
+    animate(borderViewAngle: CGFloat(M_PI_2))
   }
 
   /**
@@ -151,7 +151,7 @@ class InfoView: UIVisualEffectView {
 
    - Parameter angle: Rotation angle.
    */
-  func animateBorderView(_ angle: CGFloat) {
+  func animate(borderViewAngle: CGFloat) {
     guard status.state == .processing else {
       borderView.transform = CGAffineTransform.identity
       return
@@ -162,9 +162,9 @@ class InfoView: UIVisualEffectView {
       initialSpringVelocity: 1.0,
       options: [.beginFromCurrentState],
       animations: {
-        self.borderView.transform = CGAffineTransform(rotationAngle: angle)
+        self.borderView.transform = CGAffineTransform(rotationAngle: borderViewAngle)
       }, completion: { _ in
-        self.animateBorderView(angle + CGFloat(M_PI_2))
+        self.animate(borderViewAngle: borderViewAngle + CGFloat(M_PI_2))
     })
   }
 }

@@ -34,7 +34,7 @@ class InfoView: UIVisualEffectView {
   /**
    The current info view status mode.
    */
-  var status: Status = Status(.scanning) {
+  var status: Status = Status(state: .scanning) {
     didSet {
       setupFrames()
 
@@ -67,7 +67,7 @@ class InfoView: UIVisualEffectView {
       addSubview($0)
     }
 
-    status = Status(.scanning)
+    status = Status(state: .scanning)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -126,7 +126,7 @@ class InfoView: UIVisualEffectView {
   func animateLoading() {
     borderView.isHidden = false
 
-    animateBlur(.light)
+    animate(blurStyle: .light)
     animateBorderView(CGFloat(M_PI_2))
   }
 
@@ -135,14 +135,14 @@ class InfoView: UIVisualEffectView {
 
    - Parameter style: The current blur style.
    */
-  func animateBlur(_ style: UIBlurEffectStyle) {
+  func animate(blurStyle style: UIBlurEffectStyle) {
     guard status.state == .processing else { return }
 
     UIView.animate(withDuration: 2.0, delay: 0.5, options: [.beginFromCurrentState],
       animations: {
         self.effect = UIBlurEffect(style: style)
       }, completion: { _ in
-        self.animateBlur(style == .light ? .extraLight : .light)
+        self.animate(blurStyle: style == .light ? .extraLight : .light)
     })
   }
 

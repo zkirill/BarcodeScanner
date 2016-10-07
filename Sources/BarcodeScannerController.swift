@@ -89,7 +89,7 @@ open class BarcodeScannerController: UIViewController {
     }()
 
   /// The current controller's status mode.
-  var status: Status = Status(.scanning) {
+  var status: Status = Status(state: .scanning) {
     didSet {
       let duration = status.animated &&
         (status.state == .processing
@@ -102,7 +102,7 @@ open class BarcodeScannerController: UIViewController {
 
         DispatchQueue.main.asyncAfter(
           deadline: DispatchTime.now() + Double(Int64(2.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-            self.status = Status(.scanning)
+            self.status = Status(state: .scanning)
         }
 
         return
@@ -230,7 +230,7 @@ open class BarcodeScannerController: UIViewController {
 
     if authorizationStatus == .authorized {
       setupSession()
-      status = Status(.scanning)
+      status = Status(state: .scanning)
     } else if authorizationStatus == .notDetermined {
       AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo,
         completionHandler: { (granted: Bool) -> Void in
@@ -239,11 +239,11 @@ open class BarcodeScannerController: UIViewController {
               self.setupSession()
             }
 
-            self.status = granted ? Status(.scanning) : Status(.unauthorized)
+            self.status = granted ? Status(state: .scanning) : Status(state: .unauthorized)
           }
       })
     } else {
-      status = Status(.unauthorized)
+      status = Status(state: .unauthorized)
     }
   }
 
@@ -275,7 +275,7 @@ open class BarcodeScannerController: UIViewController {
    - Parameter message: Error message that overrides the message from the config.
    */
   open func resetWithError(_ message: String? = nil) {
-    status = Status(.notFound, text: message)
+    status = Status(state: .notFound, text: message)
   }
 
   /**
@@ -284,7 +284,7 @@ open class BarcodeScannerController: UIViewController {
    - Parameter animated: Flag to show scanner with or without animation.
    */
   open func reset(animated: Bool = true) {
-    status = Status(.scanning, animated: animated)
+    status = Status(state: .scanning, animated: animated)
   }
 
   /**
@@ -367,7 +367,7 @@ open class BarcodeScannerController: UIViewController {
         flashView.removeFromSuperview()
 
         if processing {
-          self.status = Status(.processing)
+          self.status = Status(state: .processing)
         }
     })
   }

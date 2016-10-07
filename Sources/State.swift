@@ -23,7 +23,7 @@ struct Status {
    - Parameter animated: A flag to enable/disable animation.
    - Parameter text: A text that overrides a text from the state.
    */
-  init(_ state: State, animated: Bool = true, text: String? = nil) {
+  init(state: State, animated: Bool = true, text: String? = nil) {
     self.state = state
     self.animated = animated
     self.text = text ?? state.text

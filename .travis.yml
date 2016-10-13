@@ -3,3 +3,6 @@ language: objective-c
 
 script:
 - xcodebuild clean build -project BarcodeScanner.xcodeproj -scheme "BarcodeScanner-iOS" -sdk iphonesimulator
+
+notifications:
+  email: false

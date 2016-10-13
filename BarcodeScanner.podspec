@@ -18,4 +18,6 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'BarcodeScanner' => ['Images/*.{png}'] }
 
   s.frameworks = 'UIKit', 'AVFoundation'
+
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 end

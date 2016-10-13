@@ -48,7 +48,7 @@ controller.codeDelegate = self
 controller.errorDelegate = self
 controller.dismissalDelegate = self
 
-presentViewController(controller, animated: true, completion: nil)
+present(controller, animated: true, completion: nil)
 ```
 
 <div align="center">
@@ -73,7 +73,7 @@ Use `BarcodeScannerCodeDelegate` when you want to get the captured code back.
 ```swift
 extension ViewController: BarcodeScannerCodeDelegate {
 
-  func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String, type: String) {
+  func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
     print(code)
     controller.reset()
   }
@@ -86,7 +86,7 @@ Use `BarcodeScannerErrorDelegate` when you want to handle session errors.
 ```swift
 extension ViewController: BarcodeScannerErrorDelegate {
 
-  func barcodeScanner(controller: BarcodeScannerController, didReceiveError error: ErrorType) {
+  func barcodeScanner(_ controller: BarcodeScannerController, didReceiveError error: Error) {
     print(error)
   }
 }
@@ -101,8 +101,8 @@ presented initially.
 ```swift
 extension ViewController: BarcodeScannerDismissalDelegate {
 
-  func barcodeScannerDidDismiss(controller: BarcodeScannerController) {
-    controller.dismissViewControllerAnimated(true, completion: nil)
+  func barcodeScannerDidDismiss(_ controller: BarcodeScannerController) {
+    controller.dismiss(animated: true, completion: nil)
   }
 }
 ```
@@ -123,9 +123,9 @@ on the code. When the task is done you have 3 options to proceed:
 1. Dismiss `BarcodeScannerController` and show your results.
 
  ```swift
- func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+ func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
    // Code processing
-   controller.dismissViewControllerAnimated(true, completion: nil)
+   controller.dismiss(animated: true, completion: nil)
  }
  ```
 2. Show an error message and switch back to the scanning mode (for example,
@@ -136,24 +136,23 @@ when there is no product found with a given barcode in your database):
  </div><br/>
 
  ```swift
- func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+ func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
    // Code processing
-   controller.resetWithError("Error message")
+   controller.resetWithError(message: "Error message")
    // If message is not provided the default message from the config will be used instead.
  }
  ```
 3. Reset the controller to the scanning mode (with or without animation):
 
  ```swift
- func barcodeScanner(controller: BarcodeScannerController, didCapturedCode code: String) {
+ func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
    // Code processing
    controller.reset(animated: true)
  }
  ```
 
-If you want to do continuous barcode scanning just set the `oneTimeSearch`
+If you want to do continuous barcode scanning just set the `isOneTimeSearch`
 property on your `BarcodeScannerController` instance to `false`.
-
 
 ### Customization
 
@@ -173,20 +172,20 @@ BarcodeScanner.Info.settingsText = NSLocalizedString(
   "In order to scan barcodes you have to allow camera under your settings.", comment: "")
 
 // Fonts
-BarcodeScanner.Title.font = UIFont.boldSystemFontOfSize(17)
-BarcodeScanner.CloseButton.font = UIFont.boldSystemFontOfSize(17)
-BarcodeScanner.SettingsButton.font = UIFont.boldSystemFontOfSize(17)
-BarcodeScanner.Info.font = UIFont.boldSystemFontOfSize(14)
-BarcodeScanner.Info.loadingFont = UIFont.boldSystemFontOfSize(16)
+BarcodeScanner.Title.font = UIFont.boldSystemFont(ofSize: 17)
+BarcodeScanner.CloseButton.font = UIFont.boldSystemFont(ofSize: 17)
+BarcodeScanner.SettingsButton.font = UIFont.boldSystemFont(ofSize: 17)
+BarcodeScanner.Info.font = UIFont.boldSystemFont(ofSize: 14)
+BarcodeScanner.Info.loadingFont = UIFont.boldSystemFont(ofSize: 16)
 
 // Colors
-BarcodeScanner.Title.color = UIColor.blackColor()
-BarcodeScanner.CloseButton.color = UIColor.blackColor()
-BarcodeScanner.SettingsButton.color = UIColor.whiteColor()
-BarcodeScanner.Info.textColor = UIColor.blackColor()
-BarcodeScanner.Info.tint = UIColor.blackColor()
-BarcodeScanner.Info.loadingTint = UIColor.blackColor()
-BarcodeScanner.Info.notFoundTint = UIColor.redColor()
+BarcodeScanner.Title.color = UIColor.black
+BarcodeScanner.CloseButton.color = UIColor.black
+BarcodeScanner.SettingsButton.color = UIColor.white
+BarcodeScanner.Info.textColor = UIColor.black
+BarcodeScanner.Info.tint = UIColor.black
+BarcodeScanner.Info.loadingTint = UIColor.black
+BarcodeScanner.Info.notFoundTint = UIColor.red
 ```
 
 ## Installation

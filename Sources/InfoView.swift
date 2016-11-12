@@ -141,8 +141,8 @@ class InfoView: UIVisualEffectView {
     UIView.animate(withDuration: 2.0, delay: 0.5, options: [.beginFromCurrentState],
       animations: {
         self.effect = UIBlurEffect(style: style)
-      }, completion: { _ in
-        self.animate(blurStyle: style == .light ? .extraLight : .light)
+      }, completion: { [weak self] _ in
+        self?.animate(blurStyle: style == .light ? .extraLight : .light)
     })
   }
 
@@ -163,8 +163,8 @@ class InfoView: UIVisualEffectView {
       options: [.beginFromCurrentState],
       animations: {
         self.borderView.transform = CGAffineTransform(rotationAngle: borderViewAngle)
-      }, completion: { _ in
-        self.animate(borderViewAngle: borderViewAngle + CGFloat(M_PI_2))
+      }, completion: { [weak self] _ in
+        self?.animate(borderViewAngle: borderViewAngle + CGFloat(M_PI_2))
     })
   }
 }

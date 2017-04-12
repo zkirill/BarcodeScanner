@@ -127,7 +127,7 @@ class InfoView: UIVisualEffectView {
     borderView.isHidden = false
 
     animate(blurStyle: .light)
-    animate(borderViewAngle: CGFloat(M_PI_2))
+    animate(borderViewAngle: CGFloat(Double.pi/2))
   }
 
   /**
@@ -164,7 +164,7 @@ class InfoView: UIVisualEffectView {
       animations: {
         self.borderView.transform = CGAffineTransform(rotationAngle: borderViewAngle)
       }, completion: { [weak self] _ in
-        self?.animate(borderViewAngle: borderViewAngle + CGFloat(M_PI_2))
+        self?.animate(borderViewAngle: borderViewAngle + CGFloat(Double.pi/2))
     })
   }
 }

@@ -203,14 +203,6 @@ open class BarcodeScannerController: UIViewController {
       object: nil)
   }
 
-  open override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-
-    setupFrames()
-    infoView.setupFrames()
-    headerView.isHidden = !isBeingPresented
-  }
-
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     animateFocusView()
@@ -268,7 +260,7 @@ open class BarcodeScannerController: UIViewController {
     output.metadataObjectTypes = metadata
     videoPreviewLayer?.session = captureSession
 
-    setupFrames()
+    view.setNeedsLayout()
   }
 
   // MARK: - Reset
@@ -310,11 +302,9 @@ open class BarcodeScannerController: UIViewController {
   }
 
   // MARK: - Layout
+  open override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
 
-  /**
-   Sets frames of the subviews.
-   */
-  func setupFrames() {
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
     infoView.frame = infoFrame
@@ -329,6 +319,8 @@ open class BarcodeScannerController: UIViewController {
 
     center(subview: focusView, inSize: CGSize(width: 218, height: 150))
     center(subview: settingsButton, inSize: CGSize(width: 150, height: 50))
+
+    headerView.isHidden = !isBeingPresented
   }
 
   /**
@@ -386,13 +378,13 @@ open class BarcodeScannerController: UIViewController {
     focusView.layer.removeAllAnimations()
     focusView.isHidden = false
 
-    setupFrames()
-
     UIView.animate(withDuration: 1.0, delay:0,
       options: [.repeat, .autoreverse, .beginFromCurrentState],
       animations: {
         self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
       }, completion: nil)
+
+    view.setNeedsLayout()
   }
 
   // MARK: - Actions

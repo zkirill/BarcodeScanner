@@ -36,7 +36,7 @@ class InfoView: UIVisualEffectView {
    */
   var status: Status = Status(state: .scanning) {
     didSet {
-      setupFrames()
+      setNeedsLayout()
 
       let stateStyles = status.state.styles
 
@@ -79,7 +79,9 @@ class InfoView: UIVisualEffectView {
   /**
    Sets up frames of subviews.
    */
-  func setupFrames() {
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
     let padding: CGFloat = 10
     let labelHeight: CGFloat = 40
     let imageSize = CGSize(width: 30, height: 27)

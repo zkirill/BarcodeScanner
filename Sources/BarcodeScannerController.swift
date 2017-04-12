@@ -311,9 +311,14 @@ open class BarcodeScannerController: UIViewController {
 
     if let videoPreviewLayer = videoPreviewLayer {
       videoPreviewLayer.frame = view.layer.bounds
-
-      if videoPreviewLayer.connection != nil {
-        videoPreviewLayer.connection.videoOrientation = .portrait
+      if let connection = videoPreviewLayer.connection, connection.isVideoOrientationSupported {
+        switch (UIApplication.shared.statusBarOrientation) {
+        case .portrait: connection.videoOrientation = .portrait
+        case .landscapeRight: connection.videoOrientation = .landscapeRight
+        case .landscapeLeft: connection.videoOrientation = .landscapeLeft
+        case .portraitUpsideDown: connection.videoOrientation = .portraitUpsideDown
+        default: connection.videoOrientation = .portrait
+        }
       }
     }
 
@@ -335,12 +340,6 @@ open class BarcodeScannerController: UIViewController {
       y: (view.frame.height - size.height) / 2,
       width: size.width,
       height: size.height)
-  }
-
-  // MARK: - Orientation
-
-  open override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-    return .portrait
   }
 
   // MARK: - Animations

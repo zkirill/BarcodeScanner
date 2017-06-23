@@ -176,7 +176,7 @@ open class BarcodeScannerController: UIViewController {
     super.viewDidLoad()
 
     videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-    videoPreviewLayer?.videoGravity = AVLayerVideoGravityResize
+    videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
 
     view.backgroundColor = UIColor.black
 

@@ -419,12 +419,17 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
 
     guard
       let metadataObj = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
-      let code = metadataObj.stringValue,
+      var code = metadataObj.stringValue,
       metadata.contains(metadataObj.type)
       else { return }
 
     if isOneTimeSearch {
       locked = true
+    }
+    // See: https://stackoverflow.com/questions/22767584/ios7-barcode-scanner-api-adds-a-zero-to-upca-barcode-format
+    if metadataObj.type == AVMetadataObjectTypeEAN13Code && code.hasPrefix("0"){
+      let index = code.index(code.startIndex, offsetBy: 1)
+      code = code.substring(from: index)
     }
 
     animateFlash(whenProcessing: isOneTimeSearch)

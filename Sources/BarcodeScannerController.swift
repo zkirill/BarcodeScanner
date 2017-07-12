@@ -330,7 +330,7 @@ open class BarcodeScannerController: UIViewController {
       }
     }
 
-    if barCodeFocusViewType == .oneDimention {
+    if barCodeFocusViewType == .oneDimension {
         center(subview: focusView, inSize: CGSize(width: 280, height: 80))
     } else {
         center(subview: focusView, inSize: CGSize(width: 218, height: 150))

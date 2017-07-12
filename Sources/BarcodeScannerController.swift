@@ -125,6 +125,8 @@ open class BarcodeScannerController: UIViewController {
       })
     }
   }
+    
+  var shouldAnimateFocusView: Bool = true
 
   /// The current torch mode on the capture device.
   var torchMode: TorchMode = .off {
@@ -376,12 +378,14 @@ open class BarcodeScannerController: UIViewController {
   func animateFocusView() {
     focusView.layer.removeAllAnimations()
     focusView.isHidden = false
-
+    
+    if shouldAnimateFocusView {
     UIView.animate(withDuration: 1.0, delay:0,
-      options: [.repeat, .autoreverse, .beginFromCurrentState],
-      animations: {
-        self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
-      }, completion: nil)
+          options: [.repeat, .autoreverse, .beginFromCurrentState],
+          animations: {
+            self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
+          }, completion: nil)
+    }
 
     view.setNeedsLayout()
   }

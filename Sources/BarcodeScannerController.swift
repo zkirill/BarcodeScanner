@@ -126,7 +126,7 @@ open class BarcodeScannerController: UIViewController {
     }
   }
     
-  var shouldAnimateFocusView: Bool = true
+  public var shouldAnimateFocusView: Bool = true
 
   /// The current torch mode on the capture device.
   var torchMode: TorchMode = .off {

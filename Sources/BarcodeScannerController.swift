@@ -126,7 +126,7 @@ open class BarcodeScannerController: UIViewController {
     }
   }
     
-  public var shouldAnimateFocusView: Bool = true
+  public var barCodeFocusViewType: FocusViewType = .animated
 
   /// The current torch mode on the capture device.
   var torchMode: TorchMode = .off {
@@ -324,7 +324,11 @@ open class BarcodeScannerController: UIViewController {
       }
     }
 
-    center(subview: focusView, inSize: CGSize(width: 218, height: 150))
+    if barCodeFocusViewType == .twoDimentions {
+        center(subview: focusView, inSize: CGSize(width: 218, height: 150))
+    } else {
+        center(subview: focusView, inSize: CGSize(width: 280, height: 80))
+    }
     center(subview: settingsButton, inSize: CGSize(width: 150, height: 50))
 
     headerView.isHidden = !isBeingPresented
@@ -379,15 +383,14 @@ open class BarcodeScannerController: UIViewController {
     focusView.layer.removeAllAnimations()
     focusView.isHidden = false
     
-    if shouldAnimateFocusView {
-    UIView.animate(withDuration: 1.0, delay:0,
-          options: [.repeat, .autoreverse, .beginFromCurrentState],
-          animations: {
-            self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
-          }, completion: nil)
-    }
-
-    view.setNeedsLayout()
+    if barCodeFocusViewType == .animated {
+        UIView.animate(withDuration: 1.0, delay:0,
+              options: [.repeat, .autoreverse, .beginFromCurrentState],
+              animations: {
+                self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
+              }, completion: nil)
+        }
+        view.setNeedsLayout()
   }
 
   // MARK: - Actions

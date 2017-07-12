@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DBF9E0E1F169DEF006B5AA8 /* FocusViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */; };
 		D50BE3E91C9FE7A80000A34C /* flashOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */; };
 		D50BE3EA1C9FE7A80000A34C /* flashOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */; };
 		D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E71C9FE7A80000A34C /* info@3x.png */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusViewType.swift; sourceTree = "<group>"; };
 		D50BE3E51C9FE7A80000A34C /* flashOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@3x.png"; sourceTree = "<group>"; };
 		D50BE3E61C9FE7A80000A34C /* flashOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@3x.png"; sourceTree = "<group>"; };
 		D50BE3E71C9FE7A80000A34C /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				D5FC8AD61D252A12004BED88 /* State.swift */,
 				D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */,
 				D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */,
+				2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */,
 				D5F1C1C51C9C5113001E17A6 /* Config.swift */,
 				D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */,
 				D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */,
@@ -178,6 +181,7 @@
 				D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */,
 				D5F1C1C91C9C5113001E17A6 /* Config.swift in Sources */,
 				D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */,
+				2DBF9E0E1F169DEF006B5AA8 /* FocusViewType.swift in Sources */,
 				D5FC8AD71D252A12004BED88 /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

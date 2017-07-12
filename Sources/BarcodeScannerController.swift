@@ -324,10 +324,10 @@ open class BarcodeScannerController: UIViewController {
       }
     }
 
-    if barCodeFocusViewType == .twoDimentions {
-        center(subview: focusView, inSize: CGSize(width: 218, height: 150))
-    } else {
+    if barCodeFocusViewType == .oneDimention {
         center(subview: focusView, inSize: CGSize(width: 280, height: 80))
+    } else {
+        center(subview: focusView, inSize: CGSize(width: 218, height: 150))
     }
     center(subview: settingsButton, inSize: CGSize(width: 150, height: 50))
 

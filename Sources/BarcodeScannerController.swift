@@ -204,7 +204,14 @@ open class BarcodeScannerController: UIViewController {
       name: NSNotification.Name.UIApplicationWillEnterForeground,
       object: nil)
   }
-
+  
+  open override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setupFrame()
+    
+    headerView.isHidden = !isBeingPresented
+  }
+  
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     animateFocusView()
@@ -302,15 +309,14 @@ open class BarcodeScannerController: UIViewController {
     flashButton.alpha = alpha
     settingsButton.isHidden = status.state != .unauthorized
   }
-
+  
   // MARK: - Layout
-  open override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
+  
+  func setupFrame() {
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
     infoView.frame = infoFrame
-
+    
     if let videoPreviewLayer = videoPreviewLayer {
       videoPreviewLayer.frame = view.layer.bounds
       if let connection = videoPreviewLayer.connection, connection.isVideoOrientationSupported {
@@ -382,6 +388,8 @@ open class BarcodeScannerController: UIViewController {
   func animateFocusView() {
     focusView.layer.removeAllAnimations()
     focusView.isHidden = false
+    
+    setupFrame()
     
     if barCodeFocusViewType == .animated {
         UIView.animate(withDuration: 1.0, delay:0,

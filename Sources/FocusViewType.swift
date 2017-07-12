@@ -11,7 +11,7 @@ import UIKit
 public enum FocusViewType {
     
     case animated
-    case oneDimention
-    case twoDimentions
+    case oneDimension
+    case twoDimensions
 
 }

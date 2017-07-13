@@ -207,7 +207,6 @@ open class BarcodeScannerController: UIViewController {
   
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    setupFrame()
     
     headerView.isHidden = !isBeingPresented
   }
@@ -215,6 +214,30 @@ open class BarcodeScannerController: UIViewController {
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     animateFocusView()
+  }
+  
+  open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    
+    coordinator.animate(alongsideTransition: { (context) in
+      self.setupFrame()
+    }) { (context) in
+      
+      self.focusView.layer.removeAllAnimations()
+      
+      UIView.animate(withDuration: 0.3, animations: {
+        if self.barCodeFocusViewType == .oneDimension {
+          self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
+        } else {
+          self.center(subview: self.focusView, inSize: CGSize(width: 218, height: 150))
+        }
+      }, completion: { (finished) in
+        if finished {
+          self.animateFocusView()
+        }
+      })
+      
+    }
   }
 
   /**
@@ -339,7 +362,7 @@ open class BarcodeScannerController: UIViewController {
 
     headerView.isHidden = !isBeingPresented
   }
-
+  
   /**
    Sets a new size and center aligns subview's position.
 

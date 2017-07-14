@@ -218,25 +218,11 @@ open class BarcodeScannerController: UIViewController {
   
   open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
-    
     coordinator.animate(alongsideTransition: { (context) in
       self.setupFrame()
     }) { (context) in
-      
       self.focusView.layer.removeAllAnimations()
-      
-      UIView.animate(withDuration: 0.3, animations: {
-        if self.barCodeFocusViewType == .oneDimension {
-          self.center(subview: self.focusView, inSize: CGSize(width: 280, height: 80))
-        } else {
-          self.center(subview: self.focusView, inSize: CGSize(width: 218, height: 150))
-        }
-      }, completion: { (finished) in
-        if finished {
-          self.animateFocusView()
-        }
-      })
-      
+      self.animateFocusView()
     }
   }
 
@@ -332,14 +318,13 @@ open class BarcodeScannerController: UIViewController {
     flashButton.alpha = alpha
     settingsButton.isHidden = status.state != .unauthorized
   }
-  
+
   // MARK: - Layout
-  
   func setupFrame() {
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
     flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
     infoView.frame = infoFrame
-    
+
     if let videoPreviewLayer = videoPreviewLayer {
       videoPreviewLayer.frame = view.layer.bounds
       if let connection = videoPreviewLayer.connection, connection.isVideoOrientationSupported {
@@ -362,7 +347,7 @@ open class BarcodeScannerController: UIViewController {
 
     headerView.isHidden = !isBeingPresented
   }
-  
+
   /**
    Sets a new size and center aligns subview's position.
 

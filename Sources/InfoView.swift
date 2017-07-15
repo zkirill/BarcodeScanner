@@ -8,7 +8,7 @@ class InfoView: UIVisualEffectView {
   /// Text label.
   lazy var label: UILabel = {
     let label = UILabel()
-    label.numberOfLines = 2
+    label.numberOfLines = 3
 
     return label
   }()

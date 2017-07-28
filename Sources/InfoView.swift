@@ -64,7 +64,11 @@ class InfoView: UIVisualEffectView {
     super.init(effect: blurEffect)
 
     [label, imageView, borderView].forEach {
-      addSubview($0)
+        if #available(iOS 11.0, *) {
+            contentView.addSubview($0)
+        } else {
+            addSubview($0)
+        }
     }
 
     status = Status(state: .scanning)

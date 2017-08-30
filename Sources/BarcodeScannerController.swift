@@ -42,10 +42,9 @@ open class BarcodeScannerController: UIViewController {
   lazy var infoView: InfoView = InfoView()
 
   /// Button to change torch mode.
-  lazy var flashButton: UIButton = { [unowned self] in
+  public lazy var flashButton: UIButton = { [unowned self] in
     let button = UIButton(type: .custom)
     button.addTarget(self, action: #selector(flashButtonDidPress), for: .touchUpInside)
-
     return button
     }()
 

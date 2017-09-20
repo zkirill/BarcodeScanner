@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     button.center = view.center
   }
 
-  func buttonDidPress() {
+  @objc func buttonDidPress() {
     let controller = BarcodeScannerController()
     controller.codeDelegate = self
     controller.errorDelegate = self
@@ -41,8 +41,8 @@ class ViewController: UIViewController {
 extension ViewController: BarcodeScannerCodeDelegate {
 
   func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
-    print(code)
-    print(type)
+    print("Barcode Data: \(code)")
+    print("Symbology Type: \(type)")
 
     let delayTime = DispatchTime.now() + Double(Int64(6 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
     DispatchQueue.main.asyncAfter(deadline: delayTime) {

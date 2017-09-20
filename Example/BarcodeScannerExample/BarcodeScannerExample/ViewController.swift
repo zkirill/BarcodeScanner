@@ -3,38 +3,27 @@ import BarcodeScanner
 
 class ViewController: UIViewController {
 
-  lazy var button: UIButton = {
-    let button = UIButton(type: .system)
-    button.backgroundColor = UIColor.black
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 28)
-    button.setTitleColor(UIColor.white, for: UIControlState())
-    button.setTitle("Scan", for: UIControlState())
-    button.addTarget(self, action: #selector(buttonDidPress), for: .touchUpInside)
+  @IBOutlet var presentScannerButton: UIButton!
+  @IBOutlet var pushScannerButton: UIButton!
 
-    return button
-  }()
+  private let controller = BarcodeScannerController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.white
-    view.addSubview(button)
-  }
-
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-
-    button.frame.size = CGSize(width: 250, height: 80)
-    button.center = view.center
-  }
-
-  @objc func buttonDidPress() {
-    let controller = BarcodeScannerController()
     controller.codeDelegate = self
     controller.errorDelegate = self
     controller.dismissalDelegate = self
+  }
 
+  @IBAction func handleScannerPresent(_ sender: Any, forEvent event: UIEvent) {
+    controller.title = "Barcode Scanner"
     present(controller, animated: true, completion: nil)
+  }
+
+  @IBAction func handleScannerPush(_ sender: Any, forEvent event: UIEvent) {
+    controller.title = "Barcode Scanner"
+    navigationController?.pushViewController(controller, animated: true)
   }
 }
 

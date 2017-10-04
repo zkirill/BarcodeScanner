@@ -112,14 +112,14 @@ open class BarcodeScannerController: UIViewController {
           self.infoView.frame = self.infoFrame
           self.infoView.status = self.status
         },
-        completion: { _ in
+        completion: { [weak self] _ in
           if delayReset {
-            self.resetState()
+            self?.resetState()
           }
 
-          self.infoView.layer.removeAllAnimations()
-          if self.status.state == .processing {
-            self.infoView.animateLoading()
+          self?.infoView.layer.removeAllAnimations()
+          if self?.status.state == .processing {
+            self?.infoView.animateLoading()
           }
       })
     }
@@ -378,11 +378,11 @@ open class BarcodeScannerController: UIViewController {
       animations: {
         flashView.alpha = 0.0
       },
-      completion: { _ in
+      completion: { [weak self] _ in
         flashView.removeFromSuperview()
 
         if whenProcessing {
-          self.status = Status(state: .processing)
+          self?.status = Status(state: .processing)
         }
     })
   }

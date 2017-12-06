@@ -29,8 +29,8 @@ public protocol BarcodeScannerDismissalDelegate: class {
  */
 open class BarcodeScannerController: UIViewController {
 
-  /// Video capture device.
-  lazy var captureDevice: AVCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)!
+  /// Video capture device. This may be nil when running in Simulator.
+  lazy var captureDevice: AVCaptureDevice! = AVCaptureDevice.default(for: AVMediaType.video)
 
   /// Capture session.
   lazy var captureSession: AVCaptureSession = AVCaptureSession()
@@ -124,13 +124,13 @@ open class BarcodeScannerController: UIViewController {
       })
     }
   }
-    
+
   public var barCodeFocusViewType: FocusViewType = .animated
 
   /// The current torch mode on the capture device.
   var torchMode: TorchMode = .off {
     didSet {
-      guard captureDevice.hasFlash else { return }
+      guard let captureDevice = captureDevice, captureDevice.hasFlash else { return }
 
       do {
         try captureDevice.lockForConfiguration()
@@ -264,6 +264,10 @@ open class BarcodeScannerController: UIViewController {
    Sets up capture input, output and session.
    */
   func setupSession() {
+    guard let captureDevice = captureDevice else {
+        return
+    }
+    
     do {
       let input = try AVCaptureDeviceInput(device: captureDevice)
       captureSession.addInput(input)
@@ -320,8 +324,27 @@ open class BarcodeScannerController: UIViewController {
 
   // MARK: - Layout
   func setupFrame() {
-    headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
-    flashButton.frame = CGRect(x: view.frame.width - 50, y: 73, width: 37, height: 37)
+    let flashButtonSize: CGFloat = 37
+    let isLandscape = view.frame.width > view.frame.height
+    let isIphoneX = UIDevice().userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436
+    var leftSafeAreaInset: CGFloat = 0
+    var rightSafeAreaInset: CGFloat = 0
+    
+    var navbarSize: CGFloat = 0
+    if (isLandscape) {
+        navbarSize = 32
+    }
+    else {
+        navbarSize = isIphoneX ? 88 : 64
+    }
+    
+    if #available(iOS 11.0, *) {
+        leftSafeAreaInset = view.safeAreaInsets.left
+        rightSafeAreaInset = view.safeAreaInsets.right
+    }
+    
+    headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: navbarSize)
+    flashButton.frame = CGRect(x: view.frame.width - 50 - rightSafeAreaInset, y: navbarSize + 10 + (flashButtonSize / 2), width: flashButtonSize, height: flashButtonSize)
     infoView.frame = infoFrame
 
     if let videoPreviewLayer = videoPreviewLayer {

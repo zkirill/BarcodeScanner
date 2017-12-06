@@ -85,6 +85,14 @@ class InfoView: UIVisualEffectView {
    */
   override func layoutSubviews() {
     super.layoutSubviews()
+    
+    var leftSafeAreaPadding: CGFloat = 0
+    var rightSafeAreaPadding: CGFloat = 0
+    
+    if #available(iOS 11.0, *) {
+        leftSafeAreaPadding = safeAreaInsets.left
+        rightSafeAreaPadding = safeAreaInsets.right
+    }
 
     let padding: CGFloat = 10
     let labelHeight: CGFloat = 40
@@ -93,7 +101,7 @@ class InfoView: UIVisualEffectView {
 
     if status.state != .processing && status.state != .notFound {
       imageView.frame = CGRect(
-        x: padding,
+        x: padding + leftSafeAreaPadding,
         y: (frame.height - imageSize.height) / 2,
         width: imageSize.width,
         height: imageSize.height)
@@ -101,7 +109,7 @@ class InfoView: UIVisualEffectView {
       label.frame = CGRect(
         x: imageView.frame.maxX + padding,
         y: 0,
-        width: frame.width - imageView.frame.maxX - 2 * padding,
+        width: frame.width - imageView.frame.maxX - 2 * padding - rightSafeAreaPadding,
         height: frame.height)
     } else {
       imageView.frame = CGRect(

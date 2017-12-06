@@ -61,16 +61,24 @@ class HeaderView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    let padding: CGFloat = 8
+    var leftSafeAreaPadding: CGFloat = 0
+    var topSafeAreaPadding: CGFloat = 0
+    if #available(iOS 11, *) {
+      leftSafeAreaPadding = safeAreaInsets.left
+      topSafeAreaPadding = safeAreaInsets.top
+    }
+    
+    let leadingPadding: CGFloat = 15 + leftSafeAreaPadding
+    let topPadding: CGFloat = 8 + topSafeAreaPadding
     let labelHeight: CGFloat = 40
-
+    
     button.sizeToFit()
 
-    button.frame.origin = CGPoint(x: 15,
-      y: ((frame.height - button.frame.height) / 2) + padding)
+    button.frame.origin = CGPoint(x: leadingPadding,
+      y: ((frame.height - button.frame.height) / 2) + topPadding)
 
     label.frame = CGRect(
-      x: 0, y: ((frame.height - labelHeight) / 2) + padding,
+      x: 0, y: ((frame.height - labelHeight) / 2) + topPadding,
       width: frame.width, height: labelHeight)
   }
 

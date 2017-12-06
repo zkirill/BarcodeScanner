@@ -327,7 +327,6 @@ open class BarcodeScannerController: UIViewController {
     let flashButtonSize: CGFloat = 37
     let isLandscape = view.frame.width > view.frame.height
     let isIphoneX = UIDevice().userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436
-    var leftSafeAreaInset: CGFloat = 0
     var rightSafeAreaInset: CGFloat = 0
     
     var navbarSize: CGFloat = 0
@@ -339,7 +338,6 @@ open class BarcodeScannerController: UIViewController {
     }
     
     if #available(iOS 11.0, *) {
-        leftSafeAreaInset = view.safeAreaInsets.left
         rightSafeAreaInset = view.safeAreaInsets.right
     }
     

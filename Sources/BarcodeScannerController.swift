@@ -265,7 +265,7 @@ open class BarcodeScannerController: UIViewController {
    */
   func setupSession() {
     guard let captureDevice = captureDevice else {
-        return
+      return
     }
     
     do {
@@ -326,19 +326,21 @@ open class BarcodeScannerController: UIViewController {
   func setupFrame() {
     let flashButtonSize: CGFloat = 37
     let isLandscape = view.frame.width > view.frame.height
-    let isIphoneX = UIDevice().userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436
+
     var rightSafeAreaInset: CGFloat = 0
+    var topSafeAreaInset: CGFloat = 0
+    if #available(iOS 11.0, *) {
+      rightSafeAreaInset = view.safeAreaInsets.right
+      topSafeAreaInset = view.safeAreaInsets.top
+    }
     
     var navbarSize: CGFloat = 0
     if (isLandscape) {
-        navbarSize = 32
+      navbarSize = 32
     }
     else {
-        navbarSize = isIphoneX ? 88 : 64
-    }
-    
-    if #available(iOS 11.0, *) {
-        rightSafeAreaInset = view.safeAreaInsets.right
+      // On iPhone X devices, extend the size of the top nav bar
+      navbarSize = topSafeAreaInset > 0 ? 88 : 64
     }
     
     headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: navbarSize)

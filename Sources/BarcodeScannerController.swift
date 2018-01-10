@@ -35,7 +35,7 @@ open class BarcodeScannerController: UIViewController {
   private lazy var captureSession: AVCaptureSession = AVCaptureSession()
 
   /// Header view with title and close button.
-  private lazy var headerView: HeaderView = HeaderView()
+  private lazy var navigationBar: UINavigationBar = UINavigationBar()
 
   /// Information view with description label.
   private lazy var infoView: InfoView = InfoView()
@@ -186,14 +186,13 @@ open class BarcodeScannerController: UIViewController {
 
     view.layer.addSublayer(videoPreviewLayer)
 
-    [infoView, headerView, settingsButton, flashButton, focusView].forEach {
+    [infoView, navigationBar, settingsButton, flashButton, focusView].forEach {
       view.addSubview($0)
       view.bringSubview(toFront: $0)
     }
 
     torchMode = .off
     focusView.isHidden = true
-    headerView.delegate = self
 
     setupCamera()
 
@@ -201,12 +200,43 @@ open class BarcodeScannerController: UIViewController {
       self, selector: #selector(appWillEnterForeground),
       name: NSNotification.Name.UIApplicationWillEnterForeground,
       object: nil)
+
+    // navigationBar
+    let item = UINavigationItem()
+    let closeButton = HeaderElement.makeCloseButton()
+    closeButton.addTarget(
+      self,
+      action: #selector(closeButtonDidTouched),
+      for: .touchUpInside
+    )
+    item.leftBarButtonItem = UIBarButtonItem(customView: closeButton)
+    item.titleView = HeaderElement.makeLabel()
+
+    navigationBar.isTranslucent = false
+    navigationBar.delegate = self
+    navigationBar.backgroundColor = Title.backgroundColor
+    navigationBar.items = [item]
+
+    navigationBar.translatesAutoresizingMaskIntoConstraints = false
+    navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+    navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+
+    if #available(iOS 11, *) {
+      navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+    } else {
+      navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    }
   }
   
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    headerView.isHidden = !isBeingPresented
+
+    if navigationController != nil {
+      navigationItem.titleView = HeaderElement.makeLabel()
+      navigationBar.isHidden = true
+    } else {
+      navigationBar.isHidden = false
+    }
   }
   
   open override func viewDidAppear(_ animated: Bool) {
@@ -230,6 +260,10 @@ open class BarcodeScannerController: UIViewController {
   @objc private func appWillEnterForeground() {
     torchMode = .off
     animateFocusView()
+  }
+
+  @objc private func closeButtonDidTouched() {
+    dismissalDelegate?.barcodeScannerDidDismiss(self)
   }
 
   // MARK: - Configuration
@@ -329,7 +363,6 @@ open class BarcodeScannerController: UIViewController {
     // On iPhone X devices, extend the size of the top nav bar
     let navbarSize: CGFloat = isLandscape ? 32 : insets.top > 0 ? 88 : 64
 
-    headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: navbarSize)
     flashButton.frame = CGRect(
       x: view.frame.width - 50 - insets.right,
       y: navbarSize + 10 + (flashButtonSize / 2),
@@ -477,10 +510,8 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
   }
 }
 
-// MARK: - HeaderViewDelegate
-
-extension BarcodeScannerController: HeaderViewDelegate {
-  func headerViewDidPressClose(_ headerView: HeaderView) {
-    dismissalDelegate?.barcodeScannerDidDismiss(self)
+extension BarcodeScannerController: UINavigationBarDelegate {
+  public func position(for bar: UIBarPositioning) -> UIBarPosition {
+    return .topAttached
   }
 }

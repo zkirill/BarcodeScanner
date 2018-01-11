@@ -204,13 +204,16 @@ open class BarcodeScannerController: UIViewController {
     // navigationBar
     let item = UINavigationItem()
     let closeButton = HeaderElement.makeCloseButton()
+    closeButton.sizeToFit()
     closeButton.addTarget(
       self,
       action: #selector(closeButtonDidTouched),
       for: .touchUpInside
     )
     item.leftBarButtonItem = UIBarButtonItem(customView: closeButton)
-    item.titleView = HeaderElement.makeLabel()
+    let label = HeaderElement.makeLabel()
+    label.sizeToFit()
+    item.titleView = label
 
     navigationBar.isTranslucent = false
     navigationBar.delegate = self
@@ -224,7 +227,8 @@ open class BarcodeScannerController: UIViewController {
     if #available(iOS 11, *) {
       navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
     } else {
-      navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+      navigationBar.topAnchor.constraint(
+        equalTo: topLayoutGuide.bottomAnchor).isActive = true
     }
   }
   
@@ -232,7 +236,9 @@ open class BarcodeScannerController: UIViewController {
     super.viewWillAppear(animated)
 
     if navigationController != nil {
-      navigationItem.titleView = HeaderElement.makeLabel()
+      let label = HeaderElement.makeLabel()
+      label.sizeToFit()
+      navigationItem.titleView = label
       navigationBar.isHidden = true
     } else {
       navigationBar.isHidden = false

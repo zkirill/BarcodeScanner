@@ -224,7 +224,8 @@ open class BarcodeScannerController: UIViewController {
     if #available(iOS 11, *) {
       navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
     } else {
-      navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+      navigationBar.topAnchor.constraint(
+        equalTo: topLayoutGuide.bottomAnchor).isActive = true
     }
   }
   

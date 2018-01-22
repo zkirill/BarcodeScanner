@@ -126,6 +126,7 @@
 				TargetAttributes = {
 					D50BE3F41C9FE8870000A34C = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = XVAH95CHDC;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 					};
@@ -404,14 +405,14 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = XVAH95CHDC;
 				INFOPLIST_FILE = BarcodeScannerExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.BarcodeScannerExample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "5429b4c3-def8-4c81-a541-9333e6f69af9";
+				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

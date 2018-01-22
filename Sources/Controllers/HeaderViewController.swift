@@ -1,17 +1,20 @@
 import UIKit
 
+/// Delegate to handle touch event of the close button.
 public protocol HeaderViewControllerDelegate: class {
   func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController)
 }
 
+/// Controller with title label and close button.
+/// It will be added as a child view controller if `BarcodeScannerController` is being presented.
 public final class HeaderViewController: UIViewController {
   public weak var delegate: HeaderViewControllerDelegate?
 
-  /// Header view with title and close button.
+  /// Header view with title label and close button.
   public private(set) lazy var navigationBar: UINavigationBar = self.makeNavigationBar()
-  /// Title label to show as a title view in navigation bar
+  /// Title view of the navigation bar
   public private(set) lazy var titleLabel: UILabel = self.makeTitleLabel()
-  /// Close button to show as a left bar button item in navigation bar.
+  /// Left bar button item of the navigation bar.
   public private(set) lazy var closeButton: UIButton = self.makeCloseButton()
 
   // MARK: - View lifecycle
@@ -23,16 +26,7 @@ public final class HeaderViewController: UIViewController {
     closeButton.addTarget(self, action: #selector(handleCloseButtonTap), for: .touchUpInside)
 
     view.addSubview(navigationBar)
-    navigationBar.translatesAutoresizingMaskIntoConstraints = false
-    navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-    navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-
-    if #available(iOS 11, *) {
-      navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-    } else {
-      navigationBar.topAnchor.constraint(
-        equalTo: topLayoutGuide.bottomAnchor).isActive = true
-    }
+    setupConstraints()
   }
 
   // MARK: - Actions
@@ -40,9 +34,24 @@ public final class HeaderViewController: UIViewController {
   @objc private func handleCloseButtonTap() {
     delegate?.headerViewControllerDidTapCloseButton(self)
   }
+
+  // MARK: - Layout
+
+  private func setupConstraints() {
+    navigationBar.translatesAutoresizingMaskIntoConstraints = false
+    navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+    if #available(iOS 11, *) {
+      navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+    } else {
+      navigationBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+    }
+  }
 }
 
-  // MARK: - Subviews
+// MARK: - Subviews
+
 private extension HeaderViewController {
   func makeNavigationBar() -> UINavigationBar {
     let navigationBar = UINavigationBar()

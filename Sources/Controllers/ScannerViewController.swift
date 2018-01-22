@@ -35,7 +35,11 @@ open class ScannerController: UIViewController {
   private lazy var captureSession: AVCaptureSession = AVCaptureSession()
 
   /// Information view with description label.
-  private lazy var infoView: InfoView = InfoView()
+  private lazy var messageViewController: MessageViewController = .init()
+
+  private var infoView: UIView {
+    return messageViewController.view
+  }
 
   /// Button to change torch mode.
   public lazy var flashButton: UIButton = { [unowned self] in
@@ -88,7 +92,7 @@ open class ScannerController: UIViewController {
         ) ? 0.5 : 0.0
 
       guard status.state != .notFound else {
-        infoView.status = status
+        messageViewController.state = status.state
 
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
           self.status = Status(state: .scanning)
@@ -106,7 +110,7 @@ open class ScannerController: UIViewController {
       UIView.animate(withDuration: duration,
                      animations: {
                       self.infoView.frame = self.infoFrame
-                      self.infoView.status = self.status
+                      self.messageViewController.state = self.status.state
       },
                      completion: { [weak self] _ in
                       if delayReset {
@@ -115,7 +119,7 @@ open class ScannerController: UIViewController {
 
                       self?.infoView.layer.removeAllAnimations()
                       if self?.status.state == .processing {
-                        self?.infoView.animateLoading()
+                        self?.messageViewController.animateLoading()
                       }
       })
     }
@@ -183,7 +187,8 @@ open class ScannerController: UIViewController {
 
     view.layer.addSublayer(videoPreviewLayer)
 
-    [infoView, settingsButton, flashButton, focusView].forEach {
+    add(childViewController: messageViewController)
+    [settingsButton, flashButton, focusView].forEach {
       view.addSubview($0)
       view.bringSubview(toFront: $0)
     }
@@ -212,6 +217,8 @@ open class ScannerController: UIViewController {
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     animateFocusView()
+
+    status = Status(state: .scanning)
   }
 
   open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

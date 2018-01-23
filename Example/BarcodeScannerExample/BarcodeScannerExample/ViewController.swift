@@ -6,7 +6,7 @@ class ViewController: UIViewController {
   @IBOutlet var presentScannerButton: UIButton!
   @IBOutlet var pushScannerButton: UIButton!
 
-  private let controller = BarcodeScannerController()
+  private let controller = ScannerController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -27,9 +27,9 @@ class ViewController: UIViewController {
   }
 }
 
-extension ViewController: BarcodeScannerCodeDelegate {
+extension ViewController: ScannerCodeDelegate {
 
-  func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
+  func scanner(_ controller: ScannerController, didCaptureCode code: String, type: String) {
     print("Barcode Data: \(code)")
     print("Symbology Type: \(type)")
 
@@ -40,16 +40,16 @@ extension ViewController: BarcodeScannerCodeDelegate {
   }
 }
 
-extension ViewController: BarcodeScannerErrorDelegate {
+extension ViewController: ScannerErrorDelegate {
 
-  func barcodeScanner(_ controller: BarcodeScannerController, didReceiveError error: Error) {
+  func scanner(_ controller: ScannerController, didReceiveError error: Error) {
     print(error)
   }
 }
 
-extension ViewController: BarcodeScannerDismissalDelegate {
+extension ViewController: ScannerDismissalDelegate {
 
-  func barcodeScannerDidDismiss(_ controller: BarcodeScannerController) {
+  func scannerDidDismiss(_ controller: ScannerController) {
     controller.dismiss(animated: true, completion: nil)
   }
 }

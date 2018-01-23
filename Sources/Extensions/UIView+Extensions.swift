@@ -8,4 +8,14 @@ extension UIView {
     
     return .zero
   }
+
+  func addSubviews(_ subviews: UIView...) {
+    addSubviews(subviews)
+  }
+
+  func addSubviews(_ subviews: [UIView]) {
+    subviews.forEach {
+      addSubview($0)
+    }
+  }
 }

@@ -107,10 +107,11 @@ open class ScannerController: UIViewController {
         resetState()
       }
 
+      self.messageViewController.state = self.status.state
       UIView.animate(withDuration: duration,
                      animations: {
+                      self.infoView.layoutIfNeeded()
                       self.infoView.frame = self.infoFrame
-                      self.messageViewController.state = self.status.state
       },
                      completion: { [weak self] _ in
                       if delayReset {
@@ -217,8 +218,6 @@ open class ScannerController: UIViewController {
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     animateFocusView()
-
-    status = Status(state: .scanning)
   }
 
   open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -487,6 +486,7 @@ extension ScannerController: AVCaptureMetadataOutputObjectsDelegate {
 
 extension ScannerController: HeaderViewControllerDelegate {
   public func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController) {
+    status = Status(state: .scanning)
     dismissalDelegate?.scannerDidDismiss(self)
   }
 }

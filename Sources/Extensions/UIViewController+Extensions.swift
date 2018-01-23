@@ -17,8 +17,8 @@ extension UIViewController {
 
   private func layout(childViewController: UIViewController) {
     let childView = childViewController.view
-    childView?.translatesAutoresizingMaskIntoConstraints = true
-    childView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    //childView?.translatesAutoresizingMaskIntoConstraints = true
+    //childView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     childView?.frame = view.bounds
   }
 }

@@ -8,7 +8,7 @@ public enum MessageStyle {
 
 public final class MessageViewController: UIViewController {
   // Blur effect view.
-  private lazy var blurView: BlurView = .init()
+  private lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
   /// Text label.
   public private(set) lazy var textLabel: UILabel = .init()
   /// Info image view.
@@ -30,7 +30,7 @@ public final class MessageViewController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(blurView)
-    blurView.addSubviews(textLabel, imageView, borderView)
+    blurView.contentView.addSubviews(textLabel, imageView, borderView)
     setupSubviews()
     handleStateUpdate()
   }
@@ -123,7 +123,7 @@ public final class MessageViewController: UIViewController {
       delay: 0.5,
       options: [.beginFromCurrentState],
       animations: ({ [weak self] in
-        self?.blurView.effectView.effect = UIBlurEffect(style: blurStyle)
+        self?.blurView.effect = UIBlurEffect(style: blurStyle)
       }),
       completion: ({ [weak self] _ in
         self?.animate(blurStyle: blurStyle == .light ? .extraLight : .light)
@@ -181,11 +181,11 @@ extension MessageViewController {
   private func makeCollapsedConstraints() -> [NSLayoutConstraint] {
     let padding: CGFloat = 10
     var constraints = [
-      imageView.centerYAnchor.constraint(equalTo: blurView.centerYAnchor),
+      imageView.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 18),
       imageView.widthAnchor.constraint(equalToConstant: 30),
       imageView.heightAnchor.constraint(equalToConstant: 27),
 
-      textLabel.topAnchor.constraint(equalTo: imageView.topAnchor),
+      textLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: -3),
       textLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10)
     ]
 

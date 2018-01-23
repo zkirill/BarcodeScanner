@@ -37,7 +37,7 @@ open class ScannerController: UIViewController {
   /// Information view with description label.
   private lazy var messageViewController: MessageViewController = .init()
 
-  private var infoView: UIView {
+  private var messageView: UIView {
     return messageViewController.view
   }
 
@@ -110,15 +110,15 @@ open class ScannerController: UIViewController {
       self.messageViewController.state = self.status.state
       UIView.animate(withDuration: duration,
                      animations: {
-                      self.infoView.layoutIfNeeded()
-                      self.infoView.frame = self.infoFrame
+                      self.messageView.layoutIfNeeded()
+                      self.messageView.frame = self.messageViewFrame
       },
                      completion: { [weak self] _ in
                       if delayReset {
                         self?.resetState()
                       }
 
-                      self?.infoView.layer.removeAllAnimations()
+                      self?.messageView.layer.removeAllAnimations()
                       if self?.status.state == .processing {
                         self?.messageViewController.animateLoading()
                       }
@@ -144,7 +144,7 @@ open class ScannerController: UIViewController {
   }
 
   /// Calculated frame for the info view.
-  private var infoFrame: CGRect {
+  private var messageViewFrame: CGRect {
     let height = status.state != .processing ? 75 : view.bounds.height
     return CGRect(x: 0, y: view.bounds.height - height,
                   width: view.bounds.width, height: height)
@@ -341,7 +341,7 @@ open class ScannerController: UIViewController {
       width: flashButtonSize,
       height: flashButtonSize
     )
-    infoView.frame = infoFrame
+    messageView.frame = messageViewFrame
 
     if let videoPreviewLayer = videoPreviewLayer {
       videoPreviewLayer.frame = view.layer.bounds

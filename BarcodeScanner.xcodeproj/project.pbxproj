@@ -14,12 +14,10 @@
 		D50BE3EB1C9FE7A80000A34C /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D50BE3E71C9FE7A80000A34C /* info@3x.png */; };
 		D55281B62016758F00FF3CDD /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B52016758F00FF3CDD /* HeaderViewController.swift */; };
 		D55281B8201675D500FF3CDD /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B7201675D500FF3CDD /* MessageViewController.swift */; };
-		D55281BA2016770800FF3CDD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B92016770800FF3CDD /* SettingsViewController.swift */; };
+		D55281BA2016770800FF3CDD /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B92016770800FF3CDD /* VideoViewController.swift */; };
 		D55281BC2016782C00FF3CDD /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281BB2016782C00FF3CDD /* ScannerViewController.swift */; };
 		D55281BF20167DB400FF3CDD /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281BE20167DB400FF3CDD /* UIViewController+Extensions.swift */; };
 		D55281C720168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281C620168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift */; };
-		D55281C920168E8A00FF3CDD /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281C820168E8A00FF3CDD /* BlurView.swift */; };
-		D55281CB20168E9600FF3CDD /* FooterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281CA20168E9600FF3CDD /* FooterViewController.swift */; };
 		D5C4E08E1CA0BFB9008D9269 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */; };
 		D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */; };
 		D5F1C1C91C9C5113001E17A6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C51C9C5113001E17A6 /* Config.swift */; };
@@ -36,12 +34,10 @@
 		D50BE3E71C9FE7A80000A34C /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
 		D55281B52016758F00FF3CDD /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
 		D55281B7201675D500FF3CDD /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		D55281B92016770800FF3CDD /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D55281B92016770800FF3CDD /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		D55281BB2016782C00FF3CDD /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		D55281BE20167DB400FF3CDD /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D55281C620168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
-		D55281C820168E8A00FF3CDD /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
-		D55281CA20168E9600FF3CDD /* FooterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterViewController.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TorchMode.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -76,11 +72,10 @@
 		D55281B42016758000FF3CDD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D55281CA20168E9600FF3CDD /* FooterViewController.swift */,
 				D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */,
 				D55281B52016758F00FF3CDD /* HeaderViewController.swift */,
 				D55281B7201675D500FF3CDD /* MessageViewController.swift */,
-				D55281B92016770800FF3CDD /* SettingsViewController.swift */,
+				D55281B92016770800FF3CDD /* VideoViewController.swift */,
 				D55281BB2016782C00FF3CDD /* ScannerViewController.swift */,
 			);
 			path = Controllers;
@@ -125,7 +120,6 @@
 		D5C629691C3A809D007F7B7C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D55281C820168E8A00FF3CDD /* BlurView.swift */,
 				D55281BD20167D9F00FF3CDD /* Extensions */,
 				D55281B42016758000FF3CDD /* Controllers */,
 				D5FC8AD61D252A12004BED88 /* State.swift */,
@@ -221,11 +215,9 @@
 			files = (
 				D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */,
 				D55281C720168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift in Sources */,
-				D55281C920168E8A00FF3CDD /* BlurView.swift in Sources */,
-				D55281CB20168E9600FF3CDD /* FooterViewController.swift in Sources */,
 				D5C4E08E1CA0BFB9008D9269 /* InfoView.swift in Sources */,
 				D55281BF20167DB400FF3CDD /* UIViewController+Extensions.swift in Sources */,
-				D55281BA2016770800FF3CDD /* SettingsViewController.swift in Sources */,
+				D55281BA2016770800FF3CDD /* VideoViewController.swift in Sources */,
 				D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */,
 				D5F1C1C91C9C5113001E17A6 /* Config.swift in Sources */,
 				D55281B8201675D500FF3CDD /* MessageViewController.swift in Sources */,

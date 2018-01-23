@@ -69,6 +69,14 @@ func localizedString(_ key: String) -> String {
   return key
 }
 
+var isSimulatorRunning: Bool = {
+  #if (arch(i386) || arch(x86_64)) && os(iOS)
+    return true
+  #else
+    return false
+  #endif
+}()
+
 /**
  `AVCaptureMetadataOutput` metadata object types.
  */

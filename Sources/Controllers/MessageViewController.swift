@@ -40,10 +40,6 @@ public final class MessageViewController: UIViewController {
     blurView.frame = view.bounds
   }
 
-  public override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-  }
-
   // MARK: - Subviews
 
   private func setupSubviews() {

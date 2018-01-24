@@ -1,11 +1,5 @@
 import UIKit
 
-public enum MessageStyle {
-  case initial
-  case loading
-  case error
-}
-
 public final class MessageViewController: UIViewController {
   // Blur effect view.
   private lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
@@ -18,6 +12,9 @@ public final class MessageViewController: UIViewController {
 
   private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedConstraints()
   private lazy var expandedConstraints: [NSLayoutConstraint] = self.makeExpandedConstraints()
+
+  public var regularTintColor: UIColor = .black
+  public var errorTintColor: UIColor = .red
 
   var state: State = .scanning {
     didSet {
@@ -61,30 +58,25 @@ public final class MessageViewController: UIViewController {
   private func handleStateUpdate() {
     borderView.isHidden = true
     borderView.layer.removeAllAnimations()
+    textLabel.text = state.text
 
     switch state {
     case .scanning, .unauthorized:
-      textLabel.text = state == .scanning ? Info.text : Info.settingsText
-      textLabel.textColor = .black
       textLabel.font = UIFont.boldSystemFont(ofSize: 14)
       textLabel.numberOfLines = 3
       textLabel.textAlignment = .left
-      imageView.tintColor = .black
+      imageView.tintColor = regularTintColor
     case .processing:
-      textLabel.text = Info.loadingText
-      textLabel.textColor = .black
       textLabel.font = UIFont.boldSystemFont(ofSize: 16)
       textLabel.numberOfLines = 10
       textLabel.textAlignment = .center
       borderView.isHidden = false
-      imageView.tintColor = .black
+      imageView.tintColor = regularTintColor
     case .notFound:
-      textLabel.text = Info.notFoundText
-      textLabel.textColor = .black
       textLabel.font = UIFont.boldSystemFont(ofSize: 16)
       textLabel.numberOfLines = 10
       textLabel.textAlignment = .center
-      imageView.tintColor = .red
+      imageView.tintColor = errorTintColor
     }
 
     if state == .scanning || state == .unauthorized {

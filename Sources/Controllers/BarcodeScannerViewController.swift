@@ -40,6 +40,15 @@ open class BarcodeScannerViewController: UIViewController {
   public weak var errorDelegate: BarcodeScannerErrorDelegate?
   /// Delegate to dismiss barcode scanner when the close button has been pressed.
   public weak var dismissalDelegate: BarcodeScannerDismissalDelegate?
+  /// `AVCaptureMetadataOutput` metadata object types.
+  public var metadata = AVMetadataObject.ObjectType.barcodeScannerMetadata {
+    didSet {
+      cameraViewController.metadata = metadata
+    }
+  }
+
+  // MARK: - Private properties
+
   /// Flag to lock session from capturing.
   private var locked = false
 
@@ -75,6 +84,7 @@ open class BarcodeScannerViewController: UIViewController {
   open override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.black
+    cameraViewController.metadata = metadata
     cameraViewController.delegate = self
 
     add(childViewController: cameraViewController)

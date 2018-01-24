@@ -38,9 +38,10 @@ public final class HeaderViewController: UIViewController {
   // MARK: - Layout
 
   private func setupConstraints() {
-    navigationBar.translatesAutoresizingMaskIntoConstraints = false
-    navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    NSLayoutConstraint.activate(
+      navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+    )
 
     if #available(iOS 11, *) {
       navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -50,7 +51,7 @@ public final class HeaderViewController: UIViewController {
   }
 }
 
-// MARK: - Subviews
+// MARK: - Subviews factory
 
 private extension HeaderViewController {
   func makeNavigationBar() -> UINavigationBar {

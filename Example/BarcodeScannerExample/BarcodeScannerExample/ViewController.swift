@@ -6,24 +6,24 @@ class ViewController: UIViewController {
   @IBOutlet var presentScannerButton: UIButton!
   @IBOutlet var pushScannerButton: UIButton!
 
-  private let controller = ScannerController()
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    controller.codeDelegate = self
-    controller.errorDelegate = self
-    controller.dismissalDelegate = self
-  }
-
   @IBAction func handleScannerPresent(_ sender: Any, forEvent event: UIEvent) {
+    let controller = makeBarcodeScannerController()
     controller.title = "Barcode Scanner"
     present(controller, animated: true, completion: nil)
   }
 
   @IBAction func handleScannerPush(_ sender: Any, forEvent event: UIEvent) {
+    let controller = makeBarcodeScannerController()
     controller.title = "Barcode Scanner"
     navigationController?.pushViewController(controller, animated: true)
+  }
+
+  private func makeBarcodeScannerController() -> ScannerController {
+    let controller = ScannerController()
+    controller.codeDelegate = self
+    controller.errorDelegate = self
+    controller.dismissalDelegate = self
+    return controller
   }
 }
 

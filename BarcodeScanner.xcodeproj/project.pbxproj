@@ -15,15 +15,12 @@
 		D55281B62016758F00FF3CDD /* HeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B52016758F00FF3CDD /* HeaderViewController.swift */; };
 		D55281B8201675D500FF3CDD /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B7201675D500FF3CDD /* MessageViewController.swift */; };
 		D55281BA2016770800FF3CDD /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281B92016770800FF3CDD /* CameraViewController.swift */; };
-		D55281BC2016782C00FF3CDD /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281BB2016782C00FF3CDD /* ScannerViewController.swift */; };
+		D55281BC2016782C00FF3CDD /* BarcodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281BB2016782C00FF3CDD /* BarcodeScannerViewController.swift */; };
 		D55281BF20167DB400FF3CDD /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281BE20167DB400FF3CDD /* UIViewController+Extensions.swift */; };
 		D55281C720168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55281C620168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift */; };
-		D5C4E08E1CA0BFB9008D9269 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */; };
 		D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */; };
 		D5CB377F2017ED2E00B9319D /* VideoPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CB377E2017ED2E00B9319D /* VideoPermissionService.swift */; };
 		D5F1C1C91C9C5113001E17A6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C51C9C5113001E17A6 /* Config.swift */; };
-		D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */; };
-		D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */; };
 		D5FC8AD71D252A12004BED88 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC8AD61D252A12004BED88 /* State.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,17 +33,14 @@
 		D55281B52016758F00FF3CDD /* HeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewController.swift; sourceTree = "<group>"; };
 		D55281B7201675D500FF3CDD /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		D55281B92016770800FF3CDD /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		D55281BB2016782C00FF3CDD /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		D55281BB2016782C00FF3CDD /* BarcodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerViewController.swift; sourceTree = "<group>"; };
 		D55281BE20167DB400FF3CDD /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		D55281C620168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* BarcodeScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BarcodeScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TorchMode.swift; sourceTree = "<group>"; tabWidth = 2; };
 		D5C6298B1C3A8BBD007F7B7C /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		D5CB377E2017ED2E00B9319D /* VideoPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPermissionService.swift; sourceTree = "<group>"; };
 		D5F1C1C51C9C5113001E17A6 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; tabWidth = 2; };
-		D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BarcodeScannerController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		D5FC8AD61D252A12004BED88 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
@@ -74,11 +68,10 @@
 		D55281B42016758000FF3CDD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D5F1C1C61C9C5113001E17A6 /* BarcodeScannerController.swift */,
 				D55281B52016758F00FF3CDD /* HeaderViewController.swift */,
 				D55281B7201675D500FF3CDD /* MessageViewController.swift */,
 				D55281B92016770800FF3CDD /* CameraViewController.swift */,
-				D55281BB2016782C00FF3CDD /* ScannerViewController.swift */,
+				D55281BB2016782C00FF3CDD /* BarcodeScannerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -125,11 +118,9 @@
 				D55281BD20167D9F00FF3CDD /* Extensions */,
 				D55281B42016758000FF3CDD /* Controllers */,
 				D5FC8AD61D252A12004BED88 /* State.swift */,
-				D5C4E08C1CA0BFB9008D9269 /* InfoView.swift */,
 				D5C4E08D1CA0BFB9008D9269 /* TorchMode.swift */,
 				2DBF9E0D1F169DEF006B5AA8 /* FocusViewType.swift */,
 				D5F1C1C51C9C5113001E17A6 /* Config.swift */,
-				D5F1C1D21C9C5809001E17A6 /* HeaderView.swift */,
 				D5CB377E2017ED2E00B9319D /* VideoPermissionService.swift */,
 			);
 			path = Sources;
@@ -218,14 +209,11 @@
 			files = (
 				D5C4E08F1CA0BFB9008D9269 /* TorchMode.swift in Sources */,
 				D55281C720168E7000FF3CDD /* NSLayoutConstraint+Extensions.swift in Sources */,
-				D5C4E08E1CA0BFB9008D9269 /* InfoView.swift in Sources */,
 				D55281BF20167DB400FF3CDD /* UIViewController+Extensions.swift in Sources */,
 				D55281BA2016770800FF3CDD /* CameraViewController.swift in Sources */,
-				D5F1C1D31C9C5809001E17A6 /* HeaderView.swift in Sources */,
 				D5F1C1C91C9C5113001E17A6 /* Config.swift in Sources */,
 				D55281B8201675D500FF3CDD /* MessageViewController.swift in Sources */,
-				D5F1C1CA1C9C5113001E17A6 /* BarcodeScannerController.swift in Sources */,
-				D55281BC2016782C00FF3CDD /* ScannerViewController.swift in Sources */,
+				D55281BC2016782C00FF3CDD /* BarcodeScannerViewController.swift in Sources */,
 				D5CB377F2017ED2E00B9319D /* VideoPermissionService.swift in Sources */,
 				2DBF9E0E1F169DEF006B5AA8 /* FocusViewType.swift in Sources */,
 				D504555F1FD8714700E46826 /* UIView+Extensions.swift in Sources */,

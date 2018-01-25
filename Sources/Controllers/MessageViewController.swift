@@ -1,8 +1,14 @@
 import UIKit
 
+/// View controller used for showing info text and loading animation.
 public final class MessageViewController: UIViewController {
-  // Blur effect view.
-  private lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
+  // Image tint color for all the states, except for `.notFound`.
+  public var regularTintColor: UIColor = .black
+  // Image tint color for `.notFound` state.
+  public var errorTintColor: UIColor = .red
+
+  // MARK: - UI properties
+
   /// Text label.
   public private(set) lazy var textLabel: UILabel = .init()
   /// Info image view.
@@ -10,11 +16,12 @@ public final class MessageViewController: UIViewController {
   /// Border view.
   public private(set) lazy var borderView: UIView = .init()
 
+  /// Blur effect view.
+  private lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
+  // Constraints that are activated when the view is used as a footer.
   private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedConstraints()
+  // Constraints that are activated when the view is used for loading animation and error messages.
   private lazy var expandedConstraints: [NSLayoutConstraint] = self.makeExpandedConstraints()
-
-  public var regularTintColor: UIColor = .black
-  public var errorTintColor: UIColor = .red
 
   var state: State = .scanning {
     didSet {
@@ -37,62 +44,9 @@ public final class MessageViewController: UIViewController {
     blurView.frame = view.bounds
   }
 
-  // MARK: - Subviews
-
-  private func setupSubviews() {
-    textLabel.translatesAutoresizingMaskIntoConstraints = false
-    textLabel.textColor = .black
-    textLabel.numberOfLines = 3
-
-    imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.image = imageNamed("info").withRenderingMode(.alwaysTemplate)
-    imageView.tintColor = .black
-
-    borderView.translatesAutoresizingMaskIntoConstraints = false
-    borderView.backgroundColor = .clear
-    borderView.layer.borderWidth = 2
-    borderView.layer.cornerRadius = 10
-    borderView.layer.borderColor = UIColor.black.cgColor
-  }
-
-  private func handleStateUpdate() {
-    borderView.isHidden = true
-    borderView.layer.removeAllAnimations()
-    textLabel.text = state.text
-
-    switch state {
-    case .scanning, .unauthorized:
-      textLabel.font = UIFont.boldSystemFont(ofSize: 14)
-      textLabel.numberOfLines = 3
-      textLabel.textAlignment = .left
-      imageView.tintColor = regularTintColor
-    case .processing:
-      textLabel.font = UIFont.boldSystemFont(ofSize: 16)
-      textLabel.numberOfLines = 10
-      textLabel.textAlignment = .center
-      borderView.isHidden = false
-      imageView.tintColor = regularTintColor
-    case .notFound:
-      textLabel.font = UIFont.boldSystemFont(ofSize: 16)
-      textLabel.numberOfLines = 10
-      textLabel.textAlignment = .center
-      imageView.tintColor = errorTintColor
-    }
-
-    if state == .scanning || state == .unauthorized {
-      expandedConstraints.forEach({ $0.isActive = false })
-      collapsedConstraints.forEach({ $0.isActive = true })
-    } else {
-      collapsedConstraints.forEach({ $0.isActive = false })
-      expandedConstraints.forEach({ $0.isActive = true })
-    }
-  }
-
   // MARK: - Animations
 
-  /**
-   Animates blur and border view.
-   */
+  /// Animates blur and border view.
   func animateLoading() {
     animate(blurStyle: .light)
     animate(borderViewAngle: CGFloat(Double.pi/2))
@@ -142,7 +96,62 @@ public final class MessageViewController: UIViewController {
         self?.animate(borderViewAngle: borderViewAngle + CGFloat(Double.pi / 2))
       }))
   }
+
+  // MARK: - Subviews
+
+  private func setupSubviews() {
+    textLabel.translatesAutoresizingMaskIntoConstraints = false
+    textLabel.textColor = .black
+    textLabel.numberOfLines = 3
+
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.image = imageNamed("info").withRenderingMode(.alwaysTemplate)
+    imageView.tintColor = .black
+
+    borderView.translatesAutoresizingMaskIntoConstraints = false
+    borderView.backgroundColor = .clear
+    borderView.layer.borderWidth = 2
+    borderView.layer.cornerRadius = 10
+    borderView.layer.borderColor = UIColor.black.cgColor
+  }
+
+  // MARK: - State handling
+
+  private func handleStateUpdate() {
+    borderView.isHidden = true
+    borderView.layer.removeAllAnimations()
+    textLabel.text = state.text
+
+    switch state {
+    case .scanning, .unauthorized:
+      textLabel.font = UIFont.boldSystemFont(ofSize: 14)
+      textLabel.numberOfLines = 3
+      textLabel.textAlignment = .left
+      imageView.tintColor = regularTintColor
+    case .processing:
+      textLabel.font = UIFont.boldSystemFont(ofSize: 16)
+      textLabel.numberOfLines = 10
+      textLabel.textAlignment = .center
+      borderView.isHidden = false
+      imageView.tintColor = regularTintColor
+    case .notFound:
+      textLabel.font = UIFont.boldSystemFont(ofSize: 16)
+      textLabel.numberOfLines = 10
+      textLabel.textAlignment = .center
+      imageView.tintColor = errorTintColor
+    }
+
+    if state == .scanning || state == .unauthorized {
+      expandedConstraints.forEach({ $0.isActive = false })
+      collapsedConstraints.forEach({ $0.isActive = true })
+    } else {
+      collapsedConstraints.forEach({ $0.isActive = false })
+      expandedConstraints.forEach({ $0.isActive = true })
+    }
+  }
 }
+
+// MARK: - Layout
 
 extension MessageViewController {
   private func makeExpandedConstraints() -> [NSLayoutConstraint] {

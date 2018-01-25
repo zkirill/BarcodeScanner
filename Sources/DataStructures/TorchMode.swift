@@ -1,51 +1,38 @@
 import UIKit
 import AVFoundation
 
-/**
- Wrapper around `AVCaptureTorchMode`.
- */
+/// Wrapper around `AVCaptureTorchMode`.
 public enum TorchMode {
-  case on, off
+  case on
+  case off
 
   /// Returns the next torch mode.
   var next: TorchMode {
-    let result: TorchMode
-
     switch self {
     case .on:
-      result = .off
+      return .off
     case .off:
-      result = .on
+      return .on
     }
-
-    return result
   }
 
   /// Torch mode image.
   var image: UIImage {
-    let result: UIImage
-
     switch self {
     case .on:
-      result = imageNamed("flashOn")
+      return imageNamed("flashOn")
     case .off:
-      result = imageNamed("flashOff")
+      return imageNamed("flashOff")
     }
-
-    return result
   }
 
   /// Returns `AVCaptureTorchMode` value.
   var captureTorchMode: AVCaptureDevice.TorchMode {
-    let result: AVCaptureDevice.TorchMode
-
     switch self {
     case .on:
-      result = .on
+      return .on
     case .off:
-      result = .off
+      return .off
     }
-
-    return result
   }
 }

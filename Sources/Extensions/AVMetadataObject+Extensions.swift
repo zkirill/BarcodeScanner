@@ -3,9 +3,7 @@ import AVFoundation
 extension AVMetadataObject.ObjectType {
   public static let upca: AVMetadataObject.ObjectType = .init(rawValue: "org.gs1.UPC-A")
 
-  /**
-   `AVCaptureMetadataOutput` metadata object types.
-   */
+  /// `AVCaptureMetadataOutput` metadata object types.
   public static var barcodeScannerMetadata = [
     AVMetadataObject.ObjectType.aztec,
     AVMetadataObject.ObjectType.code128,

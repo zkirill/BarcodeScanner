@@ -58,6 +58,8 @@ open class BarcodeScannerViewController: UIViewController {
 
   // MARK: - UI
 
+  // Title label and close button.
+  public private(set) lazy var headerViewController: HeaderViewController = .init()
   /// Information view with description label.
   public private(set) lazy var messageViewController: MessageViewController = .init()
   /// Camera view with custom buttons.
@@ -223,7 +225,6 @@ private extension BarcodeScannerViewController {
     if navigationController != nil {
       cameraView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     } else {
-      let headerViewController = HeaderViewController()
       headerViewController.delegate = self
       add(childViewController: headerViewController)
 

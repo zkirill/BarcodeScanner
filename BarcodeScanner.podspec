@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "BarcodeScanner"
   s.summary          = "Simple and beautiful barcode scanner."
-  s.version          = "3.0.3"
+  s.version          = "4.0.0"
   s.homepage         = "https://github.com/hyperoslo/BarcodeScanner"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -15,7 +15,10 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Sources/**/*'
-  s.resource_bundles = { 'BarcodeScanner' => ['Images/*.{png}'] , 'Localization' => ['Localization/*.lproj/Localizable.strings']}
+  s.resource_bundles = {
+    'BarcodeScanner' => ['Images/*.{png}'],
+    'Localization' => ['Localization/*.lproj/Localizable.strings']
+  }
 
   s.frameworks = 'UIKit', 'AVFoundation'
 

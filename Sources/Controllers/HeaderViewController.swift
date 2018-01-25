@@ -57,7 +57,7 @@ private extension HeaderViewController {
   func makeNavigationBar() -> UINavigationBar {
     let navigationBar = UINavigationBar()
     navigationBar.isTranslucent = false
-    navigationBar.backgroundColor = Title.backgroundColor
+    navigationBar.backgroundColor = .white
     navigationBar.items = [makeNavigationItem()]
     return navigationBar
   }
@@ -73,9 +73,9 @@ private extension HeaderViewController {
 
   func makeTitleLabel() -> UILabel {
     let label = UILabel()
-    label.text = Title.text
-    label.font = Title.font
-    label.textColor = Title.color
+    label.text = localizedString("SCAN_BARCODE_TITLE")
+    label.font = UIFont.boldSystemFont(ofSize: 17)
+    label.textColor = .black
     label.numberOfLines = 1
     label.textAlignment = .center
     return label
@@ -83,9 +83,9 @@ private extension HeaderViewController {
 
   func makeCloseButton() -> UIButton {
     let button = UIButton(type: .system)
-    button.setTitle(CloseButton.text, for: UIControlState())
-    button.titleLabel?.font = CloseButton.font
-    button.tintColor = CloseButton.color
+    button.setTitle(localizedString("BUTTON_CLOSE"), for: UIControlState())
+    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+    button.tintColor = .black
     return button
   }
 }

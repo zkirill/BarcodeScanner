@@ -16,6 +16,8 @@ final class CameraViewController: UIViewController {
   weak var delegate: CameraViewControllerDelegate?
   /// Focus view type.
   var barCodeFocusViewType: FocusViewType = .animated
+  /// `AVCaptureMetadataOutput` metadata object types.
+  var metadata = [AVMetadataObject.ObjectType]()
 
   // MARK: - UI
 
@@ -327,8 +329,8 @@ private extension CameraViewController {
   func makeSettingsButton() -> UIButton {
     let button = UIButton(type: .system)
     let title = NSAttributedString(
-      string: SettingsButton.text,
-      attributes: [.font : SettingsButton.font, .foregroundColor : SettingsButton.color]
+      string: localizedString("BUTTON_SETTINGS"),
+      attributes: [.font: UIFont.boldSystemFont(ofSize: 17), .foregroundColor : UIColor.white]
     )
     button.setAttributedTitle(title, for: UIControlState())
     button.sizeToFit()

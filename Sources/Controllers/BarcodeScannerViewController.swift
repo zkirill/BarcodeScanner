@@ -4,18 +4,18 @@ import AVFoundation
 // MARK: - Delegates
 
 /// Delegate to handle the captured code.
-public protocol ScannerCodeDelegate: class {
-  func scanner(_ controller: ScannerController, didCaptureCode code: String, type: String)
+public protocol BarcodeScannerCodeDelegate: class {
+  func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String)
 }
 
 /// Delegate to report errors.
-public protocol ScannerErrorDelegate: class {
-  func scanner(_ controller: ScannerController, didReceiveError error: Error)
+public protocol BarcodeScannerErrorDelegate: class {
+  func scanner(_ controller: BarcodeScannerViewController, didReceiveError error: Error)
 }
 
 /// Delegate to dismiss barcode scanner when the close button has been pressed.
-public protocol ScannerDismissalDelegate: class {
-  func scannerDidDismiss(_ controller: ScannerController)
+public protocol BarcodeScannerDismissalDelegate: class {
+  func scannerDidDismiss(_ controller: BarcodeScannerViewController)
 }
 
 // MARK: - Controller
@@ -27,7 +27,7 @@ public protocol ScannerDismissalDelegate: class {
  - Unauthorized mode
  - Not found error message
  */
-open class ScannerController: UIViewController {
+open class BarcodeScannerViewController: UIViewController {
 
   // MARK: - Public properties
 
@@ -35,11 +35,20 @@ open class ScannerController: UIViewController {
   /// and waits for the next reset action.
   public var isOneTimeSearch = true
   /// Delegate to handle the captured code.
-  public weak var codeDelegate: ScannerCodeDelegate?
+  public weak var codeDelegate: BarcodeScannerCodeDelegate?
   /// Delegate to report errors.
-  public weak var errorDelegate: ScannerErrorDelegate?
+  public weak var errorDelegate: BarcodeScannerErrorDelegate?
   /// Delegate to dismiss barcode scanner when the close button has been pressed.
-  public weak var dismissalDelegate: ScannerDismissalDelegate?
+  public weak var dismissalDelegate: BarcodeScannerDismissalDelegate?
+  /// `AVCaptureMetadataOutput` metadata object types.
+  public var metadata = AVMetadataObject.ObjectType.barcodeScannerMetadata {
+    didSet {
+      cameraViewController.metadata = metadata
+    }
+  }
+
+  // MARK: - Private properties
+
   /// Flag to lock session from capturing.
   private var locked = false
 
@@ -75,6 +84,7 @@ open class ScannerController: UIViewController {
   open override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.black
+    cameraViewController.metadata = metadata
     cameraViewController.delegate = self
 
     add(childViewController: cameraViewController)
@@ -221,7 +231,7 @@ open class ScannerController: UIViewController {
 
 // MARK: - HeaderViewControllerDelegate
 
-extension ScannerController: HeaderViewControllerDelegate {
+extension BarcodeScannerViewController: HeaderViewControllerDelegate {
   public func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController) {
     status = Status(state: .scanning)
     dismissalDelegate?.scannerDidDismiss(self)
@@ -230,7 +240,7 @@ extension ScannerController: HeaderViewControllerDelegate {
 
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
 
-extension ScannerController: CameraViewControllerDelegate {
+extension BarcodeScannerViewController: CameraViewControllerDelegate {
   func cameraViewControllerDidSetupCaptureSession(_ controller: CameraViewController) {
     status = Status(state: .scanning)
   }

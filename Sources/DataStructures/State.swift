@@ -46,49 +46,15 @@ enum State {
 
     switch self {
     case .scanning:
-      string = Info.text
+      string = localizedString("INFO_DESCRIPTION_TEXT")
     case .processing:
-      string = Info.loadingText
+      string = localizedString("INFO_LOADING_TITLE")
     case .unauthorized:
-      string = Info.settingsText
+      string = localizedString("ASK_FOR_PERMISSION_TEXT")
     case .notFound:
-      string = Info.notFoundText
+      string = localizedString("NO_PRODUCT_ERROR_TITLE")
     }
 
     return string
-  }
-
-  /// State styles.
-  var styles: Styles {
-    let styles: Styles
-
-    switch self {
-    case .scanning:
-      styles = (
-        tint: Info.tint,
-        font: Info.font,
-        alignment: .left
-      )
-    case .processing:
-      styles = (
-        tint: Info.loadingTint,
-        font: Info.loadingFont,
-        alignment: .center
-      )
-    case .unauthorized:
-      styles = (
-        tint: Info.tint,
-        font: Info.font,
-        alignment: .left
-      )
-    case .notFound:
-      styles = (
-        tint: Info.notFoundTint,
-        font: Info.loadingFont,
-        alignment: .center
-      )
-    }
-
-    return styles
   }
 }

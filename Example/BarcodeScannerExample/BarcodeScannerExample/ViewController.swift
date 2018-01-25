@@ -6,15 +6,15 @@ final class ViewController: UIViewController {
   @IBOutlet var pushScannerButton: UIButton!
 
   @IBAction func handleScannerPresent(_ sender: Any, forEvent event: UIEvent) {
-    let controller = makeBarcodeScannerViewController()
-    controller.title = "Barcode Scanner"
-    present(controller, animated: true, completion: nil)
+    let viewController = makeBarcodeScannerViewController()
+    viewController.title = "Barcode Scanner"
+    present(viewController, animated: true, completion: nil)
   }
 
   @IBAction func handleScannerPush(_ sender: Any, forEvent event: UIEvent) {
-    let controller = makeBarcodeScannerViewController()
-    controller.title = "Barcode Scanner"
-    navigationController?.pushViewController(controller, animated: true)
+    let viewController = makeBarcodeScannerViewController()
+    viewController.title = "Barcode Scanner"
+    navigationController?.pushViewController(viewController, animated: true)
   }
 
   private func makeBarcodeScannerViewController() -> BarcodeScannerViewController {
@@ -33,8 +33,7 @@ extension ViewController: BarcodeScannerCodeDelegate {
     print("Barcode Data: \(code)")
     print("Symbology Type: \(type)")
 
-    let delayTime = DispatchTime.now() + Double(Int64(6 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-    DispatchQueue.main.asyncAfter(deadline: delayTime) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
       controller.resetWithError()
     }
   }

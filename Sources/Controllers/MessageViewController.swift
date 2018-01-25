@@ -142,11 +142,11 @@ public final class MessageViewController: UIViewController {
     }
 
     if state == .scanning || state == .unauthorized {
-      expandedConstraints.forEach({ $0.isActive = false })
-      collapsedConstraints.forEach({ $0.isActive = true })
+      expandedConstraints.deactivate()
+      collapsedConstraints.activate()
     } else {
-      collapsedConstraints.forEach({ $0.isActive = false })
-      expandedConstraints.forEach({ $0.isActive = true })
+      collapsedConstraints.deactivate()
+      expandedConstraints.activate()
     }
   }
 }
@@ -164,7 +164,7 @@ extension MessageViewController {
       imageView.widthAnchor.constraint(equalToConstant: 30),
       imageView.heightAnchor.constraint(equalToConstant: 27),
 
-      textLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 14),
+      textLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 18),
       textLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
       textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
 

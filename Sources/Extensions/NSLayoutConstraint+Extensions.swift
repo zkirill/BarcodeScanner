@@ -13,3 +13,21 @@ extension NSLayoutConstraint {
     }
   }
 }
+
+extension Array where Element: NSLayoutConstraint {
+  func activate() {
+    forEach {
+      if !$0.isActive {
+        $0.isActive = true
+      }
+    }
+  }
+
+  func deactivate() {
+    forEach {
+      if $0.isActive {
+        $0.isActive = false
+      }
+    }
+  }
+}

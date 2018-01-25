@@ -218,8 +218,8 @@ public final class CameraViewController: UIViewController {
       return
     }
 
-    regularFocusViewConstraints.forEach({ $0.isActive = false })
-    animatedFocusViewConstraints.forEach({ $0.isActive = true })
+    regularFocusViewConstraints.deactivate()
+    animatedFocusViewConstraints.activate()
     
     UIView.animate(
       withDuration: 1.0, delay:0,

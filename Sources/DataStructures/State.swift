@@ -2,26 +2,20 @@ import UIKit
 
 // MARK: - Status
 
-/**
- Status is a holder of the current state
- with a few additional configuration properties.
- */
+/// Status is a holder of the current state with a few additional configuration properties.
 struct Status {
   /// The current state.
   let state: State
-
-  /// A flag to enable/disable animation.
+  /// Flag to enable/disable animation.
   let animated: Bool
-
-  /// A text that overrides a text from the state.
+  /// Text that overrides a text from the state.
   let text: String
 
   /**
    Creates a new instance of `Status`.
-
-   - Parameter state: A state.
-   - Parameter animated: A flag to enable/disable animation.
-   - Parameter text: A text that overrides a text from the state.
+   - Parameter state: State value.
+   - Parameter animated: Flag to enable/disable animation.
+   - Parameter text: Text that overrides a text from the state.
    */
   init(state: State, animated: Bool = true, text: String? = nil) {
     self.state = state
@@ -30,31 +24,26 @@ struct Status {
   }
 }
 
-// MARK: - State.
+// MARK: - State
 
-/**
- Barcode scanner state.
- */
+/// Barcode scanner state.
 enum State {
-  case scanning, processing, unauthorized, notFound
-
-  typealias Styles = (tint: UIColor, font: UIFont, alignment: NSTextAlignment)
+  case scanning
+  case processing
+  case unauthorized
+  case notFound
 
   /// State message.
   var text: String {
-    let string: String
-
     switch self {
     case .scanning:
-      string = localizedString("INFO_DESCRIPTION_TEXT")
+      return localizedString("INFO_DESCRIPTION_TEXT")
     case .processing:
-      string = localizedString("INFO_LOADING_TITLE")
+      return localizedString("INFO_LOADING_TITLE")
     case .unauthorized:
-      string = localizedString("ASK_FOR_PERMISSION_TEXT")
+      return localizedString("ASK_FOR_PERMISSION_TEXT")
     case .notFound:
-      string = localizedString("NO_PRODUCT_ERROR_TITLE")
+      return localizedString("NO_PRODUCT_ERROR_TITLE")
     }
-
-    return string
   }
 }

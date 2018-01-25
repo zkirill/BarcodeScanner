@@ -1,6 +1,7 @@
 import UIKit
 import AVFoundation
 
+/// Delegate to handle camera setup and video capturing.
 protocol CameraViewControllerDelegate: class {
   func cameraViewControllerDidSetupCaptureSession(_ controller: CameraViewController)
   func cameraViewControllerDidFailToSetupCaptureSession(_ controller: CameraViewController)
@@ -12,21 +13,24 @@ protocol CameraViewControllerDelegate: class {
   )
 }
 
-final class CameraViewController: UIViewController {
+/// View controller responsible for camera controls and video capturing.
+public final class CameraViewController: UIViewController {
   weak var delegate: CameraViewControllerDelegate?
+
   /// Focus view type.
-  var barCodeFocusViewType: FocusViewType = .animated
+  public var barCodeFocusViewType: FocusViewType = .animated
   /// `AVCaptureMetadataOutput` metadata object types.
   var metadata = [AVMetadataObject.ObjectType]()
 
-  // MARK: - UI
+  // MARK: - UI proterties
 
   /// Animated focus view.
-  private lazy var focusView: UIView = self.makeFocusView()
+  public private(set) lazy var focusView: UIView = self.makeFocusView()
   /// Button to change torch mode.
-  public lazy var flashButton: UIButton = .init(type: .custom)
+  public private(set) lazy var flashButton: UIButton = .init(type: .custom)
   /// Button that opens settings to allow camera usage.
-  private lazy var settingsButton: UIButton = self.makeSettingsButton()
+  public private(set) lazy var settingsButton: UIButton = self.makeSettingsButton()
+
   // Constraints for the focus view when it gets smaller in size.
   private var regularFocusViewConstraints = [NSLayoutConstraint]()
   // Constraints for the focus view when it gets bigger in size.
@@ -66,7 +70,7 @@ final class CameraViewController: UIViewController {
 
   // MARK: - View lifecycle
 
-  override func viewDidLoad() {
+  public override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .black
 
@@ -89,24 +93,26 @@ final class CameraViewController: UIViewController {
     settingsButton.addTarget(self, action: #selector(settingsButtonDidPress), for: .touchUpInside)
 
     NotificationCenter.default.addObserver(
-      self, selector: #selector(appWillEnterForeground),
+      self,
+      selector: #selector(appWillEnterForeground),
       name: NSNotification.Name.UIApplicationWillEnterForeground,
-      object: nil)
+      object: nil
+    )
   }
 
-  override func viewDidAppear(_ animated: Bool) {
+  public override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     setupVideoPreviewLayerOrientation()
     animateFocusView()
   }
 
-  override func viewWillDisappear(_ animated: Bool) {
+  public override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     captureSession.stopRunning()
   }
 
-  override func viewWillTransition(to size: CGSize,
-                                   with coordinator: UIViewControllerTransitionCoordinator) {
+  public override func viewWillTransition(to size: CGSize,
+                                          with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
     coordinator.animate(alongsideTransition: { [weak self] _ in
       self?.setupVideoPreviewLayerOrientation()
@@ -115,7 +121,7 @@ final class CameraViewController: UIViewController {
     }
   }
 
-  // MARK: - State handling
+  // MARK: - Video capturing
 
   func startCapturing() {
     guard !isSimulatorRunning else {
@@ -341,9 +347,9 @@ private extension CameraViewController {
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
 
 extension CameraViewController: AVCaptureMetadataOutputObjectsDelegate {
-  func metadataOutput(_ output: AVCaptureMetadataOutput,
-                      didOutput metadataObjects: [AVMetadataObject],
-                      from connection: AVCaptureConnection) {
+  public func metadataOutput(_ output: AVCaptureMetadataOutput,
+                             didOutput metadataObjects: [AVMetadataObject],
+                             from connection: AVCaptureConnection) {
     delegate?.cameraViewController(self, didOutput: metadataObjects)
   }
 }

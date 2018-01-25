@@ -31,15 +31,17 @@ open class BarcodeScannerViewController: UIViewController {
 
   // MARK: - Public properties
 
-  /// When the flag is set to `true` controller returns a captured code
-  /// and waits for the next reset action.
-  public var isOneTimeSearch = true
   /// Delegate to handle the captured code.
   public weak var codeDelegate: BarcodeScannerCodeDelegate?
   /// Delegate to report errors.
   public weak var errorDelegate: BarcodeScannerErrorDelegate?
   /// Delegate to dismiss barcode scanner when the close button has been pressed.
   public weak var dismissalDelegate: BarcodeScannerDismissalDelegate?
+
+  /// When the flag is set to `true` controller returns a captured code
+  /// and waits for the next reset action.
+  public var isOneTimeSearch = true
+
   /// `AVCaptureMetadataOutput` metadata object types.
   public var metadata = AVMetadataObject.ObjectType.barcodeScannerMetadata {
     didSet {
@@ -51,13 +53,17 @@ open class BarcodeScannerViewController: UIViewController {
 
   /// Flag to lock session from capturing.
   private var locked = false
+  /// Flag to check if layout constraints has been activated.
+  private var constraintsActivated = false
 
   // MARK: - UI
 
+  // Title label and close button.
+  public private(set) lazy var headerViewController: HeaderViewController = .init()
   /// Information view with description label.
-  private lazy var messageViewController: MessageViewController = .init()
+  public private(set) lazy var messageViewController: MessageViewController = .init()
   /// Camera view with custom buttons.
-  private lazy var cameraViewController: CameraViewController = .init()
+  public private(set) lazy var cameraViewController: CameraViewController = .init()
 
   private var messageView: UIView {
     return messageViewController.view
@@ -93,32 +99,7 @@ open class BarcodeScannerViewController: UIViewController {
 
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-
-    let cameraView = cameraViewController.view!
-
-    NSLayoutConstraint.activate(
-      cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      cameraView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    )
-
-    if navigationController != nil {
-      cameraView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    } else {
-      let headerViewController = HeaderViewController()
-      headerViewController.delegate = self
-      add(childViewController: headerViewController)
-
-      let headerView = headerViewController.view!
-
-      NSLayoutConstraint.activate(
-        headerView.topAnchor.constraint(equalTo: view.topAnchor),
-        headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        headerView.bottomAnchor.constraint(equalTo: headerViewController.navigationBar.bottomAnchor),
-        cameraView.topAnchor.constraint(equalTo: headerView.bottomAnchor)
-      )
-    }
+    setupConstraints()
   }
 
   open override func viewWillTransition(to size: CGSize,
@@ -133,7 +114,6 @@ open class BarcodeScannerViewController: UIViewController {
 
   /**
    Shows error message and goes back to the scanning mode.
-
    - Parameter errorMessage: Error message that overrides the message from the config.
    */
   public func resetWithError(message: String? = nil) {
@@ -142,7 +122,6 @@ open class BarcodeScannerViewController: UIViewController {
 
   /**
    Resets the controller to the scanning mode.
-
    - Parameter animated: Flag to show scanner with or without animation.
    */
   public func reset(animated: Bool = true) {
@@ -158,7 +137,8 @@ open class BarcodeScannerViewController: UIViewController {
       return
     }
 
-    let animatedTransition = newValue.state == .processing || oldValue.state == .processing
+    let animatedTransition = newValue.state == .processing
+      || oldValue.state == .processing
       || oldValue.state == .notFound
     let duration = newValue.animated && animatedTransition ? 0.5 : 0.0
     let delayReset = oldValue.state == .processing || oldValue.state == .notFound
@@ -187,9 +167,7 @@ open class BarcodeScannerViewController: UIViewController {
       }))
   }
 
-  /**
-   Resets the current state.
-   */
+  /// Resets the current state.
   private func resetState() {
     locked = status.state == .processing && isOneTimeSearch
     if status.state == .scanning {
@@ -203,7 +181,6 @@ open class BarcodeScannerViewController: UIViewController {
 
   /**
    Simulates flash animation.
-
    - Parameter processing: Flag to set the current state to `.processing`.
    */
   private func animateFlash(whenProcessing: Bool = false) {
@@ -229,16 +206,51 @@ open class BarcodeScannerViewController: UIViewController {
   }
 }
 
+// MARK: - Layout
+
+private extension BarcodeScannerViewController {
+  private func setupConstraints() {
+    guard constraintsActivated else {
+      return
+    }
+
+    let cameraView = cameraViewController.view!
+
+    NSLayoutConstraint.activate(
+      cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      cameraView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    )
+
+    if navigationController != nil {
+      cameraView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    } else {
+      headerViewController.delegate = self
+      add(childViewController: headerViewController)
+
+      let headerView = headerViewController.view!
+
+      NSLayoutConstraint.activate(
+        headerView.topAnchor.constraint(equalTo: view.topAnchor),
+        headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        headerView.bottomAnchor.constraint(equalTo: headerViewController.navigationBar.bottomAnchor),
+        cameraView.topAnchor.constraint(equalTo: headerView.bottomAnchor)
+      )
+    }
+  }
+}
+
 // MARK: - HeaderViewControllerDelegate
 
 extension BarcodeScannerViewController: HeaderViewControllerDelegate {
-  public func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController) {
+  func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController) {
     status = Status(state: .scanning)
     dismissalDelegate?.scannerDidDismiss(self)
   }
 }
 
-// MARK: - AVCaptureMetadataOutputObjectsDelegate
+// MARK: - CameraViewControllerDelegate
 
 extension BarcodeScannerViewController: CameraViewControllerDelegate {
   func cameraViewControllerDidSetupCaptureSession(_ controller: CameraViewController) {

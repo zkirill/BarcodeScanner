@@ -114,11 +114,13 @@ public final class CameraViewController: UIViewController {
   public override func viewWillTransition(to size: CGSize,
                                           with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
-    coordinator.animate(alongsideTransition: { [weak self] _ in
-      self?.setupVideoPreviewLayerOrientation()
-    }) { [weak self] _ in
-      self?.animateFocusView()
-    }
+    coordinator.animate(
+      alongsideTransition: { [weak self] _ in
+        self?.setupVideoPreviewLayerOrientation()
+      },
+      completion: ({ [weak self] _ in
+        self?.animateFocusView()
+      }))
   }
 
   // MARK: - Video capturing
@@ -218,11 +220,12 @@ public final class CameraViewController: UIViewController {
       return
     }
 
-    regularFocusViewConstraints.forEach({ $0.isActive = false })
-    animatedFocusViewConstraints.forEach({ $0.isActive = true })
-    
+    regularFocusViewConstraints.deactivate()
+    animatedFocusViewConstraints.activate()
+
     UIView.animate(
-      withDuration: 1.0, delay:0,
+      withDuration: 1.0,
+      delay: 0,
       options: [.repeat, .autoreverse, .beginFromCurrentState],
       animations: ({ [weak self] in
         self?.view.layoutIfNeeded()
@@ -300,7 +303,7 @@ private extension CameraViewController {
     videoPreviewLayer.frame = view.layer.bounds
 
     if let connection = videoPreviewLayer.connection, connection.isVideoOrientationSupported {
-      switch (UIApplication.shared.statusBarOrientation) {
+      switch UIApplication.shared.statusBarOrientation {
       case .portrait:
         connection.videoOrientation = .portrait
       case .landscapeRight:
@@ -336,7 +339,7 @@ private extension CameraViewController {
     let button = UIButton(type: .system)
     let title = NSAttributedString(
       string: localizedString("BUTTON_SETTINGS"),
-      attributes: [.font: UIFont.boldSystemFont(ofSize: 17), .foregroundColor : UIColor.white]
+      attributes: [.font: UIFont.boldSystemFont(ofSize: 17), .foregroundColor: UIColor.white]
     )
     button.setAttributedTitle(title, for: UIControlState())
     button.sizeToFit()

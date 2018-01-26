@@ -65,6 +65,11 @@ open class BarcodeScannerViewController: UIViewController {
   /// Camera view with custom buttons.
   public private(set) lazy var cameraViewController: CameraViewController = .init()
 
+  // Constraints that are activated when the view is used as a footer.
+  private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedMessageConstraints()
+  // Constraints that are activated when the view is used for loading animation and error messages.
+  private lazy var expandedConstraints: [NSLayoutConstraint] = self.makeExpandedMessageConstraints()
+
   private var messageView: UIView {
     return messageViewController.view
   }
@@ -76,38 +81,26 @@ open class BarcodeScannerViewController: UIViewController {
     }
   }
 
-  /// Calculated frame for the info view.
-  private var messageViewFrame: CGRect {
-    let height = status.state != .processing ? 75 : view.bounds.height
-    return CGRect(
-      x: 0, y: view.bounds.height - height,
-      width: view.bounds.width, height: height
-    )
-  }
-
   // MARK: - View lifecycle
 
   open override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.black
+
+    add(childViewController: messageViewController)
+    messageView.translatesAutoresizingMaskIntoConstraints = false
+    collapsedConstraints.activate()
+
     cameraViewController.metadata = metadata
     cameraViewController.delegate = self
-
     add(childViewController: cameraViewController)
-    add(childViewController: messageViewController)
+
+    view.bringSubview(toFront: messageView)
   }
 
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    setupConstraints()
-  }
-
-  open override func viewWillTransition(to size: CGSize,
-                                        with coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransition(to: size, with: coordinator)
-    coordinator.animate(alongsideTransition: { (context) in
-      self.messageView.frame = self.messageViewFrame
-    })
+    setupCameraConstraints()
   }
 
   // MARK: - State handling
@@ -147,13 +140,20 @@ open class BarcodeScannerViewController: UIViewController {
       resetState()
     }
 
+    if newValue.state != .processing {
+      expandedConstraints.deactivate()
+      collapsedConstraints.activate()
+    } else {
+      collapsedConstraints.deactivate()
+      expandedConstraints.activate()
+    }
+
     messageViewController.state = newValue.state
 
     UIView.animate(
       withDuration: duration,
       animations: ({
-        self.messageView.layoutIfNeeded()
-        self.messageView.frame = self.messageViewFrame
+        self.view.layoutIfNeeded()
       }),
       completion: ({ [weak self] _ in
         if delayReset {
@@ -209,11 +209,12 @@ open class BarcodeScannerViewController: UIViewController {
 // MARK: - Layout
 
 private extension BarcodeScannerViewController {
-  private func setupConstraints() {
-    guard constraintsActivated else {
+  private func setupCameraConstraints() {
+    guard !constraintsActivated else {
       return
     }
 
+    constraintsActivated = true
     let cameraView = cameraViewController.view!
 
     NSLayoutConstraint.activate(
@@ -238,6 +239,24 @@ private extension BarcodeScannerViewController {
         cameraView.topAnchor.constraint(equalTo: headerView.bottomAnchor)
       )
     }
+  }
+
+  private func makeExpandedMessageConstraints() -> [NSLayoutConstraint] {
+    return [
+      messageView.topAnchor.constraint(equalTo: view.topAnchor),
+      messageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      messageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      messageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    ]
+  }
+
+  private func makeCollapsedMessageConstraints() -> [NSLayoutConstraint] {
+    return [
+      messageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      messageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      messageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      messageView.heightAnchor.constraint(equalToConstant: 75)
+    ]
   }
 }
 

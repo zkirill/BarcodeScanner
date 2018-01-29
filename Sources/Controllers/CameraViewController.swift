@@ -19,6 +19,11 @@ public final class CameraViewController: UIViewController {
 
   /// Focus view type.
   public var barCodeFocusViewType: FocusViewType = .animated
+  public var showsCameraButton: Bool = false {
+    didSet {
+      cameraButton.isHidden = showsCameraButton
+    }
+  }
   /// `AVCaptureMetadataOutput` metadata object types.
   var metadata = [AVMetadataObject.ObjectType]()
 
@@ -411,6 +416,7 @@ private extension CameraViewController {
   func makeCameraButton() -> UIButton {
     let button = UIButton(type: .custom)
     button.setImage(imageNamed("cameraRotate"), for: UIControlState())
+    button.isHidden = showsCameraButton
     return button
   }
 }

@@ -30,6 +30,8 @@ public final class CameraViewController: UIViewController {
   public private(set) lazy var flashButton: UIButton = .init(type: .custom)
   /// Button that opens settings to allow camera usage.
   public private(set) lazy var settingsButton: UIButton = self.makeSettingsButton()
+  // Button to switch between front and back camera.
+  public private(set) lazy var cameraButton: UIButton = self.makeCameraButton()
 
   // Constraints for the focus view when it gets smaller in size.
   private var regularFocusViewConstraints = [NSLayoutConstraint]()
@@ -41,7 +43,7 @@ public final class CameraViewController: UIViewController {
   /// Video preview layer.
   private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
   /// Video capture device. This may be nil when running in Simulator.
-  private lazy var captureDevice: AVCaptureDevice! = AVCaptureDevice.default(for: .video)
+  private var captureDevice: AVCaptureDevice?
   /// Capture session.
   private lazy var captureSession: AVCaptureSession = AVCaptureSession()
   // Service used to check authorization status of the capture device
@@ -62,6 +64,14 @@ public final class CameraViewController: UIViewController {
     }
   }
 
+  private var frontCameraDevice: AVCaptureDevice? {
+    return AVCaptureDevice.devices(for: .video).first(where: { $0.position == .front })
+  }
+
+  private var backCameraDevice: AVCaptureDevice? {
+    return AVCaptureDevice.default(for: .video)
+  }
+
   // MARK: - Initialization
 
   deinit {
@@ -73,31 +83,21 @@ public final class CameraViewController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .black
-
     videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-    videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+    videoPreviewLayer?.videoGravity = .resizeAspectFill
 
     guard let videoPreviewLayer = videoPreviewLayer else {
       return
     }
 
     view.layer.addSublayer(videoPreviewLayer)
-    view.addSubviews(settingsButton, flashButton, focusView)
+    view.addSubviews(settingsButton, flashButton, focusView, cameraButton)
 
     torchMode = .off
     focusView.isHidden = true
     setupCamera()
     setupConstraints()
-
-    flashButton.addTarget(self, action: #selector(flashButtonDidPress), for: .touchUpInside)
-    settingsButton.addTarget(self, action: #selector(settingsButtonDidPress), for: .touchUpInside)
-
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(appWillEnterForeground),
-      name: NSNotification.Name.UIApplicationWillEnterForeground,
-      object: nil
-    )
+    setupActions()
   }
 
   public override func viewDidAppear(_ animated: Bool) {
@@ -149,6 +149,31 @@ public final class CameraViewController: UIViewController {
 
   // MARK: - Actions
 
+  private func setupActions() {
+    flashButton.addTarget(
+      self,
+      action: #selector(handleFlashButtonTap),
+      for: .touchUpInside
+    )
+    settingsButton.addTarget(
+      self,
+      action: #selector(handleSettingsButtonTap),
+      for: .touchUpInside
+    )
+    cameraButton.addTarget(
+      self,
+      action: #selector(handleCameraButtonTap),
+      for: .touchUpInside
+    )
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(appWillEnterForeground),
+      name: NSNotification.Name.UIApplicationWillEnterForeground,
+      object: nil
+    )
+  }
+
   /// `UIApplicationWillEnterForegroundNotification` action.
   @objc private func appWillEnterForeground() {
     torchMode = .off
@@ -156,12 +181,17 @@ public final class CameraViewController: UIViewController {
   }
 
   /// Opens setting to allow camera usage.
-  @objc private func settingsButtonDidPress() {
+  @objc private func handleSettingsButtonTap() {
     delegate?.cameraViewControllerDidTapSettingsButton(self)
   }
 
+  /// Swaps camera position.
+  @objc private func handleCameraButtonTap() {
+    swapCamera()
+  }
+
   /// Sets the next torch mode.
-  @objc private func flashButtonDidPress() {
+  @objc private func handleFlashButtonTap() {
     torchMode = torchMode.next
   }
 
@@ -179,7 +209,8 @@ public final class CameraViewController: UIViewController {
       }
 
       if error == nil {
-        strongSelf.setupSession()
+        strongSelf.setupSessionInput(for: .back)
+        strongSelf.setupSessionOutput()
         strongSelf.delegate?.cameraViewControllerDidSetupCaptureSession(strongSelf)
       } else {
         strongSelf.delegate?.cameraViewControllerDidFailToSetupCaptureSession(strongSelf)
@@ -188,18 +219,32 @@ public final class CameraViewController: UIViewController {
   }
 
   /// Sets up capture input, output and session.
-  private func setupSession() {
-    guard let captureDevice = captureDevice, !isSimulatorRunning else {
+  private func setupSessionInput(for position: AVCaptureDevice.Position) {
+    guard !isSimulatorRunning else {
+      return
+    }
+
+    guard let device = position == .front ? frontCameraDevice : backCameraDevice else {
       return
     }
 
     do {
-      let input = try AVCaptureDeviceInput(device: captureDevice)
-      captureSession.addInput(input)
+      let newInput = try AVCaptureDeviceInput(device: device)
+      captureDevice = device
+      // Swap capture device inputs
+      captureSession.beginConfiguration()
+      if let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput {
+        captureSession.removeInput(currentInput)
+      }
+      captureSession.addInput(newInput)
+      captureSession.commitConfiguration()
     } catch {
       delegate?.cameraViewController(self, didReceiveError: error)
+      return
     }
+  }
 
+  private func setupSessionOutput() {
     let output = AVCaptureMetadataOutput()
     captureSession.addOutput(output)
     output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
@@ -207,6 +252,14 @@ public final class CameraViewController: UIViewController {
     videoPreviewLayer?.session = captureSession
 
     view.setNeedsLayout()
+  }
+
+  /// Switch front/back camera.
+  private func swapCamera() {
+    guard let input = captureSession.inputs.first as? AVCaptureDeviceInput else {
+      return
+    }
+    setupSessionInput(for: input.device.position == .back ? .front : .back)
   }
 
   // MARK: - Animations
@@ -248,25 +301,34 @@ private extension CameraViewController {
         flashButton.trailingAnchor.constraint(
           equalTo: view.safeAreaLayoutGuide.trailingAnchor,
           constant: -13
+        ),
+        cameraButton.bottomAnchor.constraint(
+          equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+          constant: -30
         )
       )
     } else {
       NSLayoutConstraint.activate(
         flashButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-        flashButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -13)
+        flashButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -13),
+        cameraButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
       )
     }
 
-    let flashButtonSize: CGFloat = 37
+    let imageButtonSize: CGFloat = 37
 
     NSLayoutConstraint.activate(
-      flashButton.widthAnchor.constraint(equalToConstant: flashButtonSize),
-      flashButton.heightAnchor.constraint(equalToConstant: flashButtonSize),
+      flashButton.widthAnchor.constraint(equalToConstant: imageButtonSize),
+      flashButton.heightAnchor.constraint(equalToConstant: imageButtonSize),
 
       settingsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       settingsButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
       settingsButton.widthAnchor.constraint(equalToConstant: 150),
-      settingsButton.heightAnchor.constraint(equalToConstant: 50)
+      settingsButton.heightAnchor.constraint(equalToConstant: 50),
+
+      cameraButton.widthAnchor.constraint(equalToConstant: 48),
+      cameraButton.heightAnchor.constraint(equalToConstant: 48),
+      cameraButton.trailingAnchor.constraint(equalTo: flashButton.trailingAnchor)
     )
 
     setupFocusViewConstraints()
@@ -343,6 +405,12 @@ private extension CameraViewController {
     )
     button.setAttributedTitle(title, for: UIControlState())
     button.sizeToFit()
+    return button
+  }
+
+  func makeCameraButton() -> UIButton {
+    let button = UIButton(type: .custom)
+    button.setImage(imageNamed("cameraRotate"), for: UIControlState())
     return button
   }
 }

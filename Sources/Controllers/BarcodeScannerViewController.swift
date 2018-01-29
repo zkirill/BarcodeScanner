@@ -220,7 +220,7 @@ private extension BarcodeScannerViewController {
     NSLayoutConstraint.activate(
       cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       cameraView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -75)
     )
 
     if navigationController != nil {

@@ -5,7 +5,11 @@ import AVFoundation
 
 /// Delegate to handle the captured code.
 public protocol BarcodeScannerCodeDelegate: class {
-  func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String)
+  func scanner(
+    _ controller: BarcodeScannerViewController,
+    didCaptureCode code: String,
+    type: String
+  )
 }
 
 /// Delegate to report errors.
@@ -28,6 +32,7 @@ public protocol BarcodeScannerDismissalDelegate: class {
  - Not found error message
  */
 open class BarcodeScannerViewController: UIViewController {
+  private static let footerHeight: CGFloat = 75
 
   // MARK: - Public properties
 
@@ -66,9 +71,9 @@ open class BarcodeScannerViewController: UIViewController {
   public private(set) lazy var cameraViewController: CameraViewController = .init()
 
   // Constraints that are activated when the view is used as a footer.
-  private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedMessageConstraints()
+  private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedConstraints()
   // Constraints that are activated when the view is used for loading animation and error messages.
-  private lazy var expandedConstraints: [NSLayoutConstraint] = self.makeExpandedMessageConstraints()
+  private lazy var expandedConstraints: [NSLayoutConstraint] = self.makeExpandedConstraints()
 
   private var messageView: UIView {
     return messageViewController.view
@@ -220,7 +225,10 @@ private extension BarcodeScannerViewController {
     NSLayoutConstraint.activate(
       cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       cameraView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      cameraView.bottomAnchor.constraint(
+        equalTo: view.bottomAnchor,
+        constant: -BarcodeScannerViewController.footerHeight
+      )
     )
 
     if navigationController != nil {
@@ -241,7 +249,7 @@ private extension BarcodeScannerViewController {
     }
   }
 
-  private func makeExpandedMessageConstraints() -> [NSLayoutConstraint] {
+  private func makeExpandedConstraints() -> [NSLayoutConstraint] {
     return [
       messageView.topAnchor.constraint(equalTo: view.topAnchor),
       messageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -250,12 +258,14 @@ private extension BarcodeScannerViewController {
     ]
   }
 
-  private func makeCollapsedMessageConstraints() -> [NSLayoutConstraint] {
+  private func makeCollapsedConstraints() -> [NSLayoutConstraint] {
     return [
       messageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       messageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       messageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      messageView.heightAnchor.constraint(equalToConstant: 75)
+      messageView.heightAnchor.constraint(
+        equalToConstant: BarcodeScannerViewController.footerHeight
+      )
     ]
   }
 }

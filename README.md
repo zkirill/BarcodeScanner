@@ -181,12 +181,16 @@ viewController.messageViewController.textLabel.textColor = .black
 **Camera**
 ```swift
 let viewController = BarcodeScannerViewController()
-viewController.barCodeFocusViewType = .animated
+// Change focus view style
+viewController.cameraViewController.barCodeFocusViewType = .animated
+// Show camera position button
+viewController.cameraViewController.showsCameraButton = true
+// Set settings button text
 let title = NSAttributedString(
   string: "Settings",
   attributes: [.font: UIFont.boldSystemFont(ofSize: 17), .foregroundColor : UIColor.white]
 )
-viewController.settingButton.setAttributedTitle(title, for: UIControlState())
+viewController.cameraViewController.settingButton.setAttributedTitle(title, for: UIControlState())
 ```
 
 **Metadata**

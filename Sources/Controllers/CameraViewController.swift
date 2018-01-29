@@ -250,6 +250,10 @@ public final class CameraViewController: UIViewController {
   }
 
   private func setupSessionOutput() {
+    guard !isSimulatorRunning else {
+      return
+    }
+
     let output = AVCaptureMetadataOutput()
     captureSession.addOutput(output)
     output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)

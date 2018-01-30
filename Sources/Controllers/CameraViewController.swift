@@ -275,8 +275,11 @@ public final class CameraViewController: UIViewController {
 
   /// Performs focus view animation.
   private func animateFocusView() {
+    // Restore to initial state
     focusView.layer.removeAllAnimations()
-    focusView.isHidden = false
+    animatedFocusViewConstraints.deactivate()
+    regularFocusViewConstraints.activate()
+    view.layoutIfNeeded()
 
     guard barCodeFocusViewType == .animated else {
       return

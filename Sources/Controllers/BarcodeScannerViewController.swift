@@ -128,7 +128,7 @@ open class BarcodeScannerViewController: UIViewController {
 
   private func changeStatus(from oldValue: Status, to newValue: Status) {
     guard newValue.state != .notFound else {
-      messageViewController.state = newValue.state
+      messageViewController.status = newValue
       DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
         self.status = Status(state: .scanning)
       }
@@ -153,7 +153,7 @@ open class BarcodeScannerViewController: UIViewController {
       expandedConstraints.activate()
     }
 
-    messageViewController.state = newValue.state
+    messageViewController.status = newValue
 
     UIView.animate(
       withDuration: duration,

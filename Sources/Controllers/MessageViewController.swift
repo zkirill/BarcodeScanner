@@ -6,6 +6,8 @@ public final class MessageViewController: UIViewController {
   public var regularTintColor: UIColor = .black
   // Image tint color for `.notFound` state.
   public var errorTintColor: UIColor = .red
+  // Customizable state messages.
+  public var messages = StateMessageProvider()
 
   // MARK: - UI properties
 
@@ -23,9 +25,9 @@ public final class MessageViewController: UIViewController {
   // Constraints that are activated when the view is used for loading animation and error messages.
   private lazy var expandedConstraints: [NSLayoutConstraint] = self.makeExpandedConstraints()
 
-  var state: State = .scanning {
+  var status = Status(state: .scanning) {
     didSet {
-      handleStateUpdate()
+      handleStatusUpdate()
     }
   }
 
@@ -36,7 +38,7 @@ public final class MessageViewController: UIViewController {
     view.addSubview(blurView)
     blurView.contentView.addSubviews(textLabel, imageView, borderView)
     setupSubviews()
-    handleStateUpdate()
+    handleStatusUpdate()
   }
 
   public override func viewDidLayoutSubviews() {
@@ -58,7 +60,7 @@ public final class MessageViewController: UIViewController {
    - Parameter style: The current blur style.
    */
   private func animate(blurStyle: UIBlurEffectStyle) {
-    guard state == .processing else { return }
+    guard status.state == .processing else { return }
 
     UIView.animate(
       withDuration: 2.0,
@@ -78,7 +80,7 @@ public final class MessageViewController: UIViewController {
    - Parameter angle: Rotation angle.
    */
   private func animate(borderViewAngle: CGFloat) {
-    guard state == .processing else {
+    guard status.state == .processing else {
       borderView.transform = .identity
       return
     }
@@ -117,12 +119,12 @@ public final class MessageViewController: UIViewController {
 
   // MARK: - State handling
 
-  private func handleStateUpdate() {
+  private func handleStatusUpdate() {
     borderView.isHidden = true
     borderView.layer.removeAllAnimations()
-    textLabel.text = state.text
+    textLabel.text = status.text ?? messages.makeText(for: status.state)
 
-    switch state {
+    switch status.state {
     case .scanning, .unauthorized:
       textLabel.font = UIFont.boldSystemFont(ofSize: 14)
       textLabel.numberOfLines = 3
@@ -141,7 +143,7 @@ public final class MessageViewController: UIViewController {
       imageView.tintColor = errorTintColor
     }
 
-    if state == .scanning || state == .unauthorized {
+    if status.state == .scanning || status.state == .unauthorized {
       expandedConstraints.deactivate()
       collapsedConstraints.activate()
     } else {

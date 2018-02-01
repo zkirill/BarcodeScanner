@@ -58,6 +58,7 @@ public final class CameraViewController: UIViewController {
   private var torchMode: TorchMode = .off {
     didSet {
       guard let captureDevice = captureDevice, captureDevice.hasFlash else { return }
+      guard captureDevice.isTorchModeSupported(torchMode.captureTorchMode) else { return }
 
       do {
         try captureDevice.lockForConfiguration()
@@ -138,7 +139,8 @@ public final class CameraViewController: UIViewController {
     torchMode = .off
     captureSession.startRunning()
     focusView.isHidden = false
-    flashButton.isHidden = false
+    flashButton.isHidden = captureDevice?.position == .front
+    cameraButton.isHidden = !showsCameraButton
   }
 
   func stopCapturing() {
@@ -150,6 +152,7 @@ public final class CameraViewController: UIViewController {
     captureSession.stopRunning()
     focusView.isHidden = true
     flashButton.isHidden = true
+    cameraButton.isHidden = true
   }
 
   // MARK: - Actions
@@ -243,6 +246,7 @@ public final class CameraViewController: UIViewController {
       }
       captureSession.addInput(newInput)
       captureSession.commitConfiguration()
+      flashButton.isHidden = position == .front
     } catch {
       delegate?.cameraViewController(self, didReceiveError: error)
       return
@@ -423,7 +427,7 @@ private extension CameraViewController {
   func makeCameraButton() -> UIButton {
     let button = UIButton(type: .custom)
     button.setImage(imageNamed("cameraRotate"), for: UIControlState())
-    button.isHidden = showsCameraButton
+    button.isHidden = !showsCameraButton
     return button
   }
 }

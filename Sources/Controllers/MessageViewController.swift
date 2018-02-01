@@ -12,11 +12,11 @@ public final class MessageViewController: UIViewController {
   // MARK: - UI properties
 
   /// Text label.
-  public private(set) lazy var textLabel: UILabel = .init()
+  public private(set) lazy var textLabel: UILabel = self.makeTextLabel()
   /// Info image view.
-  public private(set) lazy var imageView: UIImageView = .init()
+  public private(set) lazy var imageView: UIImageView = self.makeImageView()
   /// Border view.
-  public private(set) lazy var borderView: UIView = .init()
+  public private(set) lazy var borderView: UIView = self.makeBorderView()
 
   /// Blur effect view.
   private lazy var blurView: UIVisualEffectView = .init(effect: UIBlurEffect(style: .extraLight))
@@ -37,7 +37,6 @@ public final class MessageViewController: UIViewController {
     super.viewDidLoad()
     view.addSubview(blurView)
     blurView.contentView.addSubviews(textLabel, imageView, borderView)
-    setupSubviews()
     handleStatusUpdate()
   }
 
@@ -99,24 +98,6 @@ public final class MessageViewController: UIViewController {
       }))
   }
 
-  // MARK: - Subviews
-
-  private func setupSubviews() {
-    textLabel.translatesAutoresizingMaskIntoConstraints = false
-    textLabel.textColor = .black
-    textLabel.numberOfLines = 3
-
-    imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.image = imageNamed("info").withRenderingMode(.alwaysTemplate)
-    imageView.tintColor = .black
-
-    borderView.translatesAutoresizingMaskIntoConstraints = false
-    borderView.backgroundColor = .clear
-    borderView.layer.borderWidth = 2
-    borderView.layer.cornerRadius = 10
-    borderView.layer.borderColor = UIColor.black.cgColor
-  }
-
   // MARK: - State handling
 
   private func handleStatusUpdate() {
@@ -126,12 +107,10 @@ public final class MessageViewController: UIViewController {
 
     switch status.state {
     case .scanning, .unauthorized:
-      textLabel.font = UIFont.boldSystemFont(ofSize: 14)
       textLabel.numberOfLines = 3
       textLabel.textAlignment = .left
       imageView.tintColor = regularTintColor
     case .processing:
-      textLabel.font = UIFont.boldSystemFont(ofSize: 16)
       textLabel.numberOfLines = 10
       textLabel.textAlignment = .center
       borderView.isHidden = false
@@ -150,6 +129,37 @@ public final class MessageViewController: UIViewController {
       collapsedConstraints.deactivate()
       expandedConstraints.activate()
     }
+  }
+}
+
+// MARK: - Subviews factory
+
+private extension MessageViewController {
+  func makeTextLabel() -> UILabel {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textColor = .black
+    label.numberOfLines = 3
+    label.font = UIFont.boldSystemFont(ofSize: 14)
+    return label
+  }
+
+  func makeImageView() -> UIImageView {
+    let imageView = UIImageView()
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.image = imageNamed("info").withRenderingMode(.alwaysTemplate)
+    imageView.tintColor = .black
+    return imageView
+  }
+
+  func makeBorderView() -> UIView {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.backgroundColor = .clear
+    view.layer.borderWidth = 2
+    view.layer.cornerRadius = 10
+    view.layer.borderColor = UIColor.black.cgColor
+    return view
   }
 }
 

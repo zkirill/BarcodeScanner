@@ -60,6 +60,8 @@ open class BarcodeScannerViewController: UIViewController {
   private var locked = false
   /// Flag to check if layout constraints has been activated.
   private var constraintsActivated = false
+  /// Flag to check if view controller is currently on screen
+  private var isVisible = false
 
   // MARK: - UI
 
@@ -106,6 +108,12 @@ open class BarcodeScannerViewController: UIViewController {
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     setupCameraConstraints()
+    isVisible = true
+  }
+
+  open override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    isVisible = false
   }
 
   // MARK: - State handling
@@ -274,7 +282,6 @@ private extension BarcodeScannerViewController {
 
 extension BarcodeScannerViewController: HeaderViewControllerDelegate {
   func headerViewControllerDidTapCloseButton(_ controller: HeaderViewController) {
-    status = Status(state: .scanning)
     dismissalDelegate?.scannerDidDismiss(self)
   }
 }
@@ -304,7 +311,7 @@ extension BarcodeScannerViewController: CameraViewControllerDelegate {
 
   func cameraViewController(_ controller: CameraViewController,
                             didOutput metadataObjects: [AVMetadataObject]) {
-    guard !locked else { return }
+    guard !locked && isVisible else { return }
     guard !metadataObjects.isEmpty else { return }
 
     guard

@@ -81,6 +81,7 @@ public final class CameraViewController: UIViewController {
   // MARK: - Initialization
 
   deinit {
+    stopCapturing()
     NotificationCenter.default.removeObserver(self)
   }
 
@@ -110,11 +111,6 @@ public final class CameraViewController: UIViewController {
     super.viewDidAppear(animated)
     setupVideoPreviewLayerOrientation()
     animateFocusView()
-  }
-
-  public override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    captureSession.stopRunning()
   }
 
   public override func viewWillTransition(to size: CGSize,

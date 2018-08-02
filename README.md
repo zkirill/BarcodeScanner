@@ -209,6 +209,8 @@ it, simply add the following line to your Podfile:
 pod 'BarcodeScanner'
 ```
 
+Don't forget to set a `Privacy - Camera Usage Description` in your Info.plist file, else the app will crash with a SIGBART. 
+
 In order to quickly try the demo project of a **BarcodeScanner** just run
 `pod try BarcodeScanner` in your terminal.
 
